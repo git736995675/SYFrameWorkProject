@@ -1,0 +1,82 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using SY;
+using SY.LitJson;
+
+public class @Name  
+{ 
+    @File1 
+    
+    
+    private const string ConfigName = "@Name" ; 
+    
+    private static Dictionary<string,@Name> Data { get; set; } 
+    
+    private static List<@Name> _dataArray;
+
+    
+    public static void LoadConfig(Action onComplete)
+    {
+         if (Data != null)
+         {
+            onComplete?.Invoke(); 
+            return;
+         } 
+         ConfigUtils.LoadConfigTextAsset<Dictionary<string,@Name>>(ConfigName, (data) =>
+         {
+             Data = data;
+             _dataArray = Data.Values.ToList();
+             onComplete?.Invoke();
+         });
+    }
+    
+    public static void LoadConfig(string bundleName, string assetName, Action onComplete)
+    {
+        if (Data != null)
+        {
+            onComplete?.Invoke(); 
+            return;
+        } 
+        ConfigUtils.LoadConfigTextAsset(bundleName, assetName, (textAsset) =>
+        {
+            SetConfig(textAsset.text);
+            onComplete?.Invoke();
+        });
+    }
+    
+    private static void SetConfig(string text)
+    {
+        Data = JsonMapper.ToObject<Dictionary<string,@Name>>(text);
+        _dataArray = Data.Values.ToList();
+    }
+        
+    public static void Get(int id,Action<@Name>  callback) 
+    { 
+        LoadConfig(() =>
+        {
+            Data.TryGetValue(id.ToString(), out var config);
+            callback?.Invoke(config);
+        });
+    }  
+    
+    public static void GetAll(Action<List<@Name>>  callback) 
+    { 
+        LoadConfig(() =>
+        {
+            callback?.Invoke(_dataArray);
+        });
+    }  
+    
+    //------------------------------------------------ͬ������������ǰ����
+    public static @Name Get(int id)
+    {
+        Data.TryGetValue(id.ToString(), out var config);
+        return config;
+    }
+    
+    public static List<@Name> GetAll()
+    {
+        return _dataArray;
+    }
+}

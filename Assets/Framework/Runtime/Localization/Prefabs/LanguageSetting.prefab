@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4088285370948528028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4088285370948528026}
+  - component: {fileID: 4088285370948528027}
+  m_Layer: 0
+  m_Name: LanguageSetting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4088285370948528026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4088285370948528028}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 540, y: 960, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4088285370948528027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4088285370948528028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668effbed9de43f6b0601428517825f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countryS:
+  - Country: English
+    ShortName: en
+    Sort: 1
+    Annotate: "\u82F1\u6587"
+    StrKey: ENGLISH
+    Font: {fileID: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "\u7B80\u4F53\u4E2D\u6587"
+    ShortName: zh
+    Sort: 2
+    Annotate: "\u4E2D\u6587"
+    StrKey: CHINESE
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "\u7E41\u4F53\u4E2D\u6587"
+    ShortName: tc
+    Sort: 3
+    Annotate: "\u7E41\u4F53\u4E2D\u6587"
+    StrKey: TC
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "\u0939\u093F\u0928\u094D\u0926\u0940"
+    ShortName: hi
+    Sort: 4
+    Annotate: "\u5370\u5730\u8BED"
+    StrKey: HINDI
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "Portugu\xEAs"
+    ShortName: pt
+    Sort: 5
+    Annotate: "\u8461\u8404\u7259\u8BED"
+    StrKey: Portuguese
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "\u0644\u063A\u0629 \u0639\u0631\u0628\u064A\u0629"
+    ShortName: ar
+    Sort: 6
+    Annotate: "\u963F\u62C9\u4F2F\u8BED"
+    StrKey: Arabic
+    Font: {fileID: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "Fran\xE7ais"
+    ShortName: fr
+    Sort: 7
+    Annotate: "\u6CD5\u8BED"
+    StrKey: French
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: Bahasa
+    ShortName: id
+    Sort: 8
+    Annotate: "\u5370\u5C3C\u8BED"
+    StrKey: Indonesian
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "T\xFCrk\xE7e"
+    ShortName: tr
+    Sort: 9
+    Annotate: "\u571F\u8033\u5176\u8BED"
+    StrKey: Turkic
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: Deutsch
+    ShortName: de
+    Sort: 10
+    Annotate: "\u5FB7\u8BED"
+    StrKey: German
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "Espa\xF1ol"
+    ShortName: es
+    Sort: 11
+    Annotate: "\u897F\u8BED"
+    StrKey: Spanish
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "\u65E5\u672C\u8A9E"
+    ShortName: ja
+    Sort: 12
+    Annotate: "\u65E5\u672C"
+    StrKey: Japanese
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "\uD55C\uAD6D\uC5B4"
+    ShortName: ko
+    Sort: 13
+    Annotate: "\u97E9\u8BED"
+    StrKey: Korean
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "P\u0443\u0441\u043A\u0430\u044F"
+    ShortName: ru
+    Sort: 14
+    Annotate: "\u4FC4\u8BED"
+    StrKey: RUSSIAN
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: Italiano
+    ShortName: it
+    Sort: 15
+    Annotate: "\u610F\u5927\u5229\u8BED"
+    StrKey: ITALIAN
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  - Country: "Ti\u1EBFng Vi\u1EC7t"
+    ShortName: vn
+    Sort: 16
+    Annotate: "\u8D8A\u5357\u8BED"
+    StrKey: VIETNAMESE
+    Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    TMPFontAsset: {fileID: 0}
+  currentCountry: 12

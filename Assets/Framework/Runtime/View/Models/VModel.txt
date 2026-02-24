@@ -1,0 +1,96 @@
+using System;
+using SY;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public partial class @Name : BaseView {
+  
+    private @NameModel _model;
+    
+    #region 数据定义
+@Attribute
+    #endregion
+   
+    /// <summary>
+    /// 初始化，加载结束第一时间调用
+    /// </summary>
+    protected override void Initialize()
+    {
+        base.Initialize();
+        _model = Model as @NameModel;
+    }
+    
+    /// <summary>
+    /// 展示时第一时间调用
+    /// </summary>
+    protected override void Show()
+    {
+        base.Show();
+        
+    }
+    
+    /// <summary>
+    /// 按钮的通用点击事件，所有按钮点击时都会调用
+    /// </summary>
+    protected override void CommonButtonClickEvent(Button button)
+    {
+        base.CommonButtonClickEvent(button);
+        
+    }
+
+    /// <summary>
+    /// Toggle的通用点击事件，所有按钮点击时都会调用
+    /// </summary>
+    protected override void CommonToggleClickEvent(Toggle toggle, bool isOn)
+    {
+        base.CommonToggleClickEvent(toggle,isOn);
+    
+    }
+    
+    /// <summary>
+    /// 展示动画播放结束时调用
+    /// </summary>
+    protected override void ShowCompleted()
+    {
+        base.ShowCompleted();
+        
+    }
+    
+    /// <summary>
+    /// Model数据变化时调用
+    /// </summary>
+    protected override void OnModelChanged()
+    {
+        base.OnModelChanged();
+    
+    }
+    
+    /// <summary>
+    /// 注册事件用，展示时调用
+    /// </summary>
+    protected override void RegisterEvents()
+    {
+        base.RegisterEvents();
+      
+    }
+    
+    /// <summary>
+    /// 关闭时第一时间调用
+    /// </summary>
+    protected override void Hide()
+    {
+       base.Hide();
+       
+    }
+    
+     /// <summary>
+    /// 关闭动画播放完毕调用
+    /// </summary>
+    protected override void HideCompleted()
+    { 
+        base.HideCompleted();
+    			
+    }
+    
+}

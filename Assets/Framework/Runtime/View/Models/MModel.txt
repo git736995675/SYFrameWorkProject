@@ -1,0 +1,26 @@
+using SY;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "@Name", menuName = "UI/@Name")]
+public class @Name : BaseModel{
+   
+    public @NameArgs Args { get; private set; }
+  
+    protected override void Initialize()
+    {
+        if(BaseArgs!=null)
+           Args = BaseArgs as @NameArgs;
+    }
+
+    protected override void Reset()
+    {
+       if(BaseArgs!=null)
+          Args = BaseArgs as @NameArgs;
+    }
+}
+
+public class @NameArgs :ViewArgs
+{
+    
+    
+}
