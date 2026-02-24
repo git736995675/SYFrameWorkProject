@@ -364,7 +364,7 @@ public class FileEncryptionTool : EditorWindow
                     continue;
                 }
 
-                var relativePath = filePath.Replace($"{inputFolderPath}/", "");
+                var relativePath = filePath.Replace("\\", "/").Replace($"{inputFolderPath}/", "");
                 var outputPath = Path.Combine(outputFolderPath, relativePath);
                 var outputDir = Path.GetDirectoryName(outputPath);
 
