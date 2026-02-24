@@ -11,11 +11,17 @@ namespace SY
 {
     public class ResUtils : MonoSingleton<ResUtils>
     {
-        public static string ResInfoListFileOutPutPath => Path.Combine(Application.streamingAssetsPath, "ResourcesInfoList.json");
+        public static string ResInfoListFileOutPutPath => 
+            
+#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+            "file://" + Path.Combine(Application.streamingAssetsPath, "ResourcesInfoList.json");
+#else
+             Path.Combine(Application.streamingAssetsPath, "ResourcesInfoList.json");
+#endif
 
         private ResourcesInfo _resourcesInfo;
 
-        private readonly List<ResInfoLoadWaitCache> _cache = new(); //¼ÓÔØÖÐ±ÜÃâÖØ¸´¼ÓÔØ
+        private readonly List<ResInfoLoadWaitCache> _cache = new(); //ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
 
         public void GetResInfo(string resName, Action<string, string> callback)
         {
@@ -78,7 +84,7 @@ namespace SY
     }
 
     /// <summary>
-    /// ×ÊÔ´Çåµ¥ÊµÌå
+    /// ï¿½ï¿½Ô´ï¿½åµ¥Êµï¿½ï¿½
     /// </summary>
     public class ResourcesInfo
     {
@@ -89,7 +95,7 @@ namespace SY
     }
     
     /// <summary>
-    /// ¼ÓÔØ×ÊÔ´Çåµ¥Ê±µÄ»º´æ
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½åµ¥Ê±ï¿½Ä»ï¿½ï¿½ï¿½
     /// </summary>
     public struct ResInfoLoadWaitCache
     {
