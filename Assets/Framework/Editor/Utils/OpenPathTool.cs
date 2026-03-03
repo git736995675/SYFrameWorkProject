@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace SY
+namespace Framework.Editor.Utils
 {
     public class OpenPathTool : EditorWindow
     {

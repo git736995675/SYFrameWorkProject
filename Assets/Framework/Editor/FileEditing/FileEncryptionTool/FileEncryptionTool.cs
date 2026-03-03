@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.IO;
+using Framework.Editor.FileEditing.FileEncryptionTool;
 
 public class FileEncryptionTool : EditorWindow
 {
