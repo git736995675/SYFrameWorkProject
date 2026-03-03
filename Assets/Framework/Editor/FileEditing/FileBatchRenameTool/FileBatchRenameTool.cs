@@ -26,7 +26,8 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
         {
             Add,
             Replace,
-            Set
+            Set,
+            Hash
         }
 
         private ModifyType _modifyType = ModifyType.Add;
@@ -64,14 +65,14 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
         private const float CheckboxWidth = 25f;
         private const float ArrowWidth = 40f;
         private const float PaddingWidth = 10f;
-        
-        private FileTypeFilterUtility.FileTypeFilter _filter = FileTypeFilterUtility.FileTypeFilter.All;
+
+        private FileEditUtility.FileTypeFilter _filter = FileEditUtility.FileTypeFilter.All;
 
 
         [MenuItem("SY-Tool/文件编辑/文件批量重命名工具")]
         public static void ShowWindow()
         {
-            FileBatchRenameTool window = GetWindow<FileBatchRenameTool>("文件批量重命名");
+            var window = GetWindow<FileBatchRenameTool>("文件批量重命名");
             window.minSize = new Vector2(900, 800);
             window.maxSize = new Vector2(1920, 1080);
         }
@@ -89,20 +90,17 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
 
         private void OnGUI()
         {
+            EditorGUILayout.Space();
             // 使用EditorGUIUtility标准间距
             EditorGUIUtility.labelWidth = 120;
-
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("文件批量重命名工具", EditorStyles.boldLabel);
-            EditorGUILayout.Space();
 
             // 目录选择
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("目标目录:", GUILayout.Width(80));
             _targetDirectory = EditorGUILayout.TextField(_targetDirectory);
-            if (GUILayout.Button("浏览", GUILayout.Width(60)))
+            if (GUILayout.Button("浏览目录", GUILayout.Width(60)))
             {
-                string path = EditorUtility.OpenFolderPanel("选择目录", _targetDirectory, "");
+                var path = EditorUtility.OpenFolderPanel("选择目录", _targetDirectory, "");
                 if (!string.IsNullOrEmpty(path))
                 {
                     _targetDirectory = path;
@@ -110,36 +108,35 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
                 }
             }
             EditorGUILayout.EndHorizontal();
-           
+
             EditorGUILayout.Space();
-            
+
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("文件类型:", GUILayout.Width(80));
-            var newFilter = (FileTypeFilterUtility.FileTypeFilter)EditorGUILayout.EnumPopup(_filter,GUILayout.Width(500));
-            if (newFilter != _filter)
+            EditorGUI.BeginChangeCheck();
+            var newFilter = (FileEditUtility.FileTypeFilter)EditorGUILayout.EnumPopup(_filter);
+            if (EditorGUI.EndChangeCheck())
             {
                 _filter = newFilter;
-                _searchPattern = FileTypeFilterUtility.GetFilterExtensionsByType(_filter);
+                _searchPattern = FileEditUtility.GetFilterExtensionsByType(_filter);
             }
-
             EditorGUILayout.EndHorizontal();
 
             // 文件筛选
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("文件筛选:", GUILayout.Width(80));
             _searchPattern = EditorGUILayout.TextField(_searchPattern);
-            EditorGUILayout.LabelField("(例: *.txt;*.cs)", GUILayout.Width(120));
             EditorGUILayout.EndHorizontal();
+            EditorGUILayout.HelpBox("支持通配符，多个格式用分号分隔\n例如: *.txt;*.cs;*.json", MessageType.Info);
             _includeSubdirectories = EditorGUILayout.Toggle("包含子目录", _includeSubdirectories);
+           
 
             // 刷新按钮
-            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("刷新文件列表", GUILayout.Height(30), GUILayout.MinWidth(120)))
             {
                 RefreshFileList();
             }
-            EditorGUILayout.EndHorizontal();
-            
+
             if (_files is { Count: > 0 })
             {
                 // 文件过滤
@@ -225,26 +222,17 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
 
         private void DrawSetSettings()
         {
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("占位符说明:", GUILayout.MaxWidth(80));
-            EditorGUILayout.LabelField("{name} - 原文件名", GUILayout.MaxWidth(120));
-            EditorGUILayout.LabelField("{index} - 序号", GUILayout.MaxWidth(100));
-            EditorGUILayout.LabelField("{任意文本} - 直接写入花括号内的内容", GUILayout.MaxWidth(200));
-            EditorGUILayout.EndHorizontal();
-
             _setText = EditorGUILayout.TextField("文件名格式", _setText);
-            EditorGUILayout.HelpBox("示例: {name}_{自定义文本}_{index} 在花括号中直接写入想要添加的文本，如：{VIP}、{高清}、{2024}",
-                MessageType.Info);
+            EditorGUILayout.HelpBox("占位符说明: {name} - 原文件名  {index} - 序号  {任意文本} - 直接写入花括号内的内容 \n" +
+                                    "示例: {name}_{自定义文本}_{index} 在花括号中直接写入想要添加的文本，如：{VIP}、{高清}、{2024}", MessageType.Info);
 
             EditorGUILayout.Space();
             _useIndexInSet = EditorGUILayout.Toggle("使用序号", _useIndexInSet);
-            if (_useIndexInSet)
-            {
-                EditorGUILayout.BeginHorizontal();
-                _startIndex = EditorGUILayout.IntField("起始序号", _startIndex, GUILayout.MaxWidth(200));
-                _increment = EditorGUILayout.IntField("增量", _increment, GUILayout.MaxWidth(200));
-                EditorGUILayout.EndHorizontal();
-            }
+            if (!_useIndexInSet) return;
+            EditorGUILayout.BeginHorizontal();
+            _startIndex = EditorGUILayout.IntField("起始序号", _startIndex, GUILayout.MaxWidth(200));
+            _increment = EditorGUILayout.IntField("增量", _increment, GUILayout.MaxWidth(200));
+            EditorGUILayout.EndHorizontal();
         }
 
         private void DrawPreviewList()
@@ -256,9 +244,9 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
             }
 
             // 计算列宽 - 使用EditorGUIUtility.currentViewWidth确保准确
-            float totalWidth = EditorGUIUtility.currentViewWidth - 35f;
-            float availableWidth = totalWidth - CheckboxWidth - ArrowWidth - PaddingWidth * 4;
-            float columnWidth = availableWidth / 2;
+            var totalWidth = EditorGUIUtility.currentViewWidth - 35f;
+            var availableWidth = totalWidth - CheckboxWidth - ArrowWidth - PaddingWidth * 4;
+            var columnWidth = availableWidth / 2;
 
             // 确保最小宽度
             columnWidth = Mathf.Max(columnWidth, 200f);
@@ -269,10 +257,9 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
                 EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
                 {
                     // 全选复选框
-                    bool allSelected = _previewList.Count > 0 && _previewList.All(p => p.Selected);
-                    EditorGUI.showMixedValue =
-                        _previewList.Count > 0 && _previewList.Any(p => p.Selected) && !allSelected;
-                    bool newAllSelected = EditorGUILayout.Toggle(allSelected, GUILayout.Width(CheckboxWidth));
+                    var allSelected = _previewList.Count > 0 && _previewList.All(p => p.Selected);
+                    EditorGUI.showMixedValue = _previewList.Count > 0 && _previewList.Any(p => p.Selected) && !allSelected;
+                    var newAllSelected = EditorGUILayout.Toggle(allSelected, GUILayout.Width(CheckboxWidth));
                     EditorGUI.showMixedValue = false;
 
                     if (newAllSelected != allSelected && _previewList.Count > 0)
@@ -463,7 +450,7 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
                     }
                 }
 
-                string newFileName = fileName;
+                var newFileName = fileName;
 
                 var preview = new FilePreview
                 {
@@ -484,6 +471,9 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
                         break;
                     case ModifyType.Set:
                         newFileName = ApplySet(preview);
+                        break;
+                    case ModifyType.Hash:
+                        newFileName = ApplyHash(preview);
                         break;
                 }
 
@@ -523,34 +513,34 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
             var newFileName = preview.OriginalName.Replace(_oldText, _newText);
             return newFileName;
         }
+        
+        private static string ApplyHash(FilePreview preview)
+        {
+            var newFileName = FileEditUtility.CalculateHash(preview.OriginalPath,FileEditUtility.HashAlgorithmType.MD5);
+            newFileName = $"{newFileName}{preview.Extension}";
+            return newFileName;
+        }
 
         private string ApplySet(FilePreview preview)
         {
-            string result = _setText;
+            var result = _setText;
 
             // 首先处理特殊占位符 {name} 和 {index}
             result = result.Replace("{name}", preview.OriginalNameWithoutExt);
 
-            if (_useIndexInSet)
-            {
-                result = result.Replace("{index}", preview.Index.ToString());
-            }
-            else
-            {
-                result = result.Replace("{index}", "");
-            }
+            result = result.Replace("{index}", _useIndexInSet ? preview.Index.ToString() : "");
 
             // 处理自定义花括号内容：查找所有 {自定义内容} 并提取内容
-            string pattern = @"\{([^}]+)\}";
-            MatchCollection matches = Regex.Matches(result, pattern);
+            const string pattern = @"\{([^}]+)\}";
+            var matches = Regex.Matches(result, pattern);
 
             foreach (Match match in matches)
             {
-                string fullMatch = match.Value;
-                string content = match.Groups[1].Value;
+                var fullMatch = match.Value;
+                var content = match.Groups[1].Value;
 
                 // 跳过已经处理过的特殊占位符
-                if (content == "name" || content == "index")
+                if (content is "name" or "index")
                 {
                     continue;
                 }
@@ -573,8 +563,8 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
 
         private void ExecuteRename()
         {
-            int successCount = 0;
-            int failCount = 0;
+            var successCount = 0;
+            var failCount = 0;
 
             foreach (var preview in _previewList)
             {
@@ -582,8 +572,8 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
 
                 if (preview.OriginalName == preview.NewName) continue;
 
-                string directory = Path.GetDirectoryName(preview.OriginalPath);
-                string newPath = Path.Combine(directory, preview.NewName);
+                var directory = Path.GetDirectoryName(preview.OriginalPath);
+                var newPath = Path.Combine(directory, preview.NewName);
 
                 // 检查目标文件是否已存在
                 if (File.Exists(newPath))
