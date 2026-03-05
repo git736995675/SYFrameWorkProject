@@ -23,12 +23,11 @@ namespace Framework.Editor.FileEditing.FileEncryptionTool
         private bool _changeNameToMd5 = true;
         private Vector2 _scrollPosition;
 
-        [MenuItem("SY-Tool/文件编辑/文件加密解密工具")]
+        [MenuItem("SY-Tool/文件编辑/文件加解密工具")]
         public static void ShowWindow()
         {
-            GetWindow<FileEncryptionTool>("文件加密解密工具");
+            GetWindow<FileEncryptionTool>("文件加解密工具");
         }
-
 
         private void OnEnable()
         {

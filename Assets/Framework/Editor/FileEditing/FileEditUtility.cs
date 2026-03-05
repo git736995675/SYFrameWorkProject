@@ -27,7 +27,10 @@ namespace Framework.Editor.Utils
         {
             { FileTypeFilter.All, "*.*" },
             { FileTypeFilter.Images, "*.png;*.jpg;*.jpeg;*.gif;*.bmp;*.tga;*.psd;*.tif;*.tiff" },
-            { FileTypeFilter.TextFiles, "*.txt;*.json;*.xml;*.yml;*.yaml;*.md;*.html;*.doc;*.doc;*.docx;*.pdf;*.ppt;*.pptx" },
+            {
+                FileTypeFilter.TextFiles,
+                "*.txt;*.json;*.xml;*.yml;*.yaml;*.md;*.html;*.doc;*.doc;*.docx;*.pdf;*.ppt;*.pptx"
+            },
             { FileTypeFilter.Audio, "*.mp3;*.wav;*.ogg;*.aac;*.aif;*.flac;*.ape;*.aiff;*.mid;*.amr;*.silk12;" },
             { FileTypeFilter.Videos, "*.mp4;*.mov;*.avi;*.mpg;*.mpeg;*.mkv;*.wmv;*.webm;" },
             { FileTypeFilter.Table, "*.csv;*.xlsx;*.xls;" },
@@ -44,7 +47,7 @@ namespace Framework.Editor.Utils
         {
             return FileTypeExtensions.GetValueOrDefault(typeFilter, "");
         }
-        
+
         /// <summary>
         /// Hash算法类型
         /// </summary>
@@ -54,7 +57,7 @@ namespace Framework.Editor.Utils
             SHA1,
             SHA256
         }
-        
+
         /// <summary>
         /// 计算文件的hash值
         /// </summary>
@@ -96,7 +99,5 @@ namespace Framework.Editor.Utils
                 return "Error";
             }
         }
-        
-        
     }
 }

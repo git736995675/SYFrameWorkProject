@@ -1,15 +1,17 @@
+#if UNITY_EDITOR
+
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace SY
+namespace Framework.Editor.CodeLineCounter
 {
     public class CodeLineCounter : MonoBehaviour
     {
-        [MenuItem("SY_Tools/代码行数统计")]
+        [MenuItem("SY-Tool/工具/代码行数统计")]
         private static void CountLinesOfCode()
         {
-            const string path = "Assets"; // Ĭ��·��Ϊ Assets �ļ���
+            const string path = "Assets"; 
             var totalLines = 0;
 
             foreach (var file in Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories))
@@ -26,3 +28,4 @@ namespace SY
         }
     }
 }
+#endif

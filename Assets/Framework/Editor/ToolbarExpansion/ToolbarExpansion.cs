@@ -3,19 +3,20 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using SY;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace SY
+namespace Framework.Editor.Utils
 {
     [InitializeOnLoad]
-    public static class ToolBarExtend
+    public static class ToolbarExpansion
     {
         private static ScriptableObject _toolbar;
 
-        static ToolBarExtend()
+        static ToolbarExpansion()
         {
             // 每100ms检测一次GUI变化（确保按钮持续存在）
             EditorApplication.update += OnUpdate;
@@ -24,7 +25,7 @@ namespace SY
         private static void OnUpdate()
         {
             if (_toolbar != null) return;
-            var toolbarType = typeof(Editor).Assembly.GetType("UnityEditor.Toolbar");
+            var toolbarType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.Toolbar");
             var toolbars = Resources.FindObjectsOfTypeAll(toolbarType);
             _toolbar = toolbars.Length > 0 ? (ScriptableObject)toolbars[0] : null;
             if (_toolbar == null) return;

@@ -45,7 +45,9 @@ namespace Framework.Editor.FileEditing.BytesVideoConverter
         [MenuItem("SY-Tool/文件编辑/Bytes-Video互转")]
         public static void ShowWindow()
         {
-            GetWindow<BytesVideoConverter>("Bytes-Video Converter");
+            var window = GetWindow<BytesVideoConverter>("Bytes-Video Converter");
+            window.minSize = new Vector2(400, 500);
+            window.Show();
         }
 
         private void OnGUI()

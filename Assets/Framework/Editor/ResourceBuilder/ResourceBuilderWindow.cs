@@ -24,7 +24,7 @@ namespace SY
         private static bool _isCompression = true;
 
 
-        [MenuItem("SY_Tools/AssetBundles管理", false, 1)]
+        [MenuItem("SY-Tool/AssetBundle/AssetBundles管理", false, 1)]
         public static void ShowWindow()
         {
             GetWindow<ResourceBuilderWindow>("AssetBundles管理");
