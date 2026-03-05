@@ -9,8 +9,6 @@ namespace Framework.Editor.FileEditing.FileEncryptionTool
     {
         private const string Key = "T0KFuFExfBGGdhxvHe9UgrYqJ6ZfOG842lX4sNjZyeM=";
         private const string Iv = "XaS8xVOWudVKQwjqiGXcTw==";
-    
-    
 
         // 生成新的密钥和IV
         public static (byte[] key, byte[] iv) GenerateKeyAndIV()
@@ -138,7 +136,7 @@ namespace Framework.Editor.FileEditing.FileEncryptionTool
             using var sr = new StreamReader(cs);
             return sr.ReadToEnd();
         }
-    
+
         //字符串转md5
         public static string ComputeMD5Hash(string rawData)
         {
@@ -159,7 +157,7 @@ namespace Framework.Editor.FileEditing.FileEncryptionTool
         {
             var extension = Path.GetExtension(oriPath);
             var md5Name = ComputeMD5Hash(Path.GetFileNameWithoutExtension(oriPath));
-            var directoryName = oriPath.Replace(Path.GetFileName(oriPath),"");
+            var directoryName = oriPath.Replace(Path.GetFileName(oriPath), "");
             var newName = !string.IsNullOrEmpty(directoryName)
                 ? $"{directoryName}{md5Name}{extension}"
                 : $"{md5Name}{extension}";

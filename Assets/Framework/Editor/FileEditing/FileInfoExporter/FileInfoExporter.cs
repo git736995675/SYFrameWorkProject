@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,17 +49,17 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
             _exportOptions = new Dictionary<string, bool>
             {
                 { "文件名", true },
-                { "相对路径", true },
+                { "相对路径", false },
                 { "完整路径", false },
                 { "文件扩展名", true },
-                { "文件大小(字节)", true },
-                { "文件大小(KB/MB/GB)", true },
-                { "MD5哈希值", false },
+                { "文件大小(字节)", false },
+                { "文件大小(KB/MB/GB)", false },
+                { "MD5哈希值", true },
                 { "SHA1哈希值", false },
                 { "SHA256哈希值", false },
                 { "CRC32哈希值", false },
                 { "创建时间", false },
-                { "最后修改时间", true },
+                { "最后修改时间", false },
                 { "最后访问时间", false },
                 { "文件属性", false },
                 { "是否为只读", false },
@@ -140,6 +142,7 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
                 _filter = newFilter;
                 _searchPattern = FileEditUtility.GetFilterExtensionsByType(_filter);
             }
+
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
@@ -148,7 +151,7 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.HelpBox("支持通配符，多个格式用分号分隔\n例如: *.txt;*.cs;*.json", MessageType.Info);
-           
+
             // 包含子文件夹选项
             _includeSubfolders = EditorGUILayout.Toggle("包含子目录", _includeSubfolders);
         }
@@ -278,16 +281,7 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
                 try
                 {
                     var filters = currentFilter.Split(';');
-                    var totalCount = 0;
-
-                    foreach (var filter in filters)
-                    {
-                        var trimmedFilter = filter.Trim();
-                        if (!string.IsNullOrEmpty(trimmedFilter))
-                        {
-                            totalCount += Directory.GetFiles(_targetPath, trimmedFilter, option).Length;
-                        }
-                    }
+                    var totalCount = filters.Select(filter => filter.Trim()).Where(trimmedFilter => !string.IsNullOrEmpty(trimmedFilter)).Sum(trimmedFilter => Directory.GetFiles(_targetPath, trimmedFilter, option).Length);
 
                     EditorGUILayout.LabelField("匹配文件数量:", totalCount.ToString());
                 }
@@ -409,7 +403,7 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
         private Dictionary<string, string> CollectFileInfo(string filePath)
         {
             var info = new Dictionary<string, string>();
-            FileInfo fileInfo = new FileInfo(filePath);
+            var fileInfo = new FileInfo(filePath);
 
             // 文件名
             if (_exportOptions["文件名"])
@@ -526,7 +520,6 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
             return string.Join(",", values);
         }
 
-     
 
         private static string CalculateCRC32(string filePath)
         {
@@ -587,7 +580,7 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
         }
     }
 
-// CRC32算法实现
+    // CRC32算法实现
     public class Crc32 : HashAlgorithm
     {
         private const uint DefaultPolynomial = 0xedb88320;
@@ -626,21 +619,18 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
             return hashBuffer;
         }
 
-        public override int HashSize
-        {
-            get { return 32; }
-        }
+        public override int HashSize => 32;
 
         private static uint[] InitializeTable(uint polynomial)
         {
             if (polynomial == DefaultPolynomial && _defaultTable != null)
                 return _defaultTable;
 
-            uint[] createTable = new uint[256];
-            for (int i = 0; i < 256; i++)
+            var createTable = new uint[256];
+            for (var i = 0; i < 256; i++)
             {
-                uint entry = (uint)i;
-                for (int j = 0; j < 8; j++)
+                var entry = (uint)i;
+                for (var j = 0; j < 8; j++)
                     if ((entry & 1) == 1)
                         entry = (entry >> 1) ^ polynomial;
                     else
@@ -656,13 +646,13 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
 
         private static uint CalculateHash(uint[] table, uint seed, byte[] buffer, int start, int size)
         {
-            uint crc = seed;
-            for (int i = start; i < start + size; i++)
+            var crc = seed;
+            for (var i = start; i < start + size; i++)
                 crc = (crc >> 8) ^ table[(buffer[i] ^ crc) & 0xff];
             return crc;
         }
 
-        private byte[] UintToBigEndianBytes(uint x)
+        private static byte[] UintToBigEndianBytes(uint x)
         {
             return new byte[]
             {
@@ -674,3 +664,5 @@ namespace Framework.Editor.FileEditing.FileInfoExporter
         }
     }
 }
+
+#endif

@@ -69,7 +69,7 @@ namespace Framework.Editor.FileEditing.FileBatchRenameTool
         private FileEditUtility.FileTypeFilter _filter = FileEditUtility.FileTypeFilter.All;
 
 
-        [MenuItem("SY-Tool/文件编辑/文件批量重命名工具")]
+        [MenuItem("SY-Tool/文件编辑/文件重命名工具")]
         public static void ShowWindow()
         {
             var window = GetWindow<FileBatchRenameTool>("文件批量重命名");
