@@ -1,71 +1,82 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.IO;
-
-/**
- *Copyright(C) 2017 by 东爵
- *All rights reserved.
- *FileName:     BuyOperator.cs
- *Author:       jojo
- *Version:      1.0
- *UnityVersion：5.5.0f3
- *Date:         2017-01-16
- *Description:  快速创建文件夹
- *History:
-*/
-public class CreateFolder {
-    private static string path = Application.dataPath + "/";
 #if UNITY_EDITOR
-    [MenuItem("Assets/CreatFolder/Scripts")]
-    static void CreateScripts() {
-        Directory.CreateDirectory(path + "Scripts");
-        AssetDatabase.Refresh();
+
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+namespace Framework.Editor.CreateFolder
+{
+    public abstract class CreateFolder
+    {
+        private static readonly string Path = Application.dataPath + "/";
+
+        [MenuItem("Assets/CreatFolder/Scripts")]
+        private static void CreateScripts()
+        {
+            Directory.CreateDirectory(Path + "Scripts");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/Scenes %_U")]
+        private static void CreateScenes()
+        {
+            Directory.CreateDirectory(Path + "Scenes");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/Prefabs %_I")]
+        private static void CreatePrefabs()
+        {
+            Directory.CreateDirectory(Path + "Prefabs");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/Resources %_G")]
+        private static void CreateResources()
+        {
+            Directory.CreateDirectory(Path + "Resources");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/Materials %_M")]
+        private static void CreateMaterials()
+        {
+            Directory.CreateDirectory(Path + "Materias");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/Textures %_T")]
+        private static void CreateTextures()
+        {
+            Directory.CreateDirectory(Path + "Textures");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/StreamingAssets")]
+        private static void CreateStreamingAssets()
+        {
+            Directory.CreateDirectory(Path + "StreamingAssets");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/Plugins")]
+        private static void CreatePlugins()
+        {
+            Directory.CreateDirectory(Path + "Plugins");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/CreatFolder/BaseFolder #%_O", false, 11)]
+        private static void CreateBaseFolder()
+        {
+            Directory.CreateDirectory(Path + "Scripts");
+            Directory.CreateDirectory(Path + "Scenes");
+            Directory.CreateDirectory(Path + "Prefabs");
+            Directory.CreateDirectory(Path + "Materias");
+            Directory.CreateDirectory(Path + "Textures");
+            AssetDatabase.Refresh();
+        }
     }
-    [MenuItem("Assets/CreatFolder/Scenes %_U")]
-    static void CreateScenes() {
-        Directory.CreateDirectory(path + "Scenes");
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("Assets/CreatFolder/Prefabs %_I")]
-    static void CreatePrefabs() {
-        Directory.CreateDirectory(path + "Prefabs");
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("Assets/CreatFolder/Resources %_G")]
-    static void CreateResources() {
-        Directory.CreateDirectory(path + "Resources");
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("Assets/CreatFolder/Materials %_M")]
-    static void CreateMaterials() {
-        Directory.CreateDirectory(path + "Materias");
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("Assets/CreatFolder/Textures %_T")]
-    static void CreateTextures() {
-        Directory.CreateDirectory(path + "Textures");
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("Assets/CreatFolder/StreamingAssets")]
-    static void CreateStreamingAssets() {
-        Directory.CreateDirectory(path + "StreamingAssets");
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("Assets/CreatFolder/Plugins")]
-    static void CreatePlugins() {
-        Directory.CreateDirectory(path + "Plugins");
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("Assets/CreatFolder/BaseFolder #%_O", false, 11)]
-    static void CreateBaseFolder() {
-        Directory.CreateDirectory(path + "Scripts");
-        Directory.CreateDirectory(path + "Scenes");
-        Directory.CreateDirectory(path + "Prefabs");
-        Directory.CreateDirectory(path + "Materias");
-        Directory.CreateDirectory(path + "Textures");
-        AssetDatabase.Refresh();
-    }
-#endif
 }
+
+#endif
