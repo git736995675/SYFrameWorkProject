@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Editor.FileEditing.FileTypeCleaner
+namespace ZSYFramework.Editor.FileEditing.FileTypeCleaner
 {
     public class FileTypeCleaner : EditorWindow
     {

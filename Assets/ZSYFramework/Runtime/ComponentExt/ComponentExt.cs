@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace SY
+namespace ZSYFramework.Runtime.ComponentExt
 {
     /// <summary>
     /// 扩展Component

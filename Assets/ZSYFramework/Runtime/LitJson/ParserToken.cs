@@ -9,7 +9,7 @@
 #endregion
 
 
-namespace SY.LitJson
+namespace ZSYFramework.Runtime.LitJson
 {
     internal enum ParserToken
     {

@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Framework.Editor.FileEditing.FileEncryptionTool
+namespace ZSYFramework.Editor.FileEditing.FileEncryptionTool
 {
     public static class EncryptionUtility
     {

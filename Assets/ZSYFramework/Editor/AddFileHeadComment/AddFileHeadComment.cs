@@ -1,7 +1,8 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+using System.IO;
 using UnityEditor;
 
-namespace Framework.Editor.AddFileHeadComment
+namespace ZSYFramework.Editor.AddFileHeadComment
 {
     /// <summary>
     /// 监听脚本创建事件，自动添加作者和创建时间注释
@@ -90,3 +91,4 @@ namespace Framework.Editor.AddFileHeadComment
         }
     }
 }
+#endif

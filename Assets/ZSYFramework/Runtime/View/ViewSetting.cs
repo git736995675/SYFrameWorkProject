@@ -1,19 +1,19 @@
 using UnityEngine;
 
-namespace SY
+namespace ZSYFramework.Runtime.View
 {
     public class ViewSetting
     {
-        // ÊÇ·ñÊÇvrÄ£Ê½
+        // ï¿½Ç·ï¿½ï¿½ï¿½vrÄ£Ê½
         public static bool IsVr { get; set; } = false;
 
-        // vrÄ£Ê½Ïà»úÉèÖÃ
+        // vrÄ£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         public static Camera Camera { get; set; }
 
-        // Ïà»úÓëuiµÄ¾àÀë
+        // ï¿½ï¿½ï¿½ï¿½ï¿½uiï¿½Ä¾ï¿½ï¿½ï¿½
         public static float CameraZoom { get; set; } = 80;
 
-        // uiÊÇ·ñ¸úËæÏà»ú
+        // uiï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         public static bool IsFollow { get; set; } = false;
     }
 }

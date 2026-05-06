@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Editor.FileEditing.BytesVideoConverter
+namespace ZSYFramework.Editor.FileEditing.BytesVideoConverter
 {
     public class BytesVideoConverter : EditorWindow
     {

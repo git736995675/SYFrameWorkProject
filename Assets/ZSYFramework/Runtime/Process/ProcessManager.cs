@@ -1,16 +1,17 @@
 using UnityEngine;
+using ZSYFramework.Runtime.ComponentExt;
 
 namespace SY
 {
     /// <summary>
-    /// ²½Öè¹ÜÀí
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public class ProcessManager : MonoSingleton<ProcessManager>
     {
         private readonly MemoryPool<Process> _pool = new();
 
         /// <summary>
-        /// È¡³öÒ»¸ö²½Öè
+        /// È¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <returns></returns>
         public Process GetProcess()
@@ -27,7 +28,7 @@ namespace SY
         }
 
         /// <summary>
-        /// »ØÊÕ²½Öè
+        /// ï¿½ï¿½ï¿½Õ²ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="process"></param>
         public void Recycle(Process process)

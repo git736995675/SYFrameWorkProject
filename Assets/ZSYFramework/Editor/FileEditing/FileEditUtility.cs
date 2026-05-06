@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Framework.Editor.Utils
+namespace ZSYFramework.Editor.FileEditing
 {
     public abstract class FileEditUtility
     {

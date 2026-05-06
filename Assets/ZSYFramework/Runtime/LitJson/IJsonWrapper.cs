@@ -14,8 +14,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-
-namespace SY.LitJson
+namespace ZSYFramework.Runtime.LitJson
 {
     public enum JsonType
     {

@@ -1,8 +1,9 @@
 // Model基类（使用ScriptableObject持久化数据）
+
 using System;
 using UnityEngine;
 
-namespace SY
+namespace ZSYFramework.Runtime.View.Scripts
 {
     public abstract class BaseModel : ScriptableObject
     {

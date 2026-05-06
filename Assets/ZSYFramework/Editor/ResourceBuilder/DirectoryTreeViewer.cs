@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,8 +5,9 @@ using System.Text;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using ZSYFramework.Editor.Utils;
 
-namespace ZSY_Framework.Editor.ResourceBuilder
+namespace ZSYFramework.Editor.ResourceBuilder
 {
     /// <summary>
     /// 资源分包，名称设置方式

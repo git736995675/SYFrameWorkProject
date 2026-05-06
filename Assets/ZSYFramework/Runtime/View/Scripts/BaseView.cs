@@ -1,9 +1,11 @@
+using SY;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using ZSYFramework.Runtime.Audio;
 
-namespace SY
+namespace ZSYFramework.Runtime.View.Scripts
 {
     // View基类（绑定UI元素）
     public abstract class BaseView : MonoBehaviour
@@ -98,7 +100,7 @@ namespace SY
         /// </summary>
         protected virtual void CommonButtonClickEvent(Button button)
         {
-            SYAudio.PlaySfx("ui.button");
+            SyAudio.PlaySfx("ui.button");
         }
 
         /// <summary>
@@ -106,7 +108,7 @@ namespace SY
         /// </summary>
         protected virtual void CommonToggleClickEvent(Toggle toggle, bool isOn)
         {
-            SYAudio.PlaySfx("ui.button");
+            SyAudio.PlaySfx("ui.button");
         }
 
         /// <summary>

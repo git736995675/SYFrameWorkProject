@@ -11,8 +11,7 @@
 
 using System;
 
-
-namespace SY.LitJson
+namespace ZSYFramework.Runtime.LitJson
 {
     public class JsonException :
 #if NETSTANDARD1_5

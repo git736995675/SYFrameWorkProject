@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
+using SY;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
+using ZSYFramework.Runtime.Config.Utils;
 
-namespace SY
+namespace ZSYFramework.Editor.Config
 {
     public partial class TableEditor : EditorWindow
     {
@@ -45,14 +47,14 @@ namespace SY
         /// </summary>
         public static void ReadAllExcel()
         {
-            ReadPath();
-            if (_paths == null)
+            TableEditor.ReadPath();
+            if (TableEditor._paths == null)
             {
                 Debug.LogError("表格路径为空");
                 return;
             }
 
-            foreach (var path in _paths)
+            foreach (var path in TableEditor._paths)
             {
                 var fullPath = Path.GetFullPath(path);
                 if (fullPath.Contains("~$"))
@@ -168,15 +170,16 @@ namespace SY
                     }
                 }
 
-                var saveJson = JsonConvert.SerializeObject(array, _isCompression ? Formatting.None : Formatting.Indented);
-                saveJson = ErrorIsEncryption ? AesSimple.JiaMi(saveJson) : saveJson;
+                var saveJson = JsonConvert.SerializeObject(array,
+                    TableEditor._isCompression ? Formatting.None : Formatting.Indented);
+                saveJson = TableEditor.ErrorIsEncryption ? AesSimple.JiaMi(saveJson) : saveJson;
 
                 fileName = fileName.Replace(".xlsx", ".json").Replace(".cvs", ".json");
                 File.WriteAllText(fileName, saveJson, Encoding.UTF8);
             }
             catch (Exception e)
             {
-                Console.WriteLine("fileName=>"+e);
+                Console.WriteLine("fileName=>" + e);
             }
         }
 

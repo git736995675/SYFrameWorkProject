@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Framework.Editor.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Editor.FileEditing.FileBatchRenameTool
+namespace ZSYFramework.Editor.FileEditing.FileBatchRenameTool
 {
     /// <summary>
     /// 文件批量重命名编辑器

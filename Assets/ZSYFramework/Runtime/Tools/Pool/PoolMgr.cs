@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ZSYFramework.Runtime.ComponentExt;
 using Object = UnityEngine.Object;
 
 namespace SY

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace SY
+namespace ZSYFramework.Editor.Config
 {
     /// <summary>
     /// 表格编辑器
@@ -26,7 +26,7 @@ namespace SY
         [MenuItem("SY_Tools/表格管理", false, 201)]
         public static void ShowWindow()
         {
-            var window = GetWindow(typeof(TableEditor));
+            var window = GetWindow(typeof(ZSYFramework.Editor.Config.TableEditor));
             window.titleContent = new GUIContent("配置表格管理窗口");
             _paths = null;
             _ignores = null;
@@ -71,10 +71,10 @@ namespace SY
 
             _paths = AssetDatabase.FindAssets("t:DefaultAsset").Select(AssetDatabase.GUIDToAssetPath)
                 .Where(path => extensions.Any(path.EndsWith)
-                               && !_ignores.Contains(path) 
+                               && !_ignores.Contains(path)
                                && !path.Contains("~$")
-                               &&  path.Contains("Assets/")  
-                               )
+                               && path.Contains("Assets/")
+                )
                 .ToList();
         }
 
@@ -82,7 +82,7 @@ namespace SY
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label($"表格路径 : {path}", EditorStyles.boldLabel);
-            if (GUILayout.Button("忽略",GUILayout.Width(100)))
+            if (GUILayout.Button("忽略", GUILayout.Width(100)))
             {
                 _ignores ??= File.Exists(TablePath) ? File.ReadAllLines(TablePath).ToList() : new List<string>();
                 if (_ignores.Contains(path)) return;

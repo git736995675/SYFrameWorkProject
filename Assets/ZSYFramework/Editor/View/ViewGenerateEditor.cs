@@ -2,11 +2,14 @@
 using System;
 using System.IO;
 using System.Text;
+using SY;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using ZSYFramework.Runtime.ComponentExt;
+using ZSYFramework.Runtime.View.Scripts;
 
-namespace SY
+namespace ZSYFramework.Editor.View
 {
     public class ViewGenerateEditor : EditorWindow
     {

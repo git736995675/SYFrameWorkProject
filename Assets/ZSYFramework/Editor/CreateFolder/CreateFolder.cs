@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Editor.CreateFolder
+namespace ZSYFramework.Editor.CreateFolder
 {
     public abstract class CreateFolder
     {

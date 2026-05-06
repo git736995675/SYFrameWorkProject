@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
-using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using SY;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace SY
+namespace ZSYFramework.Runtime.AssetBundle
 {
     public enum LoadMode
     {
@@ -28,7 +29,7 @@ namespace SY
         private bool _manifestLoadIng = false;
 
         // 已加载bundle缓存
-        private readonly Dictionary<string, AssetBundle> _bundleCache = new();
+        private readonly Dictionary<string, UnityEngine.AssetBundle> _bundleCache = new();
 
         //资源缓存
         private readonly Dictionary<string, Object> _assetCache = new();
@@ -37,7 +38,7 @@ namespace SY
         private readonly Dictionary<string, List<Action<Object>>> _loadingCallbacks = new();
 
         //bundle的引用计数
-        private readonly Dictionary<string, (AssetBundle bundle, int refCount)> _bundleReferenceCount = new();
+        private readonly Dictionary<string, (UnityEngine.AssetBundle bundle, int refCount)> _bundleReferenceCount = new();
 
         //正在加载中的bundle
         private readonly HashSet<string> _loadingBundles = new();
@@ -164,7 +165,7 @@ namespace SY
              }
              var bundle = DownloadHandlerAssetBundle.GetContent(request);
 #else
-            var request = AssetBundle.LoadFromFileAsync(path);
+            var request = UnityEngine.AssetBundle.LoadFromFileAsync(path);
             yield return request;
             if (request.assetBundle == null)
             {
@@ -310,7 +311,7 @@ namespace SY
             }
             var bundle = DownloadHandlerAssetBundle.GetContent(request);
 #else
-            var request = AssetBundle.LoadFromFileAsync(path);
+            var request = UnityEngine.AssetBundle.LoadFromFileAsync(path);
             yield return request;
             if (request.assetBundle == null)
             {

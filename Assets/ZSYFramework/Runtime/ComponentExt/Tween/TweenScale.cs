@@ -1,165 +1,168 @@
-    using DG.Tweening;
+using DG.Tweening;
 using UnityEngine;
 
-/// <summary>
-///     动画之缩放类
-/// </summary>
-public class TweenScale : UITweener
+namespace ZSYFramework.Runtime.ComponentExt.Tween
 {
     /// <summary>
-    ///     起始缩放
+    ///     动画之缩放类
     /// </summary>
-    public Vector3 from;
-
-    /// <summary>
-    ///     结束缩放
-    /// </summary>
-    public Vector3 to;
-
-    private GameObject cacheGameObject;
-    private Transform cacheTransform;
-
-    /// <summary>
-    ///     缓存transform
-    /// </summary>
-    private Transform CacheTransform
+    public class TweenScale : UiTween
     {
-        get
+        /// <summary>
+        ///     起始缩放
+        /// </summary>
+        public Vector3 from;
+
+        /// <summary>
+        ///     结束缩放
+        /// </summary>
+        public Vector3 to;
+
+        private GameObject cacheGameObject;
+        private Transform cacheTransform;
+
+        /// <summary>
+        ///     缓存transform
+        /// </summary>
+        private Transform CacheTransform
         {
-            if(cacheTransform == null)
+            get
             {
-                cacheTransform = transform;
+                if(cacheTransform == null)
+                {
+                    cacheTransform = transform;
+                }
+
+                return cacheTransform;
             }
-
-            return cacheTransform;
         }
-    }
 
-    /// <summary>
-    ///     缓存gameObject
-    /// </summary>
-    private GameObject CacheGameObject
-    {
-        get
+        /// <summary>
+        ///     缓存gameObject
+        /// </summary>
+        private GameObject CacheGameObject
         {
-            if(cacheGameObject == null)
+            get
             {
-                cacheGameObject = gameObject;
+                if(cacheGameObject == null)
+                {
+                    cacheGameObject = gameObject;
+                }
+
+                return cacheGameObject;
             }
-
-            return cacheGameObject;
         }
-    }
 
-    /// <summary>
-    ///     本物体的缩放坐标
-    /// </summary>
-    private Vector3 Scale => CacheTransform.localScale;
+        /// <summary>
+        ///     本物体的缩放坐标
+        /// </summary>
+        private Vector3 Scale => CacheTransform.localScale;
 
-    /// <summary>
-    ///     顺序播放动画
-    /// </summary>
-    public override void PlayForward()
-    {
-        base.PlayForward();
-    }
-
-    /// <summary>
-    ///     顺序播放动画 延迟
-    /// </summary>
-    public override void PlayForwardDelay()
-    {
-        CacheGameObject.SetActive(true);
-        Play(from, to);
-    }
-
-    /// <summary>
-    ///     倒序播放动画
-    /// </summary>
-    public override void PlayReverse()
-    {
-        base.PlayReverse();
-    }
-
-    /// <summary>
-    ///     倒序播放动画 延迟
-    /// </summary>
-    public override void PlayReverseDelay()
-    {
-        CacheGameObject.SetActive(true);
-        Play(to, from);
-    }
-
-    /// <summary>
-    ///     播放动画
-    /// </summary>
-    private void Play(Vector3 from, Vector3 to)
-    {
-        switch (style)
+        /// <summary>
+        ///     顺序播放动画
+        /// </summary>
+        public override void PlayForward()
         {
-            case TweenStyle.Once:
-                Once(from, to);
-                break;
-            case TweenStyle.Loop:
-                Loop(from, to);
-                break;
-            case TweenStyle.Repeatedly:
-                Repeatedly(from, to);
-                break;
-            case TweenStyle.PingPong:
-                PingPong(from, to);
-                break;
+            base.PlayForward();
         }
-    }
 
-    /// <summary>
-    ///     一次
-    /// </summary>
-    private void Once(Vector3 from, Vector3 to)
-    {
-        CacheTransform.localScale = from;
-        CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => onFinished());
-    }
+        /// <summary>
+        ///     顺序播放动画 延迟
+        /// </summary>
+        public override void PlayForwardDelay()
+        {
+            CacheGameObject.SetActive(true);
+            Play(from, to);
+        }
 
-    /// <summary>
-    ///     循环
-    /// </summary>
-    private void Loop(Vector3 from, Vector3 to)
-    {
-        CacheTransform.localScale = from;
-        CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => Loop(from, to));
-    }
+        /// <summary>
+        ///     倒序播放动画
+        /// </summary>
+        public override void PlayReverse()
+        {
+            base.PlayReverse();
+        }
 
-    /// <summary>
-    ///     一次来回
-    /// </summary>
-    private void Repeatedly(Vector3 from, Vector3 to)
-    {
-        CacheTransform.localScale = from;
-        CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => CacheTransform.DOScale(from, duration).SetEase(ease));
-    }
+        /// <summary>
+        ///     倒序播放动画 延迟
+        /// </summary>
+        public override void PlayReverseDelay()
+        {
+            CacheGameObject.SetActive(true);
+            Play(to, from);
+        }
 
-    /// <summary>
-    ///     循环来回
-    /// </summary>
-    private void PingPong(Vector3 from, Vector3 to)
-    {
-        CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => PingPong(to, from));
-    }
+        /// <summary>
+        ///     播放动画
+        /// </summary>
+        private void Play(Vector3 from, Vector3 to)
+        {
+            switch (style)
+            {
+                case TweenStyle.Once:
+                    Once(from, to);
+                    break;
+                case TweenStyle.Loop:
+                    Loop(from, to);
+                    break;
+                case TweenStyle.Repeatedly:
+                    Repeatedly(from, to);
+                    break;
+                case TweenStyle.PingPong:
+                    PingPong(from, to);
+                    break;
+            }
+        }
 
-    /// <summary>
-    ///     起始值
-    /// </summary>
-    protected override void StartValue()
-    {
-        from = Scale;
-    }
+        /// <summary>
+        ///     一次
+        /// </summary>
+        private void Once(Vector3 from, Vector3 to)
+        {
+            CacheTransform.localScale = from;
+            CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => onFinished());
+        }
 
-    /// <summary>
-    ///     结束值
-    /// </summary>
-    protected override void EndValue()
-    {
-        to = Scale;
+        /// <summary>
+        ///     循环
+        /// </summary>
+        private void Loop(Vector3 from, Vector3 to)
+        {
+            CacheTransform.localScale = from;
+            CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => Loop(from, to));
+        }
+
+        /// <summary>
+        ///     一次来回
+        /// </summary>
+        private void Repeatedly(Vector3 from, Vector3 to)
+        {
+            CacheTransform.localScale = from;
+            CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => CacheTransform.DOScale(from, duration).SetEase(ease));
+        }
+
+        /// <summary>
+        ///     循环来回
+        /// </summary>
+        private void PingPong(Vector3 from, Vector3 to)
+        {
+            CacheTransform.DOScale(to, duration).SetEase(ease).OnComplete(() => PingPong(to, from));
+        }
+
+        /// <summary>
+        ///     起始值
+        /// </summary>
+        protected override void StartValue()
+        {
+            from = Scale;
+        }
+
+        /// <summary>
+        ///     结束值
+        /// </summary>
+        protected override void EndValue()
+        {
+            to = Scale;
+        }
     }
 }

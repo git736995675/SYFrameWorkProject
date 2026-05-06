@@ -1,4 +1,4 @@
-namespace ZSY_Framework.Editor.ResourceBuilder
+namespace ZSYFramework.Editor.ResourceBuilder
 {
  
     public class ResourceBuilderInfo

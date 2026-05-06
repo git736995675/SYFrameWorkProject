@@ -6,11 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Framework.Editor.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Editor.FileEditing.FileInfoExporter
+namespace ZSYFramework.Editor.FileEditing.FileInfoExporter
 {
     /// <summary>
     /// 文件信息导出工具

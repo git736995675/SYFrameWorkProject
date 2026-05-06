@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace SY
+namespace ZSYFramework.Runtime.ComponentExt.Coroutine
 {
     public class CoroutineTask
     {

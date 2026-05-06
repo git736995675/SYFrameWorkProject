@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace SY
+namespace ZSYFramework.Runtime.Audio
 {
-    public class SYAudio : MonoBehaviour
+    public class SyAudio : MonoBehaviour
     {
        /// <summary>
         /// 设置背景音量  

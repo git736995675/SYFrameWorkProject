@@ -5,7 +5,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Editor.FileEditing.FileEncryptionTool
+namespace ZSYFramework.Editor.FileEditing.FileEncryptionTool
 {
     public class FileEncryptionTool : EditorWindow
     {

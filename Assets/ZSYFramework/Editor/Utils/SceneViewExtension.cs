@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace  SY
+namespace ZSYFramework.Editor.Utils
 {
     [InitializeOnLoad]
     public class SceneViewExtension

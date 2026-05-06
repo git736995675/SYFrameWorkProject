@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using SY.LitJson;
+using SY;
 using UnityEngine;
 using UnityEngine.Networking;
+using ZSYFramework.Runtime.LitJson;
 
-namespace SY
+namespace ZSYFramework.Runtime.AssetBundle
 {
     public class ResUtils : MonoSingleton<ResUtils>
     {

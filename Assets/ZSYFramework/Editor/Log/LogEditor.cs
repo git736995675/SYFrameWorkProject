@@ -1,7 +1,8 @@
 #if UNITY_EDITOR
+using SY;
 using UnityEditor;
 
-namespace SY
+namespace ZSYFramework.Editor.Log
 {
     public class LogEditor : EditorWindow
     {
@@ -10,11 +11,6 @@ namespace SY
         {
             LogManager.OpenLogFile();
         }
-        
-        
-        
-        
-        
     } 
 }
 #endif

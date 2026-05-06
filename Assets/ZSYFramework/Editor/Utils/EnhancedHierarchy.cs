@@ -1,12 +1,12 @@
 #if UNITY_EDITOR
 using System;
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-namespace SY
+namespace ZSYFramework.Editor.Utils
 {
     /// <summary>
     /// Unity Hierarchy窗口增强工具

@@ -16,8 +16,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 
-
-namespace SY.LitJson
+namespace ZSYFramework.Runtime.LitJson
 {
     public class JsonData : IJsonWrapper, IEquatable<JsonData>
     {

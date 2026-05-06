@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
-namespace SY
+namespace ZSYFramework.Runtime.ComponentExt
 {
     public static class ListEx
     {

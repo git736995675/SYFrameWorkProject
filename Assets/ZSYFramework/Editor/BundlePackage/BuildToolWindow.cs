@@ -1,9 +1,8 @@
 #if UNITY_EDITOR
-using SY;
 using UnityEditor;
 using UnityEngine;
 
-namespace ZSY_Framework.Editor.Build
+namespace ZSYFramework.Editor.BundlePackage
 {
     public class BuildToolWindow : EditorWindow
     {
@@ -58,14 +57,18 @@ namespace ZSY_Framework.Editor.Build
             _developmentBuild = EditorGUILayout.Toggle("Development Build", _developmentBuild);
             _autoRunAfterBuild = EditorGUILayout.Toggle("������Զ�����", _autoRunAfterBuild);
             _assetBundleBuild = EditorGUILayout.Toggle("����AssetBundle", _assetBundleBuild);
-            
+
             EditorGUILayout.Space();
             if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
             {
                 EditorGUILayout.Space();
                 EditorGUILayout.BeginVertical();
-                PlayerSettings.WebGL.exceptionSupport  = (WebGLExceptionSupport)EditorGUILayout.EnumPopup("�쳣����ȼ���",PlayerSettings.WebGL.exceptionSupport);
-                PlayerSettings.WebGL.compressionFormat  = (WebGLCompressionFormat)EditorGUILayout.EnumPopup("ѹ����ʽ��",PlayerSettings.WebGL.compressionFormat);
+                PlayerSettings.WebGL.exceptionSupport =
+                    (WebGLExceptionSupport)EditorGUILayout.EnumPopup("�쳣����ȼ���",
+                        PlayerSettings.WebGL.exceptionSupport);
+                PlayerSettings.WebGL.compressionFormat =
+                    (WebGLCompressionFormat)EditorGUILayout.EnumPopup("ѹ����ʽ��",
+                        PlayerSettings.WebGL.compressionFormat);
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.Space();
             }

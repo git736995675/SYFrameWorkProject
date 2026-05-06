@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Framework.Editor.CodeLineCounter
+namespace ZSYFramework.Editor.CodeLineCounter
 {
     public class CodeLineCounter : MonoBehaviour
     {

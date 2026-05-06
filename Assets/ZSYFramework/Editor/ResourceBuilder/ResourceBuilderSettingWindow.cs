@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace SY
+namespace ZSYFramework.Editor.ResourceBuilder
 {
 
     public class ResourceBuilderSettingWindow

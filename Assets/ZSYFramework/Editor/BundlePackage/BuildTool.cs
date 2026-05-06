@@ -2,10 +2,12 @@
 using System;
 using System.IO;
 using System.Linq;
+using SY;
 using UnityEditor;
 using UnityEngine;
+using ZSYFramework.Editor.ResourceBuilder;
 
-namespace SY
+namespace ZSYFramework.Editor.BundlePackage
 {
     public static class BuildTool
     {
@@ -87,7 +89,7 @@ namespace SY
         private static void WebGlSetting()
         {
             if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.WebGL) return;
-            
+
             PlayerSettings.WebGL.decompressionFallback = true;
             PlayerSettings.WebGL.dataCaching = true;
         }

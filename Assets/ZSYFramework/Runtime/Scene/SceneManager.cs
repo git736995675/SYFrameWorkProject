@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
+using ZSYFramework.Runtime.View;
 
 namespace SY
 {

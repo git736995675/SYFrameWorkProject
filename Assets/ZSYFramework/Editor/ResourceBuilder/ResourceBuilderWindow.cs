@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using SY;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using ZSYFramework.Runtime.AssetBundle;
 
-namespace SY
+namespace ZSYFramework.Editor.ResourceBuilder
 {
     /// <summary>
     /// AssetBundles资源管理编辑器
