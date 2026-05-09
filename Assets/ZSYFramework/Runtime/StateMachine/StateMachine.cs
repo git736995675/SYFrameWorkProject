@@ -16,9 +16,9 @@ namespace SY
             state.transform.SetParent(transform);
             _states.TryAdd(typeName, state);
         }
-        
+
         /// <summary>
-        /// �˳�״̬��
+        /// 退出状态机
         /// </summary>
         /// <param name="stateName"></param>
         /// <param name="nextStateName"></param>
@@ -33,12 +33,12 @@ namespace SY
 
             if (_currentStates.Count == 0 && !string.IsNullOrEmpty(nextStateName))
             {
-                ChangeState(nextStateName,strArg1, boolArg1, intArg1);
+                ChangeState(nextStateName, strArg1, boolArg1, intArg1);
             }
         }
-        
+
         /// <summary>
-        /// ����״̬����ԭ��״̬����
+        /// 添加状态机（与原状态并行）
         /// </summary>
         public void AddState<T>(string strArg1 = "", bool boolArg1 = false, int intArg1 = 0)
         {
@@ -49,7 +49,7 @@ namespace SY
         }
 
         /// <summary>
-        /// �л�״̬��ԭ��״̬ȫ���˳�
+        /// 切换状态机（与原状态全部退出）
         /// </summary>
         public void ChangeState<T>(string strArg1 = "", bool boolArg1 = false, int intArg1 = 0) where T : BaseState
         {
@@ -58,8 +58,8 @@ namespace SY
 
         private void ChangeState(string stateName, string strArg1 = "", bool boolArg1 = false, int intArg1 = 0)
         {
-            if(_currentStates.ContainsKey(stateName)) return;
-            
+            if (_currentStates.ContainsKey(stateName)) return;
+
             foreach (var state in _currentStates)
             {
                 state.Value?.StateExit();
@@ -75,10 +75,10 @@ namespace SY
         {
             if (_currentStates.Count == 0) return;
 
-            foreach (var key in _states.Keys)
+            // 只更新当前激活的状态
+            foreach (var state in _currentStates)
             {
-                _currentStates.TryGetValue(key, out var state);
-                state?.StateUpdate();
+                state.Value?.StateUpdate();
             }
         }
     }

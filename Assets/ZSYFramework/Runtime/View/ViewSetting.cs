@@ -1,19 +1,19 @@
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.View
+namespace SY
 {
     public class ViewSetting
     {
-        // �Ƿ���vrģʽ
+        // 是否是vr模式
         public static bool IsVr { get; set; } = false;
 
-        // vrģʽ�������
+        // vr模式摄像机
         public static Camera Camera { get; set; }
 
-        // �����ui�ľ���
+        // 摄像机到ui的距离
         public static float CameraZoom { get; set; } = 80;
 
-        // ui�Ƿ�������
+        // ui是否跟随摄像机
         public static bool IsFollow { get; set; } = false;
     }
 }

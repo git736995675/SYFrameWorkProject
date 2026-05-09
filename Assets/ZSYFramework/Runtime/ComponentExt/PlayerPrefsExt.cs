@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.ComponentExt
+namespace SY
 {
     public class PlayerPrefsExt
     {

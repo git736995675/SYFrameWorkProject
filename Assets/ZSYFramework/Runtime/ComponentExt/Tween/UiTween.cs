@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.ComponentExt.Tween
+namespace SY
 {
     #region TweenStyle 动画方式
     /// <summary>

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.View.Scripts
+namespace SY
 {
     public class ViewWaitGenerateTag : MonoBehaviour
     {

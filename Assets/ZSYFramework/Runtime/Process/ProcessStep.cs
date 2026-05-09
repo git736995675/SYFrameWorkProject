@@ -2,7 +2,7 @@ using System;
 
 namespace SY
 {
-    // Á÷³Ì²½ÖèÀà
+    // æµç¨‹æ­¥éª¤ç±»
     public class ProcessStep
     {
         public int Weight { get; private set; }

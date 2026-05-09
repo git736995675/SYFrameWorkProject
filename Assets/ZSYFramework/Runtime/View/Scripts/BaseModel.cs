@@ -3,7 +3,7 @@
 using System;
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.View.Scripts
+namespace SY
 {
     public abstract class BaseModel : ScriptableObject
     {

@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using ZSYFramework.Runtime.LitJson;
 
-namespace ZSYFramework.Runtime.AssetBundle
+namespace SY
 {
     public class ResUtils : MonoSingleton<ResUtils>
     {

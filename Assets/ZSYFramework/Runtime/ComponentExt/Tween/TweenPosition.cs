@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.ComponentExt.Tween
+namespace SY
 {
     /// <summary>
     ///     动画之位移类

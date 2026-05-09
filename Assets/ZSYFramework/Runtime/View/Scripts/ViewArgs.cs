@@ -1,6 +1,6 @@
 using System;
 
-namespace ZSYFramework.Runtime.View.Scripts
+namespace SY
 {
     public class ViewArgs
     {

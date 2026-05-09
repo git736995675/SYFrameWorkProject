@@ -1,11 +1,9 @@
-using SY;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using ZSYFramework.Runtime.Audio;
 
-namespace ZSYFramework.Runtime.View.Scripts
+namespace SY
 {
     // View基类（绑定UI元素）
     public abstract class BaseView : MonoBehaviour

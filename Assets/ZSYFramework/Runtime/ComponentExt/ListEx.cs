@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ZSYFramework.Runtime.ComponentExt
+namespace SY
 {
     public static class ListEx
     {

@@ -1,12 +1,36 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using ZSYFramework.Runtime.Config.Utils;
+using SY;
 using ZSYFramework.Runtime.LitJson;
 
 public class StrConfig  
 { 
-    	/// 多语言 	public int Id { get; set; }	/// 中文简体zh 	public string CHINESE { get; set; }	/// 英语en 	public string ENGLISH { get; set; }	/// 印地语hi 	public string HINDI { get; set; }	/// 葡萄牙语pt 	public string PORTUGUESE { get; set; }	/// 土耳其tr 	public string TURKEY { get; set; }	/// 印尼语id 	public string INDONESIAN { get; set; }	/// 西语es 	public string SPANISH { get; set; }	/// 日语ja 	public string JAPANESE { get; set; }	/// 韩语ko 	public string KOREAN { get; set; }	/// 德语de 	public string GERMAN { get; set; }	/// 法语fr 	public string FRENCH { get; set; } 
+    
+	/// 多语言 
+	public int Id { get; set; }
+	/// 中文简体zh 
+	public string CHINESE { get; set; }
+	/// 英语en 
+	public string ENGLISH { get; set; }
+	/// 印地语hi 
+	public string HINDI { get; set; }
+	/// 葡萄牙语pt 
+	public string PORTUGUESE { get; set; }
+	/// 土耳其tr 
+	public string TURKEY { get; set; }
+	/// 印尼语id 
+	public string INDONESIAN { get; set; }
+	/// 西语es 
+	public string SPANISH { get; set; }
+	/// 日语ja 
+	public string JAPANESE { get; set; }
+	/// 韩语ko 
+	public string KOREAN { get; set; }
+	/// 德语de 
+	public string GERMAN { get; set; }
+	/// 法语fr 
+	public string FRENCH { get; set; } 
     
     
     private const string ConfigName = "StrConfig" ; 

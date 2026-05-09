@@ -3,13 +3,10 @@ using System.Data;
 using System.IO;
 using System.Text;
 using ExcelDataReader;
-using SY;
 using UnityEngine;
-using ZSYFramework.Runtime.AssetBundle;
 using ZSYFramework.Runtime.LitJson;
-using Debug = UnityEngine.Debug;
 
-namespace ZSYFramework.Runtime.Config.Utils
+namespace SY
 {
     public class ConfigUtils
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SY
 {
-    // ³¡¾°µ¥Àı»ùÀà (Ëæ³¡¾°Ïú»Ù)
+    // åœºæ™¯å•ä¾‹åŸºç±» (å•æ³¡)
     public abstract class SceneSingleton<T> : MonoBehaviour where T : SceneSingleton<T>
     {
         private static T _instance;
@@ -45,7 +45,7 @@ namespace SY
 
         protected virtual void OnInstanceCreated()
         {
-            // ¶¯Ì¬´´½¨Ê±µÄ³õÊ¼»¯
+            // å•ä¾‹åˆ›å»ºæ—¶çš„é¢å¤–åˆå§‹åŒ–
         }
 
         protected virtual void OnDestroy()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.Audio
+namespace SY
 {
     public class SyAudio : MonoBehaviour
     {

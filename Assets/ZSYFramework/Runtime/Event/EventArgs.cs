@@ -1,7 +1,7 @@
 namespace SY
 {
     /// <summary>
-    /// ¹¦ÄÜÃèÊö£ºÊÂ¼ş²ÎÊı»ùÀà
+    /// å¸¦æ³›å‹å‚æ•°çš„äº‹ä»¶æ ‡è¯†ç±»
     /// </summary>
     public class EventArgs<T>
     {

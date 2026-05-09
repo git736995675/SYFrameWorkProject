@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.View.Scripts
+namespace SY
 {
     public class ViewAnimation : MonoBehaviour
     {

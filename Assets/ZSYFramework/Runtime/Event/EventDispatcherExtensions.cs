@@ -5,10 +5,10 @@ namespace SY
 {
     public static class EventDispatcherExtensions
     {
-        #region ´ø²ÎÊıµÄÊÂ¼ş
+        #region å¸¦å‚æ•°äº‹ä»¶
 
         /// <summary>
-        /// ×¢²á´ø²ÎÊıµÄÊÂ¼ş (MonoBehaviour À©Õ¹·½·¨)
+        /// æ³¨å†Œå¸¦å‚æ•°äº‹ä»¶ (MonoBehaviour æ‰©å±•æ–¹æ³•)
         /// </summary>
         public static void AddEventListener<T>(this MonoBehaviour mono, string eventName, Action<T> callback)
         {
@@ -16,7 +16,7 @@ namespace SY
         }
 
         /// <summary>
-        /// ´¥·¢´ø²ÎÊıµÄÊÂ¼ş (MonoBehaviour À©Õ¹·½·¨)
+        /// è§¦å‘å¸¦å‚æ•°äº‹ä»¶ (MonoBehaviour æ‰©å±•æ–¹æ³•)
         /// </summary>
         public static void TriggerEvent<T>(this MonoBehaviour mono, string eventName, T param)
         {
@@ -24,7 +24,7 @@ namespace SY
         }
 
         /// <summary>
-        /// ÒÆ³ı´ø²ÎÊıµÄÊÂ¼ş¼àÌı (MonoBehaviour À©Õ¹·½·¨)
+        /// ç§»é™¤å¸¦å‚æ•°äº‹ä»¶å›è°ƒ (MonoBehaviour æ‰©å±•æ–¹æ³•)
         /// </summary>
         public static void RemoveEventListener<T>(this MonoBehaviour mono, string eventName, Action<T> callback)
         {
@@ -33,10 +33,10 @@ namespace SY
 
         #endregion
 
-        #region ²»´ø²ÎÊıµÄÊÂ¼ş
+        #region æ— å‚æ•°äº‹ä»¶
 
         /// <summary>
-        /// ×¢²á²»´ø²ÎÊıµÄÊÂ¼ş (MonoBehaviour À©Õ¹·½·¨)
+        /// æ³¨å†Œæ— å‚æ•°äº‹ä»¶ (MonoBehaviour æ‰©å±•æ–¹æ³•)
         /// </summary>
         public static void AddEventListener(this MonoBehaviour mono, string eventName, Action callback)
         {
@@ -44,7 +44,7 @@ namespace SY
         }
 
         /// <summary>
-        /// ´¥·¢²»´ø²ÎÊıµÄÊÂ¼ş (MonoBehaviour À©Õ¹·½·¨)
+        /// è§¦å‘æ— å‚æ•°äº‹ä»¶ (MonoBehaviour æ‰©å±•æ–¹æ³•)
         /// </summary>
         public static void TriggerEvent(this MonoBehaviour mono, string eventName)
         {
@@ -52,7 +52,7 @@ namespace SY
         }
 
         /// <summary>
-        /// ÒÆ³ı²»´ø²ÎÊıµÄÊÂ¼ş¼àÌı (MonoBehaviour À©Õ¹·½·¨)
+        /// ç§»é™¤æ— å‚æ•°äº‹ä»¶å›è°ƒ (MonoBehaviour æ‰©å±•æ–¹æ³•)
         /// </summary>
         public static void RemoveEventListener(this MonoBehaviour mono, string eventName, Action callback)
         {
@@ -62,7 +62,7 @@ namespace SY
         #endregion
 
         /// <summary>
-        /// ÒÆ³ı¶ÔÏóËùÓĞÊÂ¼ş (MonoBehaviour À©Õ¹·½·¨)
+        /// ç§»é™¤æ‰€æœ‰è€…æ‰€æœ‰äº‹ä»¶ (MonoBehaviour æ‰©å±•æ–¹æ³•)
         /// </summary>
         public static void RemoveOwnerEvents(this MonoBehaviour mono)
         {

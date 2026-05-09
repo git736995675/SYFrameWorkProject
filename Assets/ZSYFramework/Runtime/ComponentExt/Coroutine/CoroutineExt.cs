@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using SY;
 
-namespace ZSYFramework.Runtime.ComponentExt.Coroutine
+namespace SY
 {
     public class CoroutineExt : MonoSingleton<CoroutineExt>
     {

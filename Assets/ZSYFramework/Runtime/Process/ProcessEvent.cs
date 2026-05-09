@@ -2,7 +2,7 @@ using UnityEngine.Events;
 
 namespace SY
 {
-    // ÊÂ¼þ¶¨Òå
+    // äº‹ä»¶ç±»
     [System.Serializable]
     public class ProcessEvent : UnityEvent<string, float>
     {

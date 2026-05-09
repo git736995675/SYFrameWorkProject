@@ -6,7 +6,7 @@ using SY;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ZSYFramework.Runtime.AssetBundle
+namespace SY
 {
     public enum LoadMode
     {
@@ -26,7 +26,7 @@ namespace ZSYFramework.Runtime.AssetBundle
         private AssetBundleManifest _manifest;
 
         // manifest文件是否已加载
-        private bool _manifestLoadIng = false;
+        private bool _manifestLoading = false;
 
         // 已加载bundle缓存
         private readonly Dictionary<string, UnityEngine.AssetBundle> _bundleCache = new();
@@ -142,16 +142,16 @@ namespace ZSYFramework.Runtime.AssetBundle
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator LoadManifest()
         {
-            if (_manifestLoadIng)
+            if (_manifestLoading)
             {
-                while (_manifestLoadIng || _manifest == null) 
+                while (_manifestLoading || _manifest == null) 
                 {
                     yield return null;
                 }
                 yield break;
             }
 
-            _manifestLoadIng = true;
+            _manifestLoading = true;
             // 加载主Manifest的AssetBundle
             var path = GetBundlePath($"{GetPlatformName()}.unity3d");
 
@@ -160,7 +160,8 @@ namespace ZSYFramework.Runtime.AssetBundle
              yield return request.SendWebRequest();
              if (request.result != UnityWebRequest.Result.Success)
              {
-                 Debug.LogError("Failed to load asset bundle"+request.error);
+                 Debug.LogError("Failed to load asset bundle" + request.error);
+                 _manifestLoading = false; // 确保失败时重置状态
                  yield break;
              }
              var bundle = DownloadHandlerAssetBundle.GetContent(request);
@@ -181,7 +182,7 @@ namespace ZSYFramework.Runtime.AssetBundle
             ;
             // 卸载Bundle（但不销毁已加载的Manifest）
             bundle.Unload(false);
-            _manifestLoadIng = false;
+            _manifestLoading = false;
         }
 
 
@@ -346,10 +347,13 @@ namespace ZSYFramework.Runtime.AssetBundle
                 }
 
                 // 2. 释放依赖
-                var dependencies = _manifest.GetAllDependencies(abName);
-                foreach (var dep in dependencies)
+                if (_manifest != null)
                 {
-                    ReleaseDependency(dep);
+                    var dependencies = _manifest.GetAllDependencies(abName);
+                    foreach (var dep in dependencies)
+                    {
+                        ReleaseDependency(dep);
+                    }
                 }
             });
         }

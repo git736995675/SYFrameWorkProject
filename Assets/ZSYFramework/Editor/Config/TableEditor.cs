@@ -9,7 +9,6 @@ using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
-using ZSYFramework.Runtime.Config.Utils;
 
 namespace ZSYFramework.Editor.Config
 {

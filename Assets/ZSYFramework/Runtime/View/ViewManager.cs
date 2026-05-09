@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using SY;
 using UnityEngine;
 using UnityEngine.UI;
-using ZSYFramework.Runtime.AssetBundle;
-using ZSYFramework.Runtime.ComponentExt;
-using ZSYFramework.Runtime.View.Scripts;
 
-namespace ZSYFramework.Runtime.View
+namespace SY
 {
     public enum UILayer
     {
@@ -59,7 +56,7 @@ namespace ZSYFramework.Runtime.View
                 canvas.worldCamera = Camera.main;
                 if (ViewSetting.IsVr)
                 {
-                    canvas.LocalScale(Vector3.one * 0.1f);
+                    layerGo.transform.localScale = Vector3.one * 0.1f;
                 }
 
                 canvas.sortingOrder = (int)layer;
@@ -215,11 +212,12 @@ namespace ZSYFramework.Runtime.View
         {
             if (_waitingViews.Count == 0) return;
 
+            // 打开所有等待的View
             foreach (var viewInfo in _waitingViews)
             {
                 ShowView(viewInfo.Key, viewInfo.Value);
-                return;
             }
+            _waitingViews.Clear();
         }
 
         private void InvokeOpenActions(string uiName)

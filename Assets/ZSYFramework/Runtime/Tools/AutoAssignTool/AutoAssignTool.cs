@@ -14,7 +14,7 @@ namespace SY
             var scripts = selectedPrefab.GetComponentsInChildren<MonoBehaviour>(true);
             foreach (var script in scripts)
             {
-                if (!script) continue; // ´¦Àí¶ªÊ§µÄ½Å±¾
+                if (!script) continue; // å·²ç»å¤±æ•ˆçš„è„šæœ¬
 
                 var serializedObject = new SerializedObject(script);
                 var fields = script.GetType()
@@ -22,13 +22,13 @@ namespace SY
 
                 foreach (var field in fields)
                 {
-                    // Ö»´¦Àí¿ÉĞòÁĞ»¯×Ö¶Î£¨public»ò±ê¼ÇÁËSerializeFieldµÄprivate×Ö¶Î£©
+                    // åªå¤„ç†åºåˆ—åŒ–å­—æ®µï¼špublicæˆ–å¸¦SerializeFieldçš„privateå­—æ®µ
                     if (!field.IsPublic && !field.IsDefined(typeof(SerializeField))) continue;
 
-                    // »ñÈ¡×Ö¶ÎÀàĞÍ
+                    // è·å–å­—æ®µç±»å‹
                     var fieldType = field.FieldType;
 
-                    // ÔÚÔ¤ÖÆÌåÖĞ²éÕÒÆ¥ÅäÃû³ÆµÄÎïÌå
+                    // åœ¨é¢„åˆ¶ä½“ä¸­æŸ¥æ‰¾åç§°åŒ¹é…çš„å­ç‰©ä½“
                     var target = FindChildByName(selectedPrefab.transform, field.Name);
                     if (target == null)
                     {
@@ -36,7 +36,7 @@ namespace SY
                         continue;
                     }
 
-                    // ¼ì²éÀàĞÍÆ¥Åä²¢¸³Öµ
+                    // è¿›è¡Œåç§°åŒ¹é…å¹¶èµ‹å€¼
                     if (fieldType == typeof(GameObject))
                     {
                         serializedObject.FindProperty(field.Name).objectReferenceValue = target.gameObject;
@@ -80,4 +80,5 @@ namespace SY
         }
     }
 }
+
 #endif

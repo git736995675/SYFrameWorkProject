@@ -1,9 +1,8 @@
 using System;
 using DG.Tweening;
-using SY;
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.ComponentExt.Tween
+namespace SY
 {
     /// <summary>
     /// 动画之变化类

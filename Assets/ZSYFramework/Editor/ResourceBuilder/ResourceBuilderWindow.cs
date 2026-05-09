@@ -7,7 +7,6 @@ using SY;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-using ZSYFramework.Runtime.AssetBundle;
 
 namespace ZSYFramework.Editor.ResourceBuilder
 {

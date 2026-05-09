@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace ZSYFramework.Runtime.ComponentExt
+namespace SY
 {
     public class SliderEventListener : MonoBehaviour
     {

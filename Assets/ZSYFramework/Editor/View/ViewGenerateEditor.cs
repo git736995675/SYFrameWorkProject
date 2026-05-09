@@ -6,8 +6,6 @@ using SY;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using ZSYFramework.Runtime.ComponentExt;
-using ZSYFramework.Runtime.View.Scripts;
 
 namespace ZSYFramework.Editor.View
 {

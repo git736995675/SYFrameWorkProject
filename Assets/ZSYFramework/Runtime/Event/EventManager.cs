@@ -3,324 +3,326 @@ using System.Collections.Generic;
 using SY;
 using UnityEngine;
 
-/// <summary>
-/// ·ºĞÍÊÂ¼ş·Ö·¢ÏµÍ³
-/// </summary>
-public class EventManager : MonoSingleton<EventManager>
+namespace SY
 {
-
-    // ·ºĞÍÊÂ¼ş×Öµä
-    private readonly Dictionary<Type, Dictionary<string, List<Delegate>>> _genericEvents = new();
-
-    // ÎŞ²ÎÊıÊÂ¼ş×Öµä
-    private readonly Dictionary<string, List<Action>> _noParamEvents = new();
-
-    // ¶ÔÏó-ÊÂ¼ş×¢²á¼ÇÂ¼
-    private readonly Dictionary<object, List<EventRegistration>> _ownerRegistrations = new();
-
-    #region ·ºĞÍÊÂ¼ş×¢²áÓë´¥·¢
-
     /// <summary>
-    /// ×¢²á·ºĞÍÊÂ¼ş
+    /// ç®€æ˜“äº‹ä»¶åˆ†å‘ç³»ç»Ÿ
     /// </summary>
-    public void AddEventListener<T>(string eventName, Action<T> callback, object owner)
+    public class EventManager : MonoSingleton<EventManager>
     {
-        if (string.IsNullOrEmpty(eventName) || callback == null || owner == null)
+        // å¸¦å‚æ•°äº‹ä»¶å­—å…¸
+        private readonly Dictionary<Type, Dictionary<string, List<Delegate>>> _genericEvents = new();
+
+        // æ— å‚æ•°äº‹ä»¶å­—å…¸
+        private readonly Dictionary<string, List<Action>> _noParamEvents = new();
+
+        // æ‰€æœ‰è€…-äº‹ä»¶æ³¨å†Œè®°å½•
+        private readonly Dictionary<object, List<EventRegistration>> _ownerRegistrations = new();
+
+        #region å¸¦å‚æ•°äº‹ä»¶æ³¨å†Œç®¡ç†
+
+        /// <summary>
+        /// æ³¨å†Œå¸¦å‚æ•°äº‹ä»¶
+        /// </summary>
+        public void AddEventListener<T>(string eventName, Action<T> callback, object owner)
         {
-            Debug.LogWarning("Invalid parameters for AddEventListener");
-            return;
-        }
-
-        var paramType = typeof(T);
-
-        // ³õÊ¼»¯ÀàĞÍ×Öµä
-        if (!_genericEvents.ContainsKey(paramType))
-        {
-            _genericEvents[paramType] = new Dictionary<string, List<Delegate>>();
-        }
-
-        // ³õÊ¼»¯ÊÂ¼şÁĞ±í
-        if (!_genericEvents[paramType].ContainsKey(eventName))
-        {
-            _genericEvents[paramType][eventName] = new List<Delegate>();
-        }
-
-        _genericEvents[paramType][eventName].Add(callback);
-
-        // ¼ÇÂ¼×¢²áĞÅÏ¢
-        RegisterEventOwner(owner, eventName, paramType, callback);
-    }
-
-    /// <summary>
-    /// ´¥·¢·ºĞÍÊÂ¼ş
-    /// </summary>
-    public void TriggerEvent<T>(string eventName, T param)
-    {
-        if (string.IsNullOrEmpty(eventName))
-        {
-            Debug.LogWarning("Event name is null or empty");
-            return;
-        }
-
-        var paramType = typeof(T);
-
-        if (!_genericEvents.TryGetValue(paramType, out var typeEvents) ||
-            !typeEvents.TryGetValue(eventName, out var listeners)) return;
-        // ¸´ÖÆÁĞ±í·ÀÖ¹ĞŞ¸Ä
-        var listenersCopy = new List<Delegate>(listeners);
-
-        foreach (var listener in listenersCopy)
-        {
-            try
+            if (string.IsNullOrEmpty(eventName) || callback == null || owner == null)
             {
-                ((Action<T>)listener)?.Invoke(param);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Error dispatching event {eventName}: {e}");
-            }
-        }
-    }
-
-    #endregion
-
-    #region ÎŞ²ÎÊıÊÂ¼ş
-
-    /// <summary>
-    /// ×¢²áÎŞ²ÎÊıÊÂ¼ş
-    /// </summary>
-    public void AddEventListener(string eventName, Action callback, object owner)
-    {
-        if (string.IsNullOrEmpty(eventName) || callback == null || owner == null)
-        {
-            Debug.LogWarning("Invalid parameters for AddEventListener");
-            return;
-        }
-
-        if (!_noParamEvents.ContainsKey(eventName))
-        {
-            _noParamEvents[eventName] = new List<Action>();
-        }
-
-        _noParamEvents[eventName].Add(callback);
-
-        // ¼ÇÂ¼×¢²áĞÅÏ¢
-        RegisterEventOwner(owner, eventName, null, callback);
-    }
-
-    /// <summary>
-    /// ´¥·¢ÎŞ²ÎÊıÊÂ¼ş
-    /// </summary>
-    public void TriggerEvent(string eventName)
-    {
-        if (string.IsNullOrEmpty(eventName))
-        {
-            Debug.LogWarning("Event name is null or empty");
-            return;
-        }
-
-        if (!_noParamEvents.TryGetValue(eventName, out var listeners)) return;
-        // ¸´ÖÆÁĞ±í·ÀÖ¹ĞŞ¸Ä
-        var listenersCopy = new List<Action>(listeners);
-
-        foreach (var listener in listenersCopy)
-        {
-            try
-            {
-                listener?.Invoke();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Error dispatching no-param event {eventName}: {e}");
-            }
-        }
-    }
-
-    #endregion
-
-    #region ÊÂ¼ş½â°ó
-
-    /// <summary>
-    /// ÒÆ³ıÌØ¶¨ÊÂ¼şµÄËùÓĞ¼àÌı
-    /// </summary>
-    public void RemoveEvent(string eventName)
-    {
-        // ÒÆ³ı·ºĞÍÊÂ¼ş
-        foreach (var typeEntry in _genericEvents)
-        {
-            if (!typeEntry.Value.TryGetValue(eventName, out var value)) continue;
-            // ´ÓËùÓĞÕß¼ÇÂ¼ÖĞÒÆ³ı
-            foreach (var callback in value)
-            {
-                RemoveEventFromOwnerRecords(eventName, typeEntry.Key, callback);
+                Debug.LogWarning("Invalid parameters for AddEventListener");
+                return;
             }
 
-            typeEntry.Value.Remove(eventName);
+            var paramType = typeof(T);
+
+            // åˆå§‹åŒ–ç±»å‹å­—å…¸
+            if (!_genericEvents.ContainsKey(paramType))
+            {
+                _genericEvents[paramType] = new Dictionary<string, List<Delegate>>();
+            }
+
+            // åˆå§‹åŒ–äº‹ä»¶åˆ—è¡¨
+            if (!_genericEvents[paramType].ContainsKey(eventName))
+            {
+                _genericEvents[paramType][eventName] = new List<Delegate>();
+            }
+
+            _genericEvents[paramType][eventName].Add(callback);
+
+            // è®°å½•æ³¨å†Œä¿¡æ¯
+            RegisterEventOwner(owner, eventName, paramType, callback);
         }
 
-        // ÒÆ³ıÎŞ²ÎÊıÊÂ¼ş
-        if (!_noParamEvents.TryGetValue(eventName, out var @event)) return;
-        foreach (var callback in @event)
+        /// <summary>
+        /// è§¦å‘å¸¦å‚æ•°äº‹ä»¶
+        /// </summary>
+        public void TriggerEvent<T>(string eventName, T param)
         {
-            RemoveEventFromOwnerRecords(eventName, null, callback);
+            if (string.IsNullOrEmpty(eventName))
+            {
+                Debug.LogWarning("Event name is null or empty");
+                return;
+            }
+
+            var paramType = typeof(T);
+
+            if (!_genericEvents.TryGetValue(paramType, out var typeEvents) ||
+                !typeEvents.TryGetValue(eventName, out var listeners)) return;
+            // å¤åˆ¶åˆ—è¡¨é˜²æ­¢ä¿®æ”¹
+            var listenersCopy = new List<Delegate>(listeners);
+
+            foreach (var listener in listenersCopy)
+            {
+                try
+                {
+                    ((Action<T>)listener)?.Invoke(param);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error dispatching event {eventName}: {e}");
+                }
+            }
         }
 
-        _noParamEvents.Remove(eventName);
-    }
+        #endregion
 
-    /// <summary>
-    /// ÒÆ³ıÌØ¶¨·ºĞÍÊÂ¼şµÄÌØ¶¨¼àÌı
-    /// </summary>
-    public void RemoveEventListener<T>(string eventName, Action<T> callback)
-    {
-        if (string.IsNullOrEmpty(eventName) || callback == null) return;
+        #region æ— å‚æ•°äº‹ä»¶
 
-        var paramType = typeof(T);
-
-        if (!_genericEvents.TryGetValue(paramType, out var typeEvents) ||
-            !typeEvents.TryGetValue(eventName, out var listeners)) return;
-        listeners.Remove(callback);
-
-        if (listeners.Count == 0)
+        /// <summary>
+        /// æ³¨å†Œæ— å‚æ•°äº‹ä»¶
+        /// </summary>
+        public void AddEventListener(string eventName, Action callback, object owner)
         {
-            typeEvents.Remove(eventName);
+            if (string.IsNullOrEmpty(eventName) || callback == null || owner == null)
+            {
+                Debug.LogWarning("Invalid parameters for AddEventListener");
+                return;
+            }
+
+            if (!_noParamEvents.ContainsKey(eventName))
+            {
+                _noParamEvents[eventName] = new List<Action>();
+            }
+
+            _noParamEvents[eventName].Add(callback);
+
+            // è®°å½•æ³¨å†Œä¿¡æ¯
+            RegisterEventOwner(owner, eventName, null, callback);
         }
 
-        // ´ÓËùÓĞÕß¼ÇÂ¼ÖĞÒÆ³ı
-        RemoveEventFromOwnerRecords(eventName, paramType, callback);
-    }
-
-    /// <summary>
-    /// ÒÆ³ıÌØ¶¨ÎŞ²ÎÊıÊÂ¼şµÄÌØ¶¨¼àÌı
-    /// </summary>
-    public void RemoveEventListener(string eventName, Action callback)
-    {
-        if (string.IsNullOrEmpty(eventName) || callback == null) return;
-
-        if (!_noParamEvents.TryGetValue(eventName, out var listeners)) return;
-        listeners.Remove(callback);
-
-        if (listeners.Count == 0)
+        /// <summary>
+        /// è§¦å‘æ— å‚æ•°äº‹ä»¶
+        /// </summary>
+        public void TriggerEvent(string eventName)
         {
+            if (string.IsNullOrEmpty(eventName))
+            {
+                Debug.LogWarning("Event name is null or empty");
+                return;
+            }
+
+            if (!_noParamEvents.TryGetValue(eventName, out var listeners)) return;
+            // å¤åˆ¶åˆ—è¡¨é˜²æ­¢ä¿®æ”¹
+            var listenersCopy = new List<Action>(listeners);
+
+            foreach (var listener in listenersCopy)
+            {
+                try
+                {
+                    listener?.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error dispatching no-param event {eventName}: {e}");
+                }
+            }
+        }
+
+        #endregion
+
+        #region äº‹ä»¶æ¸…ç†
+
+        /// <summary>
+        /// ç§»é™¤ç‰¹å®šäº‹ä»¶åç§°çš„æ‰€æœ‰å›è°ƒ
+        /// </summary>
+        public void RemoveEvent(string eventName)
+        {
+            // ç§»é™¤å¸¦å‚æ•°äº‹ä»¶
+            foreach (var typeEntry in _genericEvents)
+            {
+                if (!typeEntry.Value.TryGetValue(eventName, out var value)) continue;
+                // ä»æ‰€æœ‰è€…è®°å½•ä¸­ç§»é™¤
+                foreach (var callback in value)
+                {
+                    RemoveEventFromOwnerRecords(eventName, typeEntry.Key, callback);
+                }
+
+                typeEntry.Value.Remove(eventName);
+            }
+
+            // ç§»é™¤æ— å‚æ•°äº‹ä»¶
+            if (!_noParamEvents.TryGetValue(eventName, out var @event)) return;
+            foreach (var callback in @event)
+            {
+                RemoveEventFromOwnerRecords(eventName, null, callback);
+            }
+
             _noParamEvents.Remove(eventName);
         }
 
-        // ´ÓËùÓĞÕß¼ÇÂ¼ÖĞÒÆ³ı
-        RemoveEventFromOwnerRecords(eventName, null, callback);
-    }
-
-    /// <summary>
-    /// ÒÆ³ı¶ÔÏó×¢²áµÄËùÓĞÊÂ¼ş
-    /// </summary>
-    public void RemoveEventsByOwner(object owner)
-    {
-        if (owner == null || !_ownerRegistrations.TryGetValue(owner, out var registration)) return;
-
-        var registrations = new List<EventRegistration>(registration);
-
-        foreach (var reg in registrations)
+        /// <summary>
+        /// ç§»é™¤ç‰¹å®šç±»å‹äº‹ä»¶ç‰¹å®šå›è°ƒ
+        /// </summary>
+        public void RemoveEventListener<T>(string eventName, Action<T> callback)
         {
-            if (reg.ParamType != null)
-            {
-                // ·ºĞÍÊÂ¼ş
-                if (!_genericEvents.TryGetValue(reg.ParamType, out var typeEvents) ||
-                    !typeEvents.TryGetValue(reg.EventName, out var listeners)) continue;
-                listeners.Remove(reg.Callback);
+            if (string.IsNullOrEmpty(eventName) || callback == null) return;
 
-                if (listeners.Count == 0)
-                {
-                    typeEvents.Remove(reg.EventName);
-                }
-            }
-            else
-            {
-                // ÎŞ²ÎÊıÊÂ¼ş
-                if (!_noParamEvents.TryGetValue(reg.EventName, out var listeners)) continue;
-                listeners.Remove((Action)reg.Callback);
+            var paramType = typeof(T);
 
-                if (listeners.Count == 0)
-                {
-                    _noParamEvents.Remove(reg.EventName);
-                }
+            if (!_genericEvents.TryGetValue(paramType, out var typeEvents) ||
+                !typeEvents.TryGetValue(eventName, out var listeners)) return;
+            listeners.Remove(callback);
+
+            if (listeners.Count == 0)
+            {
+                typeEvents.Remove(eventName);
             }
+
+            // ä»æ‰€æœ‰è€…è®°å½•ä¸­ç§»é™¤
+            RemoveEventFromOwnerRecords(eventName, paramType, callback);
         }
 
-        _ownerRegistrations.Remove(owner);
-    }
-
-    #endregion
-
-    #region ¸¨Öú·½·¨
-
-    private void RegisterEventOwner(object owner, string eventName, Type paramType, Delegate callback)
-    {
-        if (!_ownerRegistrations.ContainsKey(owner))
+        /// <summary>
+        /// ç§»é™¤ç‰¹å®šæ— å‚æ•°äº‹ä»¶ç‰¹å®šå›è°ƒ
+        /// </summary>
+        public void RemoveEventListener(string eventName, Action callback)
         {
-            _ownerRegistrations[owner] = new List<EventRegistration>();
+            if (string.IsNullOrEmpty(eventName) || callback == null) return;
+
+            if (!_noParamEvents.TryGetValue(eventName, out var listeners)) return;
+            listeners.Remove(callback);
+
+            if (listeners.Count == 0)
+            {
+                _noParamEvents.Remove(eventName);
+            }
+
+            // ä»æ‰€æœ‰è€…è®°å½•ä¸­ç§»é™¤
+            RemoveEventFromOwnerRecords(eventName, null, callback);
         }
 
-        _ownerRegistrations[owner].Add(new EventRegistration
+        /// <summary>
+        /// ç§»é™¤æ‰€æœ‰è€…æ³¨å†Œçš„æ‰€æœ‰äº‹ä»¶
+        /// </summary>
+        public void RemoveEventsByOwner(object owner)
         {
-            EventName = eventName,
-            ParamType = paramType,
-            Callback = callback
-        });
-    }
+            if (owner == null || !_ownerRegistrations.TryGetValue(owner, out var registration)) return;
 
-    private void RemoveEventFromOwnerRecords(string eventName, Type paramType, Delegate callback)
-    {
-        // ²éÕÒËùÓĞÓµÓĞ´Ë»Øµ÷µÄËùÓĞÕß
-        var ownersToRemove = new List<object>();
+            var registrations = new List<EventRegistration>(registration);
 
-        foreach (var ownerEntry in _ownerRegistrations)
-        {
-            for (var i = ownerEntry.Value.Count - 1; i >= 0; i--)
+            foreach (var reg in registrations)
             {
-                var reg = ownerEntry.Value[i];
-                if (reg.EventName == eventName &&
-                    reg.ParamType == paramType &&
-                    reg.Callback == callback)
+                if (reg.ParamType != null)
                 {
-                    ownerEntry.Value.RemoveAt(i);
+                    // å¸¦å‚æ•°äº‹ä»¶
+                    if (!_genericEvents.TryGetValue(reg.ParamType, out var typeEvents) ||
+                        !typeEvents.TryGetValue(reg.EventName, out var listeners)) continue;
+                    listeners.Remove(reg.Callback);
+
+                    if (listeners.Count == 0)
+                    {
+                        typeEvents.Remove(reg.EventName);
+                    }
+                }
+                else
+                {
+                    // æ— å‚æ•°äº‹ä»¶
+                    if (!_noParamEvents.TryGetValue(reg.EventName, out var listeners)) continue;
+                    listeners.Remove((Action)reg.Callback);
+
+                    if (listeners.Count == 0)
+                    {
+                        _noParamEvents.Remove(reg.EventName);
+                    }
                 }
             }
 
-            if (ownerEntry.Value.Count == 0)
-            {
-                ownersToRemove.Add(ownerEntry.Key);
-            }
-        }
-
-        foreach (var owner in ownersToRemove)
-        {
             _ownerRegistrations.Remove(owner);
         }
-    }
 
-    #endregion
+        #endregion
 
-    /// <summary>
-    /// Çå³ıËùÓĞÊÂ¼ş¼àÌı
-    /// </summary>
-    public void ClearAllEvents()
-    {
-        _genericEvents.Clear();
-        _noParamEvents.Clear();
-        _ownerRegistrations.Clear();
-    }
+        #region æ‰€æœ‰è€…ç®¡ç†
 
-    private void OnDestroy()
-    {
-        ClearAllEvents();
-    }
+        private void RegisterEventOwner(object owner, string eventName, Type paramType, Delegate callback)
+        {
+            if (!_ownerRegistrations.ContainsKey(owner))
+            {
+                _ownerRegistrations[owner] = new List<EventRegistration>();
+            }
 
-    /// <summary>
-    /// ÊÂ¼ş×¢²á¼ÇÂ¼
-    /// </summary>
-    private struct EventRegistration
-    {
-        public string EventName;
-        public Type ParamType;
-        public Delegate Callback;
+            _ownerRegistrations[owner].Add(new EventRegistration
+            {
+                EventName = eventName,
+                ParamType = paramType,
+                Callback = callback
+            });
+        }
+
+        private void RemoveEventFromOwnerRecords(string eventName, Type paramType, Delegate callback)
+        {
+            // æŠŠè‡ªå·±åŠ å…¥çš„å›è°ƒä»ä¸­ç§»é™¤è®°å½•
+            var ownersToRemove = new List<object>();
+
+            foreach (var ownerEntry in _ownerRegistrations)
+            {
+                for (var i = ownerEntry.Value.Count - 1; i >= 0; i--)
+                {
+                    var reg = ownerEntry.Value[i];
+                    if (reg.EventName == eventName &&
+                        reg.ParamType == paramType &&
+                        reg.Callback == callback)
+                    {
+                        ownerEntry.Value.RemoveAt(i);
+                    }
+                }
+
+                if (ownerEntry.Value.Count == 0)
+                {
+                    ownersToRemove.Add(ownerEntry.Key);
+                }
+            }
+
+            foreach (var owner in ownersToRemove)
+            {
+                _ownerRegistrations.Remove(owner);
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// æ¸…ç†æ‰€æœ‰äº‹ä»¶ç›‘å¬
+        /// </summary>
+        public void ClearAllEvents()
+        {
+            _genericEvents.Clear();
+            _noParamEvents.Clear();
+            _ownerRegistrations.Clear();
+        }
+
+        private void OnDestroy()
+        {
+            ClearAllEvents();
+        }
+
+        /// <summary>
+        /// äº‹ä»¶æ³¨å†Œè®°å½•
+        /// </summary>
+        private struct EventRegistration
+        {
+            public string EventName;
+            public Type ParamType;
+            public Delegate Callback;
+        }
     }
 }

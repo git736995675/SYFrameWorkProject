@@ -1,12 +1,28 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using ZSYFramework.Runtime.Config.Utils;
+using SY;
 using ZSYFramework.Runtime.LitJson;
 
 public class LanguageSettingConfig  
 { 
-    	/// 字符表 	public int Id { get; set; }	/// 对应语言中全称 	public string Country { get; set; }	/// 缩写 	public string ShortName { get; set; }	/// 中文翻译 	public string Annotate { get; set; }	/// 字体资源名称 	public string FontAssetName { get; set; }	/// 在UI中的排序 	public int Sort { get; set; }	/// 在多语言表中的属性名称 	public string StrKey { get; set; }	/// 是否开启 	public bool IsUse { get; set; } 
+    
+	/// 字符表 
+	public int Id { get; set; }
+	/// 对应语言中全称 
+	public string Country { get; set; }
+	/// 缩写 
+	public string ShortName { get; set; }
+	/// 中文翻译 
+	public string Annotate { get; set; }
+	/// 字体资源名称 
+	public string FontAssetName { get; set; }
+	/// 在UI中的排序 
+	public int Sort { get; set; }
+	/// 在多语言表中的属性名称 
+	public string StrKey { get; set; }
+	/// 是否开启 
+	public bool IsUse { get; set; } 
     
     
     private const string ConfigName = "LanguageSettingConfig" ; 

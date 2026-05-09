@@ -2,9 +2,9 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-namespace ZSYFramework.Runtime.View.ViewAnimation
+namespace SY
 {
-    public class ScaleViewAnimation : Scripts.ViewAnimation
+    public class ScaleViewAnimation : ViewAnimation
     {
         private float duration = 0.3f;
     
