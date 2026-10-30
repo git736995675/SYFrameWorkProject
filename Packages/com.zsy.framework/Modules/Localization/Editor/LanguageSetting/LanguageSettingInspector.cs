@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEngine;
 using ZSYFramework.Localization;
 
-#if UNITY_EDITOR
 #if SY_TMP
 #endif
 
@@ -132,4 +131,3 @@ private void RefreshText()
 }
 }
 }
-#endif

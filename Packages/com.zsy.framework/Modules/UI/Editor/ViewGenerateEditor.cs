@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using ZSYFramework.Core;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.UI.Editor
 {
@@ -192,4 +191,3 @@ private static string GenerateAttribute(GameObject prefab, string prefabName, st
 }
 }
 }
-#endif

@@ -2,8 +2,6 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-#if UNITY_EDITOR
-
 
 namespace ZSYFramework.DevTools
 {
@@ -32,4 +30,3 @@ private static void CountLinesOfCode()
 }
 }
 }
-#endif

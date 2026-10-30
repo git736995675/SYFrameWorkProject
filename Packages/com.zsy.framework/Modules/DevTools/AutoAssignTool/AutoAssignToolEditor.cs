@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEngine;
 using ZSYFramework.Core;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.DevTools
 {
@@ -42,4 +41,3 @@ private static void ProcessSelectedPrefab()
 }
 }
 }
-#endif

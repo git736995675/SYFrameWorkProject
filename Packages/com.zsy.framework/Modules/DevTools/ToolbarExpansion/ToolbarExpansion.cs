@@ -11,7 +11,6 @@ using ZSYFramework.AssetBundle;
 using ZSYFramework.DevTools.Utils;
 using ZSYFramework.Table.Editor;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.DevTools
 {
@@ -189,4 +188,3 @@ private static void OpenExcel(string path)
 }
 
 }
-#endif

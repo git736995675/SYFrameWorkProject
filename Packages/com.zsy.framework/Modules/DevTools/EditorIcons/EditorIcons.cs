@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -757,4 +756,3 @@ public static string[] ico_list =
     #endregion
 }
 }
-#endif

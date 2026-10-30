@@ -7,7 +7,6 @@ using UnityEditor;
 using UnityEngine;
 using ZSYFramework.Core;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.AssetBundle.Editor
 {
@@ -369,4 +368,3 @@ private static void GenerateVersionFile(BuildTarget target)
 }
 
 }
-#endif

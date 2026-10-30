@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
-#if UNITY_EDITOR
 
 
 namespace ZSYFramework.DevTools
@@ -610,4 +609,3 @@ private void ExecuteRename()
 }
 }
 }
-#endif

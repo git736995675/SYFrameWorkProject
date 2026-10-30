@@ -1,7 +1,6 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-#if UNITY_EDITOR
 
 namespace ZSYFramework.DevTools.Utils
 {
@@ -136,4 +135,3 @@ private static string HiddenPath => Path.Combine(PackageRoot, HiddenName);
 private static string VisiblePath => Path.Combine(PackageRoot, VisibleName);
 }
 }
-#endif

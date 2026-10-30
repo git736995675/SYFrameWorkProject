@@ -4,7 +4,6 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.AssetBundle.Editor
 {
@@ -169,4 +168,3 @@ private static string PlatformSuffix(BuildTarget buildTarget)
 }
 }
 }
-#endif

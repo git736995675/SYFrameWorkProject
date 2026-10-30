@@ -2,7 +2,6 @@ using System.IO;
 using System;
 using UnityEditor;
 using UnityEngine;
-#if UNITY_EDITOR
 
 
 namespace ZSYFramework.DevTools
@@ -581,4 +580,3 @@ private class KeyData
 }
 
 }
-#endif

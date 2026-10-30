@@ -6,8 +6,6 @@ using UnityEditor;
 using UnityEngine;
 using ZSYFramework.Core;
 
-#if UNITY_EDITOR
-
 
 namespace ZSYFramework.DevTools
 {
@@ -358,4 +356,3 @@ private string GetRelativePath(string fullPath, string basePath)
 }
 
 }
-#endif

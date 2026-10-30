@@ -11,7 +11,6 @@ using ZSYFramework.Core;
 using ZSYFramework.Core.SY;
 using ZSYFramework.Table;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.Table.Editor
 {
@@ -298,4 +297,3 @@ public struct TableData
 
 
 }
-#endif

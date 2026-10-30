@@ -1,7 +1,6 @@
 using UnityEditor;
 using ZSYFramework.Core;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.DevTools
 {
@@ -17,4 +16,3 @@ public static void OpenFile()
 }
 } 
 }
-#endif

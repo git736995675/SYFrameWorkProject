@@ -7,7 +7,6 @@ using UnityEngine;
 using ZSYFramework.Core;
 using Process = System.Diagnostics.Process;
 
-#if UNITY_EDITOR
 
 namespace ZSYFramework.DevTools
 {
@@ -403,4 +402,3 @@ private class CustomDirectoryList
 }
 }
 }
-#endif

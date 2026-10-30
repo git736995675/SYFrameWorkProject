@@ -1,7 +1,5 @@
-#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-
 
 
 namespace ZSYFramework.Localization.Arabic
@@ -60,4 +58,3 @@ public class ArabicTextMenu : MonoBehaviour
     }
 }
 }
-#endif

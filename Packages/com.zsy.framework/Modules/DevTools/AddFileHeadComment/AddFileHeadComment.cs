@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System.IO;
 using UnityEditor;
 namespace ZSYFramework.DevTools
@@ -90,4 +89,3 @@ public static SettingsProvider CreateMySettingsProvider()
 }
 }
 }
-#endif

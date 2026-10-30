@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
-using ZSYFramework.Core;
-namespace ZSYFramework.UI
+namespace ZSYFramework.Core
 {
 /// <summary>
 /// 场景管理器。封装场景异步加载、加载画面显示与最小加载时长控制。
@@ -39,7 +38,6 @@ public void LoadScene(string sceneName, Action<float> onProgress = null, Action 
 {
     if (_isLoading) return;
 
-    ViewManager.Instance.CloseAllView();
     StartCoroutine(LoadSceneCoroutine(sceneName, LoadSceneMode.Single, onProgress, () =>
     {
         _currentActiveScene = sceneName;
