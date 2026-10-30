@@ -25,7 +25,8 @@ private static List<string> _bundleTargets;
 private static bool _isCompression = true;
 
 
-[MenuItem("SY-Tool/AssetBundle/AssetBundles管理", false, 1)]
+// [菜单已由 BundleSystemWindow 接管; 本类保留 BuildBundles/GenerateInfoListFile 供出包流程过渡调用]
+[MenuItem("SY-Tool/AssetBundle/旧版AssetBundles管理(待移除)", false, 99)]
 public static void ShowWindow()
 {
     GetWindow<ResourceBuilderWindow>("AssetBundles管理");

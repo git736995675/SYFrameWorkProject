@@ -92,7 +92,7 @@ private FileSaveModel _fileEditModel = new();
 
 private readonly List<FileSystemModel> _rootModels  = new(); 
 
-[MenuItem("SY-Tool/AssetBundle/AssetBundle资源编辑器")]
+[MenuItem("SY-Tool/AssetBundle/旧版资源编辑器(待移除)", false, 98)]
 public static void ShowWindow()
 {
     GetWindow<DirectoryTreeViewer>("AssetBundle资源编辑器");

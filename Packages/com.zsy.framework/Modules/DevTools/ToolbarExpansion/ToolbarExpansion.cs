@@ -6,7 +6,6 @@ using UnityEditor.SceneManagement;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEngine;
-using ZSYFramework.AssetBundle.Editor;
 using ZSYFramework.AssetBundle;
 using ZSYFramework.DevTools.Utils;
 using ZSYFramework.Table.Editor;
@@ -110,8 +109,6 @@ private static void DrawRefreshMenu()
     };
     if (!GUILayout.Button(content)) return;
     TableEditor.ReadAllExcel();
-    ResourceBuilderWindow.GenerateInfoListFile();
-    menu.ShowAsContext();
     AssetDatabase.Refresh();
 }
 
