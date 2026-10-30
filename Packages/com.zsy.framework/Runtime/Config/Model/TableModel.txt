@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using ZSYFramework.Runtime.Config.Utils;
+using SY;
 using ZSYFramework.Runtime.LitJson;
 
 public class @Name  
