@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace ZSYFramework.Runtime.LitJson {
+namespace ZSYFramework.Core.Json;
 
-    /// <summary>
-    /// 拓展方法
-    /// </summary>
+/// <summary>
+/// 拓展方法
+/// </summary>
 	public static class Extensions {
 
 		public static void WriteProperty(this JsonWriter w,string name,long value){
@@ -29,12 +29,11 @@ namespace ZSYFramework.Runtime.LitJson {
 
 	}
 
-    /// <summary>
-    /// 跳过序列化的标签
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
-    public sealed class JsonIgnore : Attribute
-    {
+/// <summary>
+/// 跳过序列化的标签
+/// </summary>
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
+public sealed class JsonIgnore : Attribute
+{
 
-    }
 }

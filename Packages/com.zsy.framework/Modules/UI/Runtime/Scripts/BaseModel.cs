@@ -2,57 +2,59 @@
 
 using System;
 using UnityEngine;
+using ZSYFramework.Core.Json;
 
-namespace SY
+namespace ZSYFramework.UI;
+/// <summary>
+/// 视图数据模型基类。使用 ScriptableObject 持久化视图数据。
+/// </summary>
+public abstract class BaseModel : ScriptableObject
 {
-    public abstract class BaseModel : ScriptableObject
-    {
-        public UILayer layer = UILayer.Normal; // 层级管理
-        public float maskAlpha = 0.8f;
-        public bool isMaskClose = true;
+public UILayer layer = UILayer.Normal; // 层级管理
+public float maskAlpha = 0.8f;
+public bool isMaskClose = true;
 
-        public ViewArgs BaseArgs { get; private set; } //参数
+public ViewArgs BaseArgs { get; private set; } //参数
 
-        private Action OnDataChanged { get; set; } // 数据变更事件
+private Action OnDataChanged { get; set; } // 数据变更事件
 
 
-        public void AddChangeEvent(Action changeEvent)
-        {
-            OnDataChanged += changeEvent;
-        }
+public void AddChangeEvent(Action changeEvent)
+{
+    OnDataChanged += changeEvent;
+}
 
-        public void RemoveChangeEvent(Action changeEvent)
-        {
-            OnDataChanged -= changeEvent;
-        }
+public void RemoveChangeEvent(Action changeEvent)
+{
+    OnDataChanged -= changeEvent;
+}
 
-        public void Initialize(ViewArgs viewArgs)
-        {
-            BaseArgs = viewArgs;
-            Initialize();
-        }
+public void Initialize(ViewArgs viewArgs)
+{
+    BaseArgs = viewArgs;
+    Initialize();
+}
 
-        public void RefreshArgs(ViewArgs viewArgs)
-        {
-            BaseArgs = viewArgs;
-            Reset();
-            NotifyDataChanged();
-        }
+public void RefreshArgs(ViewArgs viewArgs)
+{
+    BaseArgs = viewArgs;
+    Reset();
+    NotifyDataChanged();
+}
 
-        // 通知View更新
-        private void NotifyDataChanged()
-        {
-            OnDataChanged?.Invoke();
-        }
+// 通知View更新
+private void NotifyDataChanged()
+{
+    OnDataChanged?.Invoke();
+}
 
 
-        protected virtual void Initialize()
-        {
-        }
+protected virtual void Initialize()
+{
+}
 
-        // 重置
-        protected virtual void Reset()
-        {
-        }
-    }
+// 重置
+protected virtual void Reset()
+{
+}
 }

@@ -1,12 +1,18 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using SY;
-using ZSYFramework.Runtime.LitJson;
+using System.Linq;
+using ZSYFramework.Core.Json;
+using ZSYFramework.Table;
 
+
+namespace ZSYFramework.Localization;
+
+/// <summary>
+/// 多语言文本表契约类。由配置表生成，Key-Value 形式的翻译条目结构。
+/// </summary>
 public class StrConfig  
 { 
-    
+
 	/// 多语言 
 	public int Id { get; set; }
 	/// 中文简体zh 
@@ -31,76 +37,76 @@ public class StrConfig
 	public string GERMAN { get; set; }
 	/// 法语fr 
 	public string FRENCH { get; set; } 
-    
-    
-    private const string ConfigName = "StrConfig" ; 
-    
-    private static Dictionary<string,StrConfig> Data { get; set; } 
-    
-    private static List<StrConfig> _dataArray;
 
-    
-    public static void LoadConfig(Action onComplete)
+
+private const string ConfigName = "StrConfig" ; 
+
+private static Dictionary<string,StrConfig> Data { get; set; } 
+
+private static List<StrConfig> _dataArray;
+
+
+public static void LoadConfig(Action onComplete)
+{
+     if (Data != null)
+     {
+        onComplete?.Invoke(); 
+        return;
+     } 
+     ConfigUtils.LoadConfigTextAsset<Dictionary<string,StrConfig>>(ConfigName, (data) =>
+     {
+         Data = data;
+         _dataArray = Data.Values.ToList();
+         onComplete?.Invoke();
+     });
+}
+
+public static void LoadConfig(string bundleName, string assetName, Action onComplete)
+{
+    if (Data != null)
     {
-         if (Data != null)
-         {
-            onComplete?.Invoke(); 
-            return;
-         } 
-         ConfigUtils.LoadConfigTextAsset<Dictionary<string,StrConfig>>(ConfigName, (data) =>
-         {
-             Data = data;
-             _dataArray = Data.Values.ToList();
-             onComplete?.Invoke();
-         });
-    }
-    
-    public static void LoadConfig(string bundleName, string assetName, Action onComplete)
+        onComplete?.Invoke(); 
+        return;
+    } 
+    ConfigUtils.LoadConfigTextAsset(bundleName, assetName, (textAsset) =>
     {
-        if (Data != null)
-        {
-            onComplete?.Invoke(); 
-            return;
-        } 
-        ConfigUtils.LoadConfigTextAsset(bundleName, assetName, (textAsset) =>
-        {
-            SetConfig(textAsset.text);
-            onComplete?.Invoke();
-        });
-    }
+        SetConfig(textAsset.text);
+        onComplete?.Invoke();
+    });
+}
+
+private static void SetConfig(string text)
+{
+    Data = JsonMapper.ToObject<Dictionary<string,StrConfig>>(text);
+    _dataArray = Data.Values.ToList();
+}
     
-    private static void SetConfig(string text)
-    {
-        Data = JsonMapper.ToObject<Dictionary<string,StrConfig>>(text);
-        _dataArray = Data.Values.ToList();
-    }
-        
-    public static void Get(int id,Action<StrConfig>  callback) 
-    { 
-        LoadConfig(() =>
-        {
-            Data.TryGetValue(id.ToString(), out var config);
-            callback?.Invoke(config);
-        });
-    }  
-    
-    public static void GetAll(Action<List<StrConfig>>  callback) 
-    { 
-        LoadConfig(() =>
-        {
-            callback?.Invoke(_dataArray);
-        });
-    }  
-    
-    //------------------------------------------------ͬ������������ǰ����
-    public static StrConfig Get(int id)
+public static void Get(int id,Action<StrConfig>  callback) 
+{ 
+    LoadConfig(() =>
     {
         Data.TryGetValue(id.ToString(), out var config);
-        return config;
-    }
-    
-    public static List<StrConfig> GetAll()
+        callback?.Invoke(config);
+    });
+}  
+
+public static void GetAll(Action<List<StrConfig>>  callback) 
+{ 
+    LoadConfig(() =>
     {
-        return _dataArray;
-    }
+        callback?.Invoke(_dataArray);
+    });
+}  
+
+//------------------------------------------------ͬ������������ǰ����
+public static StrConfig Get(int id)
+{
+    Data.TryGetValue(id.ToString(), out var config);
+    return config;
+}
+
+public static List<StrConfig> GetAll()
+{
+    return _dataArray;
+}
 }

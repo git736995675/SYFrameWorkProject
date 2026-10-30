@@ -2,102 +2,107 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Editor.FileEditing
+namespace ZSYFramework.DevTools;
+/// <summary>
+/// 文件编辑通用工具。批量文件处理的基础方法与过滤器。
+/// </summary>
+public abstract class FileEditUtility
 {
-    public abstract class FileEditUtility
+// 文件类型筛选
+/// <summary>
+/// 文件类型过滤器。定义批量文件操作的目标扩展名范围。
+/// </summary>
+public enum FileTypeFilter
+{
+    All,
+    Images,
+    TextFiles,
+    Audio,
+    Videos,
+    Table,
+    Scripts,
+    Unity,
+    Archive,
+    Executable
+}
+
+// 文件类型映射
+private static readonly Dictionary<FileTypeFilter, string> FileTypeExtensions = new()
+{
+    { FileTypeFilter.All, "*.*" },
+    { FileTypeFilter.Images, "*.png;*.jpg;*.jpeg;*.gif;*.bmp;*.tga;*.psd;*.tif;*.tiff" },
     {
-        // 文件类型筛选
-        public enum FileTypeFilter
+        FileTypeFilter.TextFiles,
+        "*.txt;*.json;*.xml;*.yml;*.yaml;*.md;*.html;*.doc;*.doc;*.docx;*.pdf;*.ppt;*.pptx"
+    },
+    { FileTypeFilter.Audio, "*.mp3;*.wav;*.ogg;*.aac;*.aif;*.flac;*.ape;*.aiff;*.mid;*.amr;*.silk12;" },
+    { FileTypeFilter.Videos, "*.mp4;*.mov;*.avi;*.mpg;*.mpeg;*.mkv;*.wmv;*.webm;" },
+    { FileTypeFilter.Table, "*.csv;*.xlsx;*.xls;" },
+    { FileTypeFilter.Scripts, "*.cs;*.js;*.py;*.cpp;*.py;*.h;*.java;*.lua;*.shader;*.cgi;*.hlsl;" },
+    { FileTypeFilter.Unity, "*.prefab;*.unity;*.asset;*.mat;*.fbx;*.obj;" },
+    { FileTypeFilter.Archive, "*.zip;*.rar;*.7z;*.tar;*.gz;" },
+    { FileTypeFilter.Executable, "*.exe;*.dlls;*.msi;*.bat;*.sh;" },
+};
+
+/// <summary>
+/// 获取指定类型的后缀列表
+/// </summary>
+public static string GetFilterExtensionsByType(FileTypeFilter typeFilter)
+{
+    return FileTypeExtensions.GetValueOrDefault(typeFilter, "");
+}
+
+/// <summary>
+/// Hash算法类型
+/// </summary>
+public enum HashAlgorithmType
+{
+    MD5,
+    SHA1,
+    SHA256
+}
+
+/// <summary>
+/// 计算文件的hash值
+/// </summary>
+public static string CalculateHash(string filePath, HashAlgorithmType algorithm)
+{
+    try
+    {
+        using var stream = File.OpenRead(filePath);
+        HashAlgorithm hashAlgorithm;
+        switch (algorithm)
         {
-            All,
-            Images,
-            TextFiles,
-            Audio,
-            Videos,
-            Table,
-            Scripts,
-            Unity,
-            Archive,
-            Executable
+            case HashAlgorithmType.MD5:
+                hashAlgorithm = MD5.Create();
+                break;
+            case HashAlgorithmType.SHA1:
+                hashAlgorithm = SHA1.Create();
+                break;
+            case HashAlgorithmType.SHA256:
+                hashAlgorithm = SHA256.Create();
+                break;
+            default:
+                return "Unsupported algorithm";
         }
 
-        // 文件类型映射
-        private static readonly Dictionary<FileTypeFilter, string> FileTypeExtensions = new()
+        using (hashAlgorithm)
         {
-            { FileTypeFilter.All, "*.*" },
-            { FileTypeFilter.Images, "*.png;*.jpg;*.jpeg;*.gif;*.bmp;*.tga;*.psd;*.tif;*.tiff" },
+            var hash = hashAlgorithm.ComputeHash(stream);
+            var sb = new StringBuilder();
+            foreach (var b in hash)
             {
-                FileTypeFilter.TextFiles,
-                "*.txt;*.json;*.xml;*.yml;*.yaml;*.md;*.html;*.doc;*.doc;*.docx;*.pdf;*.ppt;*.pptx"
-            },
-            { FileTypeFilter.Audio, "*.mp3;*.wav;*.ogg;*.aac;*.aif;*.flac;*.ape;*.aiff;*.mid;*.amr;*.silk12;" },
-            { FileTypeFilter.Videos, "*.mp4;*.mov;*.avi;*.mpg;*.mpeg;*.mkv;*.wmv;*.webm;" },
-            { FileTypeFilter.Table, "*.csv;*.xlsx;*.xls;" },
-            { FileTypeFilter.Scripts, "*.cs;*.js;*.py;*.cpp;*.py;*.h;*.java;*.lua;*.shader;*.cgi;*.hlsl;" },
-            { FileTypeFilter.Unity, "*.prefab;*.unity;*.asset;*.mat;*.fbx;*.obj;" },
-            { FileTypeFilter.Archive, "*.zip;*.rar;*.7z;*.tar;*.gz;" },
-            { FileTypeFilter.Executable, "*.exe;*.dlls;*.msi;*.bat;*.sh;" },
-        };
-
-        /// <summary>
-        /// 获取指定类型的后缀列表
-        /// </summary>
-        public static string GetFilterExtensionsByType(FileTypeFilter typeFilter)
-        {
-            return FileTypeExtensions.GetValueOrDefault(typeFilter, "");
-        }
-
-        /// <summary>
-        /// Hash算法类型
-        /// </summary>
-        public enum HashAlgorithmType
-        {
-            MD5,
-            SHA1,
-            SHA256
-        }
-
-        /// <summary>
-        /// 计算文件的hash值
-        /// </summary>
-        public static string CalculateHash(string filePath, HashAlgorithmType algorithm)
-        {
-            try
-            {
-                using var stream = File.OpenRead(filePath);
-                HashAlgorithm hashAlgorithm;
-                switch (algorithm)
-                {
-                    case HashAlgorithmType.MD5:
-                        hashAlgorithm = MD5.Create();
-                        break;
-                    case HashAlgorithmType.SHA1:
-                        hashAlgorithm = SHA1.Create();
-                        break;
-                    case HashAlgorithmType.SHA256:
-                        hashAlgorithm = SHA256.Create();
-                        break;
-                    default:
-                        return "Unsupported algorithm";
-                }
-
-                using (hashAlgorithm)
-                {
-                    var hash = hashAlgorithm.ComputeHash(stream);
-                    var sb = new StringBuilder();
-                    foreach (var b in hash)
-                    {
-                        sb.Append(b.ToString("x2"));
-                    }
-
-                    return sb.ToString();
-                }
+                sb.Append(b.ToString("x2"));
             }
-            catch
-            {
-                return "Error";
-            }
+
+            return sb.ToString();
         }
     }
+    catch
+    {
+        return "Error";
+    }
+}
 }

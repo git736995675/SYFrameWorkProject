@@ -1,5 +1,6 @@
 using System;
-using SY;
+using ZSYFramework.Core;
+using ZSYFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;

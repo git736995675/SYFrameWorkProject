@@ -1,11 +1,12 @@
-namespace ZSYFramework.Editor.ResourceBuilder
-{
+namespace ZSYFramework.AssetBundle.Editor;
  
-    public class ResourceBuilderInfo
-    {
-        public int Version = 1;
-        
-        
-        
-    }
+/// <summary>
+/// 资源打包配置信息。
+/// </summary>
+public class ResourceBuilderInfo
+{
+public int Version = 1;
+
+
+
 }

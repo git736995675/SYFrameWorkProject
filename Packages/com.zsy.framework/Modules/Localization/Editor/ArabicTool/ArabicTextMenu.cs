@@ -1,62 +1,61 @@
 ﻿#if UNITY_EDITOR
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace ArabicTool
+
+
+namespace ZSYFramework.Localization.Arabic;
+public class ArabicTextMenu : MonoBehaviour
 {
-    public class ArabicTextMenu : MonoBehaviour
+    // Start is called before the first frame update
+    void Start()
     {
-        // Start is called before the first frame update
-        void Start()
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    [MenuItem("GameObject/UI/SeniorText")]
+    public static void CreateSeniorText()
+    {
+        Transform curSelectTransform = Selection.activeTransform;
+        GameObject obj = new GameObject();
+        SeniorText text = obj.AddComponent<SeniorText>();
+        text.SetRawText("New Senior Text");
+
+        string prefix = "SeniorText";
+        string findName = prefix;
+
+        if (curSelectTransform)
         {
+            int i = 0;
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-        [MenuItem("GameObject/UI/SeniorText")]
-        public static void CreateSeniorText()
-        {
-            Transform curSelectTransform = Selection.activeTransform;
-            GameObject obj = new GameObject();
-            SeniorText text = obj.AddComponent<SeniorText>();
-            text.SetRawText("New Senior Text");
-
-            string prefix = "SeniorText";
-            string findName = prefix;
-
-            if (curSelectTransform)
+            while (true)
             {
-                int i = 0;
-
-                while (true)
+                if (i > 0)
                 {
-                    if (i > 0)
-                    {
-                        findName = string.Format(prefix + " ({0})", i);
-                    }
-
-                    if (curSelectTransform.Find(findName))
-                    {
-                        i++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    findName = string.Format(prefix + " ({0})", i);
                 }
 
-                obj.transform.SetParent(curSelectTransform);
+                if (curSelectTransform.Find(findName))
+                {
+                    i++;
+                }
+                else
+                {
+                    break;
+                }
             }
 
-            obj.name = findName;
-            obj.transform.localPosition = Vector3.zero;
+            obj.transform.SetParent(curSelectTransform);
         }
+
+        obj.name = findName;
+        obj.transform.localPosition = Vector3.zero;
     }
 }
 #endif

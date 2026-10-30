@@ -1,12 +1,11 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace SY
-{
+namespace ZSYFramework.Core;
 	/// <summary>
-    /// 功能描述：
-    /// </summary>
-	public class ResManager : MonoSingleton<ResManager>
+/// 功能描述：
+/// </summary>
+	public class ResourceManager : MonoSingleton<ResourceManager>
 	{
 		public static T Load<T>(string path) where T : UnityEngine.Object
 		{
@@ -23,4 +22,3 @@ namespace SY
 			return request.asset as T;
 		}
 	}
-}

@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using SY;
-using ZSYFramework.Runtime.LitJson;
+using ZSYFramework.Core;
+using ZSYFramework.Core.Json;
+using ZSYFramework.Table;
 
 public class @Name  
 { 

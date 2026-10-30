@@ -1,23 +1,25 @@
 using System.Collections;
+using ZSYFramework.Core.Json;
 
-namespace SY
+namespace ZSYFramework.Core;
+/// <summary>
+/// 协程任务封装。将协程抽象为可跟踪状态的任务对象。
+/// </summary>
+public class CoroutineTask
 {
-    public class CoroutineTask
-    {
-        public bool IsRunning { get; private set; }
+public bool IsRunning { get; private set; }
 
-        private readonly IEnumerator _routine;
+private readonly IEnumerator _routine;
 
-        public CoroutineTask(IEnumerator routine)
-        {
-            _routine = routine;
-        }
+public CoroutineTask(IEnumerator routine)
+{
+    _routine = routine;
+}
 
-        public IEnumerator Start()
-        {
-            IsRunning = true;
-            yield return _routine;
-            IsRunning = false;
-        }
-    }
+public IEnumerator Start()
+{
+    IsRunning = true;
+    yield return _routine;
+    IsRunning = false;
+}
 }

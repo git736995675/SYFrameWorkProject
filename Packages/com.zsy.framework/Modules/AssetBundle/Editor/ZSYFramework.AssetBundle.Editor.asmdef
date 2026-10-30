@@ -6,7 +6,9 @@
         "ZSYFramework.Core",
         "ZSYFramework.Core.Editor"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
