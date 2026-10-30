@@ -47,10 +47,37 @@ namespace ZSYFramework.AssetBundle.Editor
         {
             EditorGUILayout.LabelField("打包规则资产", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "每个参与打包的根目录一个规则资产（Create → ZSYFramework → Bundle Rule Asset）。\n" +
-                "把规则资产拖入下方列表即可参与打包。命名冲突未解决时无法构建。", MessageType.Info);
+                "两种配置方式：\n" +
+                "· 选中 Assets/ 下文件夹，在 Inspector 的「AssetBundle 打包设置」里配置（推荐）；\n" +
+                "· 手动创建规则资产（Create → ZSYFramework → Bundle Rule Asset）后拖入下方列表。\n" +
+                "命名冲突未解决时无法构建。", MessageType.Info);
+
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("自动收集全部规则", GUILayout.Width(140)))
+            {
+                _rules = CollectAllRules();
+                if (_rules.Length == 0)
+                {
+                    EditorUtility.DisplayDialog("未找到规则资产",
+                        "工程内没有 BundleRuleAsset。\n请先在文件夹 Inspector 里「启用 AB 打包」。", "确定");
+                }
+            }
+            GUILayout.Label($"{ActiveRules().Length} 条规则生效", EditorStyles.miniLabel);
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
 
             _rules = DrawRuleList(_rules);
+        }
+
+        /// <summary>扫描工程内全部规则资产（文件夹 Inspector 生成 + 手动创建）。</summary>
+        private static BundleRuleAsset[] CollectAllRules()
+        {
+            return AssetDatabase.FindAssets("t:BundleRuleAsset")
+                .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+                .Select(path => AssetDatabase.LoadAssetAtPath<BundleRuleAsset>(path))
+                .Where(r => r != null && r.TargetAssetPath != null)
+                .OrderBy(r => r.TargetAssetPath, StringComparer.Ordinal)
+                .ToArray();
         }
 
         private BundleRuleAsset[] _rules = Array.Empty<BundleRuleAsset>();

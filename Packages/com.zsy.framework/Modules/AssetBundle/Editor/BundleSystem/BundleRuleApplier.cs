@@ -36,10 +36,10 @@ namespace ZSYFramework.AssetBundle.Editor
     /// </summary>
     public static class BundleRuleApplier
     {
-        // 不参与打包的扩展名（脚本/工程文件/表格源）
+        // 不参与打包的扩展名（脚本/工程文件/表格源/规则资产）
         private static readonly string[] BuiltinExcludeExtensions =
         {
-            ".meta", ".cs", ".xlsx", ".xls", ".csv", ".json", ".txt", ".asmdef",
+            ".meta", ".cs", ".xlsx", ".xls", ".csv", ".json", ".txt", ".asmdef", ".asset",
         };
 
         /// <summary>把全部规则应用到 importer。先清空旧 bundle 名保证幂等。</summary>
