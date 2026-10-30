@@ -97,7 +97,7 @@ private void OnGUI()
 
     if (GUILayout.Button("打开资源清单"))
     {
-        Application.OpenURL(ResourceUtils.ResInfoListFileOutPutPath);
+        Application.OpenURL(ResourceUtils.ResInfoListFileOutPutUri);
     }
 }
 

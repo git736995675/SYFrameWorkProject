@@ -15,13 +15,12 @@ namespace ZSYFramework.AssetBundle
     /// </summary>
     public class ResourceUtils : MonoSingleton<ResourceUtils>
     {
+        /// <summary>清单文件的真实磁盘路径。供文件系统 API (File/Directory) 使用, 不带协议前缀。</summary>
         public static string ResInfoListFileOutPutPath =>
+            Path.Combine(Application.streamingAssetsPath, "ResourcesInfoList.json");
 
-#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-            "file://" + Path.Combine(Application.streamingAssetsPath, "ResourcesInfoList.json");
-#else
-         Path.Combine(Application.streamingAssetsPath, "ResourcesInfoList.json");
-#endif
+        /// <summary>清单文件的 URI 形式。供 UnityWebRequest / Application.OpenURL 使用。</summary>
+        public static string ResInfoListFileOutPutUri => "file://" + ResInfoListFileOutPutPath;
 
         private ResourcesInfo _resourcesInfo;
 
@@ -72,7 +71,7 @@ namespace ZSYFramework.AssetBundle
 
         private static IEnumerator LoadText(Action<bool, string> callback)
         {
-            var www = UnityWebRequest.Get(ResInfoListFileOutPutPath);
+            var www = UnityWebRequest.Get(ResInfoListFileOutPutUri);
             yield return www.SendWebRequest();
 
             if (www.result != UnityWebRequest.Result.Success)
