@@ -36,7 +36,7 @@ namespace ZSYFramework.Editor.View
                 foreach (var guid in guids)
                 {
                     path =AssetDatabase.GUIDToAssetPath(guid);
-                    if (path.Contains("Runtime/View/ViewManager.cs"))
+                    if (path.EndsWith("ViewManager.cs"))
                     {
                         break;
                     }
