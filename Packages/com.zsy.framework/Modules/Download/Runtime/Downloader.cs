@@ -71,7 +71,7 @@ namespace ZSYFramework.Download
             maxConcurrency = Mathf.Max(1, maxConcurrency);
 
             var completed = 0;
-            var report = new Progress<float>(p => progress?.Report(p));
+            var report = new SynchronizationContextProgress(progress);
             using var semaphore = new SemaphoreSlim(maxConcurrency);
             var exceptions = new List<Exception>();
 
@@ -225,6 +225,26 @@ namespace ZSYFramework.Download
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>线程安全的进度转发器：把工作线程上的进度回调封送回 Unity 主线程。</summary>
+        private sealed class SynchronizationContextProgress : IProgress<float>
+        {
+            private readonly IProgress<float> _inner;
+            private readonly SynchronizationContext _context;
+
+            public SynchronizationContextProgress(IProgress<float> inner)
+            {
+                _inner = inner;
+                _context = SynchronizationContext.Current;
+            }
+
+            public void Report(float value)
+            {
+                if (_inner == null) return;
+                if (_context != null) _context.Post(_ => _inner.Report(value), null);
+                else _inner.Report(value);
+            }
         }
     }
 }

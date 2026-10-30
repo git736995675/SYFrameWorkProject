@@ -19,17 +19,17 @@ namespace ZSYFramework.AssetBundle
         /// <inheritdoc />
         public Task<T> LoadAssetAsync<T>(string location) where T : Object
         {
-            return CallbackToTask<T>(callback => ABLoadManager.Instance.Load(location, callback));
+            return CallbackToTask<T>(callback => ABLoadManager.Instance.Load(location, callback), location);
         }
 
         /// <inheritdoc />
         public Task<Object> LoadAssetAsync(string location, Type assetType)
         {
             return CallbackToTask<Object>(callback =>
-                ABLoadManager.Instance.Load<Object>(location, asset => callback(asset)));
+                ABLoadManager.Instance.Load<Object>(location, asset => callback(asset)), location);
         }
 
-        private static Task<T> CallbackToTask<T>(Action<Action<T>> invoke) where T : Object
+        private static Task<T> CallbackToTask<T>(Action<Action<T>> invoke, string location) where T : Object
         {
             var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
             invoke(result =>
