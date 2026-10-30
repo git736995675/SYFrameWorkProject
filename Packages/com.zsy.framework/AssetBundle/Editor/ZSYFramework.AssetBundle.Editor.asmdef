@@ -1,4 +1,11 @@
 {
+    "name": "ZSYFramework.AssetBundle.Editor",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.AssetBundle",
+        "ZSYFramework.Core",
+        "ZSYFramework.Core.Editor"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -7,13 +14,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false,
-    "name": "ZSYFramework.AssetBundle.Editor",
-    "rootNamespace": "ZSYFramework",
-    "references": [
-        "ZSYFramework.AssetBundle",
-        "ZSYFramework.Core",
-        "ZSYFramework.Table",
-        "ZSYFramework.Core.Editor"
-    ]
+    "noEngineReferences": false
 }

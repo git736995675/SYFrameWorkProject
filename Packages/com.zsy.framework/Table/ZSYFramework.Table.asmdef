@@ -1,4 +1,10 @@
 {
+    "name": "ZSYFramework.Table",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.Core",
+        "ZSYFramework.AssetBundle"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -7,10 +13,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false,
-    "name": "ZSYFramework.Table",
-    "rootNamespace": "ZSYFramework",
-    "references": [
-        "ZSYFramework.Core"
-    ]
+    "noEngineReferences": false
 }
