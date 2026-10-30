@@ -76,7 +76,7 @@ private void LoadClip(string clipName, Action<AudioClip> callback)
         return;
     }
 
-    ServiceHub.Asset.Load(clipName, (clip) =>
+    ServiceHub.Asset.Load<AudioClip>(clipName, (clip) =>
     {
         if (clip != null)
         {
