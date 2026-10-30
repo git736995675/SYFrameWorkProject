@@ -88,3 +88,51 @@ git push origin v0.2.0
 - 用到 → 放框架包本体（目前：UniRx、DOTween）
 - 用不到 → 放 `Samples~/` 作为可选 Sample，应用按需 Import
 - 插件必须自带或补上 asmdef（Runtime + Editor 成对），避免被罩进自动程序集
+
+## 维护操作手册
+
+### 新增一个第三方插件（如 SuperTween）
+
+1. 把插件目录拷进 `Packages/com.zsy.framework/Samples~/SuperTween/`
+2. 确认插件有 asmdef；没有就补一对（Runtime 放插件根，Editor 放插件 Editor 目录，Editor 引用 Runtime）
+3. 在 `Packages/com.zsy.framework/package.json` 的 `samples` 数组加一项：
+
+```json
+{
+  "displayName": "SuperTween 补间动画",
+  "description": "轻量补间动画库。",
+  "path": "Samples~/SuperTween"
+}
+```
+
+> 注意：`displayName` 里不要有 `/`（Unity 拿它当导入目录名）；全局 gitignore 的 `*~` 规则会误伤 `Samples~`，本工程 `.gitignore` 已加例外，新文件正常 `git add` 即可。
+
+4. `git add -A && git commit && git push`
+5. 应用项目侧：删 `Library/PackageCache/com.zsy.framework@<hash>` 缓存重新拉取（或升级版本号），面板即出现新条目
+
+### 修改 Demo / 已有插件
+
+**在管理工程里改**：`Samples~/` 对 Unity 隐形，两种调试方式任选：
+
+- 临时看效果：把 `Samples~/Demo` 拷到 `Assets/Samples/ZSY Framework/0.1.0/ZSY Demo/`（应用项目里的真实路径），改完把改动**同步回** `Samples~/Demo` 再提交
+- 长期开发：临时把目录改名去掉 `~`（`Samples~/Demo` → 可见），提交前再改回来
+
+**在应用项目里改**（推荐日常用法）：Import 到应用项目后直接改 `Assets/Samples/...` 下的文件——但这是复制体，改动**不会回流**框架仓库。改完如果值得沉淀，把对应文件拷回管理工程的 `Samples~/` 提交推送。
+
+### 发布新版本
+
+改完代码后：
+
+```bash
+# 1. 提交
+git add -A && git commit -m "更新 Demo"
+
+# 2. 升版本号 (package.json 的 version, 如 0.1.0 → 0.2.0)
+# 3. 打 tag 推送
+git tag v0.2.0
+git push origin main --tags
+```
+
+应用项目把 manifest URL 的后缀改成 `#v0.2.0` 即完成升级。不锁版本（跟随 main）的应用项目，删除 `Library/PackageCache` 缓存重新解析即可拿到最新。
+
+> ⚠️ 陷阱提醒：`~/.gitignore_global` 里的 `*~` 规则会忽略 `Samples~/`，如果发现 Sample 内容没提交上去，用 `git ls-files | grep Samples~` 检查，必要时 `git add -f "Packages/com.zsy.framework/Samples~/"`。
