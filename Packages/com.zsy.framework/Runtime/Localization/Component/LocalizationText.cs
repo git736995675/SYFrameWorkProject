@@ -1,5 +1,8 @@
+using System;
 using ArabicTool;
+#if SY_TMP
 using TMPro;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,18 +14,22 @@ namespace SY
         [SerializeField] private bool isFontOpenLocalize = true; // 字体是否开启本地化
 
         private Text _textComponent;
+#if SY_TMP
         private TMP_Text _tmpTextComponent;
+#endif
         private object[] _param;
         private bool _useTextMeshPro = false;
 
         private void Awake()
         {
+#if SY_TMP
             if (GetComponent<TMP_Text>() != null)
             {
                 _useTextMeshPro = true;
                 _tmpTextComponent = GetComponent<TMP_Text>();
             }
             else
+#endif
             {
                 _useTextMeshPro = false;
                 _textComponent = GetComponent<Text>();
@@ -51,12 +58,14 @@ namespace SY
         {
             if (isFontOpenLocalize)
             {
+#if SY_TMP
                 if (_useTextMeshPro)
                 {
                     if (LanguageManager.Instance.CurrentCountry.TMPFontAsset)
                         _tmpTextComponent.font = LanguageManager.Instance.CurrentCountry.TMPFontAsset;
                 }
                 else
+#endif
                 {
                     if (LanguageManager.Instance.CurrentCountry.Font)
                         _textComponent.font = LanguageManager.Instance.CurrentCountry.Font;
@@ -89,6 +98,7 @@ namespace SY
         {
             if (isFontOpenLocalize)
             {
+#if SY_TMP
                 if (GetComponent<TMP_Text>() != null)
                 {
                     _useTextMeshPro = true;
@@ -97,6 +107,7 @@ namespace SY
                     if (language.TMPFontAsset)
                         _tmpTextComponent.font = language.TMPFontAsset;
                 }
+#endif
 
                 if (GetComponent<Text>() != null)
                 {
@@ -136,12 +147,14 @@ namespace SY
 
         public void SetText(string text)
         {
+#if SY_TMP
             if (_useTextMeshPro)
             {
-                if (_textComponent)
+                if (_tmpTextComponent)
                     _tmpTextComponent.text = text;
             }
             else
+#endif
             {
                 if (_textComponent)
                     _textComponent.text = text;

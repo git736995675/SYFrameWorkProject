@@ -1,7 +1,10 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+#if SY_TMP
 using TMPro;
+#endif
 using UnityEditor;
 using UnityEngine;
 
@@ -33,7 +36,9 @@ namespace SY
         {
             // 获取项目中所有字体文件
             var allFonts = AssetDatabase.FindAssets("t:Font").Select(AssetDatabase.GUIDToAssetPath);
+#if SY_TMP
             var allTmps = AssetDatabase.FindAssets("t:TMP_FontAsset").Select(AssetDatabase.GUIDToAssetPath);
+#endif
            
             LanguageSettingConfig.GetAll((configs) =>
             {
@@ -76,12 +81,15 @@ namespace SY
                         }
                     }
                     
+#if SY_TMP
                     foreach (var fontPath in allTmps)
                     {
                         var fontName = Path.GetFileNameWithoutExtension(fontPath);
+                        if (fontName != setting.TMPFontAssetName) continue;
                         code.TMPFontAsset = (TMP_FontAsset)AssetDatabase.LoadAssetAtPath(fontPath,typeof(TMP_FontAsset));
                         break;
                     }
+#endif
 
                     list.Add(code);
                 }
@@ -119,3 +127,4 @@ namespace SY
         }
     }
 }
+#endif

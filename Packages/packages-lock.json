@@ -221,6 +221,20 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.zsy.framework": {
+      "version": "file:com.zsy.framework",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.zsy.framework.demo": {
+      "version": "file:com.zsy.framework.demo",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.zsy.framework": "0.1.0"
+      }
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

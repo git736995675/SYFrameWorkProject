@@ -1,5 +1,7 @@
 using System;
+#if SY_TMP
 using TMPro;
+#endif
 using UnityEngine;
 
 namespace SY
@@ -24,7 +26,9 @@ namespace SY
 
         public Font Font; //对应字体
 
+#if SY_TMP
         public TMP_FontAsset TMPFontAsset; //tmp字体
+#endif
     }
 
     public enum Country

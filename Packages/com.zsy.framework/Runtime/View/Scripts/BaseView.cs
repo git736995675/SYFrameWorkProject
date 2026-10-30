@@ -1,5 +1,6 @@
-using Unity.VisualScripting;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -186,7 +187,7 @@ namespace SY
                 mask.transform.SetAsFirstSibling();
 
                 if (!Model.isMaskClose) return;
-                mask.AddComponent<Button>().onClick.AddListener(() =>
+                mask.gameObject.AddComponent<Button>().onClick.AddListener(() =>
                 {
                     var btn = mask.GetComponent<Button>();
                     CommonButtonClickEvent(btn);
