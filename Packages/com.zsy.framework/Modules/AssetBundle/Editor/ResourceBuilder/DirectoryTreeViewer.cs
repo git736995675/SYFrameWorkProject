@@ -5,9 +5,7 @@ using System.Text;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-using ZSYFramework.Editor.Utils;
 using ZSYFramework.Core.Editor.Utils;
-using ZSYFramework.Core.Json;
 
 namespace ZSYFramework.AssetBundle.Editor
 {

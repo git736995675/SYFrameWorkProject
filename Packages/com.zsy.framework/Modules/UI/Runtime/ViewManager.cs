@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
-using ZSYFramework.Core.Json;
-
 namespace ZSYFramework.UI
 {
 /// <summary>

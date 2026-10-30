@@ -1,7 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using ZSYFramework.Core.Json;
-
 #if UNITY_EDITOR
 
 namespace ZSYFramework.AssetBundle.Editor

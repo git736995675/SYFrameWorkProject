@@ -5,9 +5,6 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using ZSYFramework.Core.Json;
-
-
 namespace ZSYFramework.Table.Editor
 {
 /// <summary>
@@ -28,7 +25,7 @@ private static List<string> _ignores;
 [MenuItem("SY_Tools/表格管理", false, 201)]
 public static void ShowWindow()
 {
-    var window = GetWindow(typeof(ZSYFramework.Editor.Config.TableEditor));
+    var window = GetWindow(typeof(TableEditor));
     window.titleContent = new GUIContent("配置表格管理窗口");
     _paths = null;
     _ignores = null;

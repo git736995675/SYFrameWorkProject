@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using ZSYFramework.Core.Json;
-
-
 namespace ZSYFramework.Localization.Arabic
 {
   public class ArabicTextTool

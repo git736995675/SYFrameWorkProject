@@ -5,8 +5,6 @@ using System.IO;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using ZSYFramework.Core;
-using ZSYFramework.Core.Json;
-
 namespace ZSYFramework.AssetBundle
 {
 /// <summary>

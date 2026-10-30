@@ -1,8 +1,5 @@
 
 using System.Collections.Generic;
-using ZSYFramework.Core.Json;
-
-
 namespace ZSYFramework.Localization.Arabic
 {
   internal class ArabicTable

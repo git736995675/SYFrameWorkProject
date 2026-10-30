@@ -2,7 +2,6 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System;
-using ZSYFramework.Core.Json;
 using var aes = Aes.Create();
 using var cryptoStream = new CryptoStream(inputStream, decryptor, CryptoStreamMode.Read);
 using var cryptoStream = new CryptoStream(outputStream, encryptor, CryptoStreamMode.Write);

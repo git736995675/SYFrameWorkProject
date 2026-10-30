@@ -4,7 +4,6 @@ using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using ZSYFramework.Core.Json;
 using ZSYFramework.Localization;
 
 #if UNITY_EDITOR
@@ -17,7 +16,7 @@ namespace ZSYFramework.Localization.Editor
 /// <summary>
 /// 语言设置资产的 Inspector 定制。可视化编辑语言与字体映射。
 /// </summary>
-public class LanguageSettingInspector : Editor
+public class LanguageSettingInspector : UnityEditor.Editor
 {
 
 public override void OnInspectorGUI()

@@ -4,10 +4,7 @@ using System;
 using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine;
-using ZSYFramework.Core.Json;
 using ZSYFramework.Core;
-using ZSYFramework.Localization;
-using ZSYFramework.UI;
 
 #if UNITY_EDITOR
 

@@ -2,8 +2,6 @@
 
 using System;
 using UnityEngine;
-using ZSYFramework.Core.Json;
-
 namespace ZSYFramework.UI
 {
 /// <summary>

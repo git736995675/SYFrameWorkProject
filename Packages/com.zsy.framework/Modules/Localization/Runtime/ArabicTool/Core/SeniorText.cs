@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using ZSYFramework.Core.Json;
-
-
 namespace ZSYFramework.Localization.Arabic
 {
   public class SeniorText : Text

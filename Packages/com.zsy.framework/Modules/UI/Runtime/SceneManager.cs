@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
 using ZSYFramework.Core;
-using ZSYFramework.Core.Json;
-
 namespace ZSYFramework.UI
 {
 /// <summary>

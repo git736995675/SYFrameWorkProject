@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using ZSYFramework.Core;
-using ZSYFramework.Core.Json;
-
 namespace ZSYFramework.Video
 {
 [RequireComponent(typeof(VideoPlayer))]

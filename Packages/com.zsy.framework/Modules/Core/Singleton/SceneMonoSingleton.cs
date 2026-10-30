@@ -1,6 +1,4 @@
 using UnityEngine;
-using ZSYFramework.Core.Json;
-
 namespace ZSYFramework.Core
 {
 // 场景单例基类 (单泡)

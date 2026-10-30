@@ -1,8 +1,6 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using ZSYFramework.Core.Json;
-
 namespace ZSYFramework.UI
 {
 /// <summary>

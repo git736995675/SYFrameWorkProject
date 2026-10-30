@@ -5,8 +5,6 @@ using System.Text;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-using ZSYFramework.AssetBundle;
-using ZSYFramework.Core.Json;
 using ZSYFramework.Core;
 using var md5 = System.Security.Cryptography.MD5.Create();
 using var stream = File.OpenRead(path);
