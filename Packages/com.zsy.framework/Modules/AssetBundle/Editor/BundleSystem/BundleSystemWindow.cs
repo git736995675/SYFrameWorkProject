@@ -163,7 +163,8 @@ namespace ZSYFramework.AssetBundle.Editor
             var options = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.StrictMode;
             if (!_incremental)
             {
-                options |= BuildAssetBundleOptions.ForceRebuildBundle;
+                // 全量: 强制重建全部 bundle; 增量时 Unity 按资产哈希自动复用未变更 bundle
+                options |= BuildAssetBundleOptions.ForceRebuildAssetBundle;
             }
 
             try

@@ -57,7 +57,7 @@ namespace ZSYFramework.AssetBundle.Editor
 
             foreach (var rule in rules)
             {
-                ApplyOne(rule, result, seenBundleNames);
+                ApplyOne(rule, result, seenBundleNames, dryRun);
             }
 
             if (!dryRun)
@@ -70,7 +70,7 @@ namespace ZSYFramework.AssetBundle.Editor
         }
 
         private static void ApplyOne(BundleRuleAsset rule, RuleApplyResult result,
-            HashSet<string> seenBundleNames)
+            HashSet<string> seenBundleNames, bool dryRun)
         {
             var root = rule.TargetAssetPath;
             if (root == null)

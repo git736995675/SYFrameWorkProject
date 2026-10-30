@@ -37,6 +37,9 @@ namespace ZSYFramework.AssetBundle
             }
         }
 
+        /// <summary>是否包含指定键。</summary>
+        public bool ContainsKey(string key) => Map.ContainsKey(key);
+
         /// <summary>索引器：读写键值（写后缓存与平行数组同步重建）。</summary>
         public string this[string key]
         {
