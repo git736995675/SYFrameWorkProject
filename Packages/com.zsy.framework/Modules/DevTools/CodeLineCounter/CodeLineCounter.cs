@@ -1,7 +1,6 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using var reader = new StreamReader(file);
 
 #if UNITY_EDITOR
 
@@ -21,6 +20,7 @@ private static void CountLinesOfCode()
 
     foreach (var file in Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories))
     {
+        using var reader = new StreamReader(file);
         while (!reader.EndOfStream)
         {
             reader.ReadLine();

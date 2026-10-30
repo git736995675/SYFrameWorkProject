@@ -6,7 +6,6 @@ using System.Text;
 using System;
 using UnityEditor;
 using UnityEngine;
-using var stream = File.OpenRead(filePath);
 
 #if UNITY_EDITOR
 
@@ -527,6 +526,7 @@ private static string CalculateCRC32(string filePath)
     var sb = new StringBuilder();
     try
     {
+        using var stream = File.OpenRead(filePath);
         var crc32 = new Crc32();
         var hash = crc32.ComputeHash(stream);
         foreach (var b in hash)

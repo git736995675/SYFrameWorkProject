@@ -2,17 +2,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using TableEditor = ZSYFramework.Editor.Config.TableEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEngine;
 using ZSYFramework.AssetBundle.Editor;
 using ZSYFramework.AssetBundle;
-using ZSYFramework.Core;
 using ZSYFramework.DevTools.Utils;
-using ZSYFramework.Editor.ResourceBuilder;
-using ZSYFramework.Editor.Utils;
 using ZSYFramework.Table.Editor;
 
 #if UNITY_EDITOR

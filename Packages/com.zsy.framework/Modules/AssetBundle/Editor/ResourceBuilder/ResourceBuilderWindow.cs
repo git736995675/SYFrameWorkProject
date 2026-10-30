@@ -6,8 +6,6 @@ using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using ZSYFramework.Core;
-using var md5 = System.Security.Cryptography.MD5.Create();
-using var stream = File.OpenRead(path);
 
 #if UNITY_EDITOR
 
@@ -358,6 +356,8 @@ private static void GenerateVersionFile(BuildTarget target)
     foreach (var bundleName in manifest.GetAllAssetBundles())
     {
         var path = Path.Combine(Application.streamingAssetsPath, target.ToString(), bundleName);
+        using var md5 = System.Security.Cryptography.MD5.Create();
+        using var stream = File.OpenRead(path);
         var hash = md5.ComputeHash(stream);
         bundleHashes[bundleName] = System.BitConverter.ToString(hash).Replace("-", "");
     }

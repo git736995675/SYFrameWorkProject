@@ -1,23 +1,7 @@
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System;
-using var aes = Aes.Create();
-using var cryptoStream = new CryptoStream(inputStream, decryptor, CryptoStreamMode.Read);
-using var cryptoStream = new CryptoStream(outputStream, encryptor, CryptoStreamMode.Write);
-using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-using var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
-using var decryptor = aes.CreateDecryptor();
-using var encryptor = aes.CreateEncryptor();
-using var inputStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read);
-using var md5Hasher = MD5.Create();
-using var ms = new MemoryStream();
-using var ms = new MemoryStream(buffer);
-using var ms = new MemoryStream(encryptedBytes);
-using var output = new MemoryStream();
-using var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
-using var sr = new StreamReader(cs);
-
 
 namespace ZSYFramework.DevTools
 {
@@ -32,6 +16,7 @@ private const string Iv = "XaS8xVOWudVKQwjqiGXcTw==";
 // 生成新的密钥和IV
 public static (byte[] key, byte[] iv) GenerateKeyAndIV()
 {
+    using var aes = Aes.Create();
     aes.KeySize = 256;
     aes.GenerateKey();
     aes.GenerateIV();
@@ -41,33 +26,47 @@ public static (byte[] key, byte[] iv) GenerateKeyAndIV()
 // 加密文件
 public static void EncryptFile(string inputPath, string outputPath, byte[] key, byte[] iv)
 {
+    using var aes = Aes.Create();
     aes.Key = key;
     aes.IV = iv;
     aes.Mode = CipherMode.CBC;
     aes.Padding = PaddingMode.PKCS7;
 
+    using var encryptor = aes.CreateEncryptor();
+    using var inputStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read);
+    using var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
+    using var cryptoStream = new CryptoStream(outputStream, encryptor, CryptoStreamMode.Write);
     inputStream.CopyTo(cryptoStream);
 }
 
 // 解密文件
 public static void DecryptFile(string inputPath, string outputPath, byte[] key, byte[] iv)
 {
+    using var aes = Aes.Create();
     aes.Key = key;
     aes.IV = iv;
     aes.Mode = CipherMode.CBC;
     aes.Padding = PaddingMode.PKCS7;
 
+    using var decryptor = aes.CreateDecryptor();
+    using var inputStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read);
+    using var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
+    using var cryptoStream = new CryptoStream(inputStream, decryptor, CryptoStreamMode.Read);
     cryptoStream.CopyTo(outputStream);
 }
 
 // 加密字节数组
 public static byte[] EncryptBytes(byte[] plainBytes, byte[] key, byte[] iv)
 {
+    using var aes = Aes.Create();
     aes.Key = key;
     aes.IV = iv;
     aes.Mode = CipherMode.CBC;
     aes.Padding = PaddingMode.PKCS7;
 
+    using var encryptor = aes.CreateEncryptor();
+    using var ms = new MemoryStream();
+    using var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
     cs.Write(plainBytes, 0, plainBytes.Length);
     cs.FlushFinalBlock();
     return ms.ToArray();
@@ -83,11 +82,16 @@ public static byte[] DecryptBytes(byte[] encryptedBytes)
 // 解密字节数组
 public static byte[] DecryptBytes(byte[] encryptedBytes, byte[] key, byte[] iv)
 {
+    using var aes = Aes.Create();
     aes.Key = key;
     aes.IV = iv;
     aes.Mode = CipherMode.CBC;
     aes.Padding = PaddingMode.PKCS7;
 
+    using var decryptor = aes.CreateDecryptor();
+    using var ms = new MemoryStream(encryptedBytes);
+    using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
+    using var output = new MemoryStream();
     cs.CopyTo(output);
     return output.ToArray();
 }
@@ -95,12 +99,14 @@ public static byte[] DecryptBytes(byte[] encryptedBytes, byte[] key, byte[] iv)
 // 加密字符串（如果需要对配置文本进行加密）
 public static string EncryptString(string plainText, byte[] key, byte[] iv)
 {
+    using var aes = Aes.Create();
     aes.Key = key;
     aes.IV = iv;
     aes.Mode = CipherMode.CBC;
     aes.Padding = PaddingMode.PKCS7;
 
     var encryptor = aes.CreateEncryptor();
+    using var ms = new MemoryStream();
     using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
     using (var sw = new StreamWriter(cs))
     {
@@ -121,18 +127,23 @@ public static string DecryptString(string cipherText)
 public static string DecryptString(string cipherText, byte[] key, byte[] iv)
 {
     var buffer = Convert.FromBase64String(cipherText);
+    using var aes = Aes.Create();
     aes.Key = key;
     aes.IV = iv;
     aes.Mode = CipherMode.CBC;
     aes.Padding = PaddingMode.PKCS7;
 
-    var decryptor = aes.CreateDecryptor();
+    using var decryptor = aes.CreateDecryptor();
+    using var ms = new MemoryStream(buffer);
+    using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
+    using var sr = new StreamReader(cs);
     return sr.ReadToEnd();
 }
 
 //字符串转md5
 public static string ComputeMD5Hash(string rawData)
 {
+    using var md5Hasher = MD5.Create();
     var data = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(rawData));
     var sBuilder = new StringBuilder();
 

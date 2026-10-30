@@ -176,8 +176,8 @@ private static void CreateJson(DataSet result, string fileName)
         }
 
         var saveJson = JsonConvert.SerializeObject(array,
-            TableEditor._isCompression ? Formatting.None : Formatting.Indented);
-        saveJson = TableEditor.ErrorIsEncryption ? AesSimple.JiaMi(saveJson) : saveJson;
+            _isCompression ? Formatting.None : Formatting.Indented);
+        saveJson = ErrorIsEncryption ? AesSimple.JiaMi(saveJson) : saveJson;
 
         fileName = fileName.Replace(".xlsx", ".json").Replace(".cvs", ".json");
         File.WriteAllText(fileName, saveJson, Encoding.UTF8);
