@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using AssetBundle = UnityEngine.AssetBundle;
 using ZSYFramework.Core;
 
 namespace ZSYFramework.AssetBundle
@@ -153,7 +152,7 @@ namespace ZSYFramework.AssetBundle
                 return null;
             }
 
-            var request = AssetBundle.LoadFromFileAsync(path);
+            var request = UnityEngine.AssetBundle.LoadFromFileAsync(path);
             while (!request.isDone) await Task.Yield();
             if (request.assetBundle == null)
             {
