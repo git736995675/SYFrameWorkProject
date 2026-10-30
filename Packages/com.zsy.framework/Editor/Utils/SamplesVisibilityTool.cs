@@ -23,7 +23,14 @@ namespace ZSYFramework.Editor.Utils
         /// <summary>切换显示/隐藏。返回切换后的状态（true=显示中）</summary>
         public static bool Toggle()
         {
-            return IsVisible ? (Hide(), false).Item2 : (Show(), true).Item2;
+            if (IsVisible)
+            {
+                Hide();
+                return false;
+            }
+
+            Show();
+            return true;
         }
 
         public static void Show()
