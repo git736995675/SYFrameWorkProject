@@ -2,7 +2,7 @@
   "name": "com.zsy.framework",
   "version": "0.1.0",
   "displayName": "ZSY Framework",
-  "description": "ZSY Unity 游戏框架：单例、事件、场景、AssetBundle、音频、本地化、状态机、配置表等模块。通过 Package Manager 的 Samples 页按需导入 Demo 或第三方插件。",
+  "description": "ZSY Unity 游戏框架：单例、事件、场景、AssetBundle、音频、本地化、状态机、配置表等模块。内置依赖 UniRx/DOTween/TMPro。\n\n可选配套包（加入应用项目 manifest.json 即可，完整 URL 见下方 documentation 或仓库 README）：\n• ZSY Demo: 也可通过本面板 Samples 页一键导入\n• Spine 动画: com.zsy.thirdparty.spine\n• SRDebugger 调试面板: com.zsy.thirdparty.srdebugger\n• SuperScrollView 循环列表: com.zsy.thirdparty.superscrollview\n• UGUI 描边渐变: com.zsy.thirdparty.uguioutline\n\n配套包 URL 形如 https://github.com/git736995675/SYFrameWorkProject.git?path=Packages/<包目录名>，详见 README。",
   "unity": "2022.3",
   "author": {
     "name": "ZSY"
@@ -10,31 +10,12 @@
   "dependencies": {
     "com.unity.textmeshpro": "3.0.7"
   },
+  "documentationUrl": "https://github.com/git736995675/SYFrameWorkProject/blob/main/README.md",
   "samples": [
     {
       "displayName": "ZSY Demo（示例场景·AB资源·配置）",
       "description": "演示场景、AssetBundle 资源目录、配置表数据与打包配置。导入到 Assets/Samples 后可直接打开 Demo 场景。",
       "path": "Samples~/Demo"
-    },
-    {
-      "displayName": "Spine 动画运行时",
-      "description": "spine-unity 3.8 运行时与编辑器工具。使用 Spine 动画的项目导入。",
-      "path": "Samples~/Spine"
-    },
-    {
-      "displayName": "SRDebugger 调试面板",
-      "description": "SRDebugger + SRF 手机调试面板。需要真机调试面板的项目导入。",
-      "path": "Samples~/SRDebugger"
-    },
-    {
-      "displayName": "SuperScrollView 循环列表",
-      "description": "高性能循环列表组件。长列表 UI 项目导入。",
-      "path": "Samples~/SuperScrollView"
-    },
-    {
-      "displayName": "UGUI 描边渐变组件",
-      "description": "UGUI OutLine 描边与渐变效果组件。按需导入。",
-      "path": "Samples~/UGUIOutLine"
     }
   ],
   "keywords": [
