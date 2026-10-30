@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.esotericsoftware.spine.spine-unity": {
+      "version": "file:com.zsy.thirdparty.spine",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "9.2.0",
       "depth": 1,
@@ -234,6 +240,18 @@
       "dependencies": {
         "com.zsy.framework": "0.1.0"
       }
+    },
+    "com.zsy.thirdparty.srdebugger": {
+      "version": "file:com.zsy.thirdparty.srdebugger",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.zsy.thirdparty.superscrollview": {
+      "version": "file:com.zsy.thirdparty.superscrollview",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

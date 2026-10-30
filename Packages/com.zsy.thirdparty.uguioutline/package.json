@@ -1,0 +1,10 @@
+{
+  "name": "com.zsy.thirdparty.uguioutline",
+  "version": "0.1.0",
+  "displayName": "UGUI OutLine (Bundled)",
+  "description": "UGUI 描边/渐变组件，随 ZSY 框架体系分发。应用项目按需引入。",
+  "unity": "2022.3",
+  "author": {
+    "name": "ZSY"
+  }
+}
