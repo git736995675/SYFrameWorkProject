@@ -5,7 +5,6 @@ using System.Text;
 using ExcelDataReader;
 using LitJson;
 using UnityEngine;
-using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
 
 namespace ZSYFramework.Table
@@ -111,20 +110,17 @@ public static void OpenExcel(string filePath)
 /// <returns></returns>
 public static void LoadConfigTextAsset<T>(string assetName,Action<T>  callback)
 {
-    ABLoadManager.Instance.LoadTextAsset(assetName, (json) =>
+    // 经 Core 服务抽象加载, 模块不直接依赖资源管线实现
+    ServiceHub.ConfigText.LoadConfig(assetName, (T config) =>
     {
         //json = AesSimple.JieMi(json);
-        var config = JsonMapper.ToObject<T>(json.text);
         callback?.Invoke(config);
     });
 }
 
 public static void LoadConfigTextAsset(string bundleName ,string assetName,Action<TextAsset>  callback)
 {
-    ABLoadManager.Instance.Load<TextAsset>(bundleName,assetName, (json) =>
-    {
-        callback?.Invoke(json);
-    });
+    ServiceHub.ConfigText.LoadConfigRaw(bundleName, assetName, obj => callback?.Invoke(obj as TextAsset));
 }
 }
 }

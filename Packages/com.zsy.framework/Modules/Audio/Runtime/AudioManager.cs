@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
 namespace ZSYFramework.Audio
 {
@@ -77,7 +76,7 @@ private void LoadClip(string clipName, Action<AudioClip> callback)
         return;
     }
 
-    ABLoadManager.Instance.LoadAudioClip(clipName, (clip) =>
+    ServiceHub.Asset.Load(clipName, (clip) =>
     {
         if (clip != null)
         {

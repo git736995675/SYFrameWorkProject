@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
 namespace ZSYFramework.UI
 {
@@ -141,11 +140,11 @@ public void ShowView(string uiName, ViewArgs args = null)
         return;
     }
 
-    ABLoadManager.Instance.Load<BaseModel>($"{uiName}Model", (model) =>
+    ServiceHub.Asset.Load<BaseModel>($"{uiName}Model", (model) =>
     {
         model.Initialize(args);
 
-        ABLoadManager.Instance.LoadPrefab($"{uiName}", (goPrefab) =>
+        ServiceHub.Asset.Load<GameObject>($"{uiName}", (goPrefab) =>
         {
             RefreshCanvasPos();
             // 实例化并挂接到层级
@@ -184,10 +183,10 @@ public void LoadView(string uiName, ViewArgs args = null, Action callback = null
         return;
     }
 
-    ABLoadManager.Instance.Load<BaseModel>($"{uiName}Model", (model) =>
+    ServiceHub.Asset.Load<BaseModel>($"{uiName}Model", (model) =>
     {
         model.Initialize(args);
-        ABLoadManager.Instance.LoadPrefab($"{uiName}", (goPrefab) =>
+        ServiceHub.Asset.Load<GameObject>($"{uiName}", (goPrefab) =>
         {
             var viewGo = Instantiate(goPrefab, _layers[model.layer].transform, false);
             var view = viewGo.GetComponent(uiName) as BaseView;

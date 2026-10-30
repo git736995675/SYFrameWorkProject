@@ -12,7 +12,6 @@
     "rootNamespace": "ZSYFramework",
     "references": [
         "ZSYFramework.Core",
-        "ZSYFramework.Table",
         "Unity.TextMeshPro",
         "LitJson"
     ]

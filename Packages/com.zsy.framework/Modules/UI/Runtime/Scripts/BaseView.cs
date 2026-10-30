@@ -1,6 +1,5 @@
 using UnityEngine.UI;
 using UnityEngine;
-using ZSYFramework.Audio;
 using ZSYFramework.Core;
 
 #if UNITY_EDITOR
@@ -105,7 +104,7 @@ protected virtual void UIUpdate()
 /// </summary>
 protected virtual void CommonButtonClickEvent(Button button)
 {
-    SYAudio.PlaySfx("ui.button");
+    ServiceHub.AudioFeedback?.PlaySfx("ui.button");
 }
 
 /// <summary>
@@ -113,7 +112,7 @@ protected virtual void CommonButtonClickEvent(Button button)
 /// </summary>
 protected virtual void CommonToggleClickEvent(Toggle toggle, bool isOn)
 {
-    SYAudio.PlaySfx("ui.button");
+    ServiceHub.AudioFeedback?.PlaySfx("ui.button");
 }
 
 /// <summary>

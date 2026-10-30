@@ -3,7 +3,6 @@
     "rootNamespace": "ZSYFramework",
     "references": [
         "ZSYFramework.Core",
-        "ZSYFramework.AssetBundle",
         "LitJson"
     ],
     "includePlatforms": [],

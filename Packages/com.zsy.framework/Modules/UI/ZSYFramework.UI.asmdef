@@ -12,10 +12,6 @@
     "rootNamespace": "ZSYFramework",
     "references": [
         "ZSYFramework.Core",
-        "ZSYFramework.AssetBundle",
-        "ZSYFramework.Audio",
-        "ZSYFramework.Table",
-        "ZSYFramework.Localization",
         "Unity.TextMeshPro"
     ]
 }

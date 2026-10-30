@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LitJson;
-using ZSYFramework.Table;
+using ZSYFramework.Core;
 
 
 namespace ZSYFramework.Localization
@@ -54,7 +54,7 @@ public static void LoadConfig(Action onComplete)
         onComplete?.Invoke(); 
         return;
      } 
-     ConfigUtils.LoadConfigTextAsset<Dictionary<string,StrConfig>>(ConfigName, (data) =>
+     ServiceHub.ConfigText.LoadConfig<Dictionary<string,StrConfig>>(ConfigName, (data) =>
      {
          Data = data;
          _dataArray = Data.Values.ToList();
@@ -69,9 +69,9 @@ public static void LoadConfig(string bundleName, string assetName, Action onComp
         onComplete?.Invoke(); 
         return;
     } 
-    ConfigUtils.LoadConfigTextAsset(bundleName, assetName, (textAsset) =>
+    ServiceHub.ConfigText.LoadConfigRaw(bundleName, assetName, obj =>
     {
-        SetConfig(textAsset.text);
+        SetConfig((obj as UnityEngine.TextAsset)?.text);
         onComplete?.Invoke();
     });
 }
