@@ -9,7 +9,8 @@ using ZSYFramework.Core.Json;
 #if UNITY_EDITOR
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 文件批量重命名编辑器
 /// </summary>
@@ -608,6 +609,7 @@ private void ExecuteRename()
     {
         EditorUtility.DisplayDialog("完成", $"成功: {successCount}, 失败: {failCount}\n请查看控制台获取详细信息", "确定");
     }
+}
 }
 }
 #endif

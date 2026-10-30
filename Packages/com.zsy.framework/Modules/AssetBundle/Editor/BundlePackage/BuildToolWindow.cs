@@ -4,7 +4,8 @@ using ZSYFramework.Core.Json;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.AssetBundle.Editor;
+namespace ZSYFramework.AssetBundle.Editor
+{
 /// <summary>
 /// 打包工具窗口。可视化配置并触发出包。
 /// </summary>
@@ -135,6 +136,7 @@ private void OnGUI()
     EditorGUILayout.EndHorizontal();
     EditorGUILayout.Space();
     EditorGUILayout.HelpBox("Current Platform: " + EditorUserBuildSettings.activeBuildTarget, MessageType.Info);
+}
 }
 }
 #endif

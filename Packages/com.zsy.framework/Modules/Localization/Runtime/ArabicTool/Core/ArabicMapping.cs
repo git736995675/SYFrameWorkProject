@@ -1,5 +1,6 @@
-﻿
-namespace ZSYFramework.Localization.Arabic;
+
+namespace ZSYFramework.Localization.Arabic
+{
 internal class ArabicMapping
 {
     public int from;
@@ -10,4 +11,5 @@ internal class ArabicMapping
         this.from = from;
         this.to = to;
     }
+}
 }

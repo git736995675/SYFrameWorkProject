@@ -18,7 +18,8 @@ using ZSYFramework.Table.Editor;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 [InitializeOnLoad]
 /// <summary>
 /// 编辑器工具栏扩展。在播放按钮右侧注入框架快捷按钮（AB模式/表/场景/显隐等）。
@@ -192,4 +193,5 @@ private static void OpenExcel(string path)
 }
 }
 
+}
 #endif

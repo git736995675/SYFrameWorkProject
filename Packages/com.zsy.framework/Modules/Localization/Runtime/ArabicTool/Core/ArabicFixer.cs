@@ -1,8 +1,9 @@
-﻿
+
 using System;
 
 
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
 public class ArabicFixer
 {
     public static string Fix(string str, bool rtl = true) => ArabicFixer.Fix(str, true, false, rtl);
@@ -31,4 +32,5 @@ public class ArabicFixer
         }
         return str1;
     }
+}
 }

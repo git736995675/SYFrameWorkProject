@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 扩展Component
 /// </summary>
@@ -1210,5 +1211,6 @@ public static T NameReplace<T>(this T selfComponent) where T : UnityEngine.Objec
 {
     selfComponent.name = selfComponent.name.Replace("(Clone)", "");
     return selfComponent;
+}
 }
 }

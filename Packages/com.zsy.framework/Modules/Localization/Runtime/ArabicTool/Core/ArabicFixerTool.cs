@@ -1,9 +1,10 @@
-﻿
+
 using System.Collections.Generic;
 using System;
 
 
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
   internal class ArabicFixerTool
   {
 internal static bool showTashkeel = true;
@@ -333,3 +334,4 @@ internal static bool IsMiddleLetter(char[] letters, int index)
   }
 }
   }
+}

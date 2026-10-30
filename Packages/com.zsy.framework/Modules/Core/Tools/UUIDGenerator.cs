@@ -2,7 +2,8 @@ using System.Security.Cryptography;
 using System.Text;
 
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 功能描述：
 /// </summary>
@@ -26,5 +27,6 @@ public static string GenerateUUID(string input)
         // 返回32位的UUID（不包含连字符）
         return sb.ToString().Substring(0, 32); // 保证返回32个字符
     }
+}
 }
 }

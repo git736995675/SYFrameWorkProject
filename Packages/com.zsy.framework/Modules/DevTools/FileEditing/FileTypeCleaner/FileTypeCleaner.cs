@@ -5,7 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 文件类型清理工具。按类型批量清理资源。
 /// </summary>
@@ -700,5 +701,6 @@ private string FormatFileSize(long bytes)
         return $"{(bytes / 1024f):F2} KB";
     else
         return $"{bytes} bytes";
+}
 }
 }

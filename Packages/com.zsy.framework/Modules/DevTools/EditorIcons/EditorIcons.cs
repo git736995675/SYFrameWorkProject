@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +10,8 @@ using ZSYFramework.Core.Json;
 
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 编辑器图标常量集。
 /// </summary>
@@ -758,5 +759,6 @@ public static string[] ico_list =
 };
 
     #endregion
+}
 }
 #endif

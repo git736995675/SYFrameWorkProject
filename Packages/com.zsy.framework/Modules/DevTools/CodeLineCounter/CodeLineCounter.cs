@@ -7,7 +7,8 @@ using var reader = new StreamReader(file);
 #if UNITY_EDITOR
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 代码行数统计工具。统计工程代码规模。
 /// </summary>
@@ -29,6 +30,7 @@ private static void CountLinesOfCode()
     }
 
     Debug.Log($"Total lines of code in {path}: {totalLines}");
+}
 }
 }
 #endif

@@ -7,7 +7,8 @@ using Object = UnityEngine.Object;
 using ZSYFramework.Core;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.AssetBundle;
+namespace ZSYFramework.AssetBundle
+{
 /// <summary>
 /// 资源加载模式枚举：Editor 直读或 AssetBundle 加载。
 /// </summary>
@@ -397,5 +398,6 @@ private IEnumerator UnloadAfterDelay(string bundleName)
         _bundleReferenceCount[bundleName].refCount > 0) yield break;
     _bundleReferenceCount[bundleName].bundle.Unload(true);
     _bundleReferenceCount.Remove(bundleName);
+}
 }
 }

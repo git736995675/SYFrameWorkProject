@@ -2,7 +2,8 @@ using DG.Tweening;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 ///     动画之旋转类
 /// </summary>
@@ -167,5 +168,6 @@ protected override void StartValue()
 protected override void EndValue()
 {
     to = Rotation;
+}
 }
 }

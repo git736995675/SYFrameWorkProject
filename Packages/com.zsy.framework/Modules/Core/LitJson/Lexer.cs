@@ -13,7 +13,8 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 internal class FsmContext
 {
     public bool  Return;
@@ -905,4 +906,5 @@ internal class Lexer
     {
         input_buffer = input_char;
     }
+}
 }

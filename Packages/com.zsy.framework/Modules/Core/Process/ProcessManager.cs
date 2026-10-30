@@ -1,7 +1,8 @@
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// �������
 /// </summary>
@@ -34,5 +35,6 @@ public void Recycle(Process process)
 {
     process.gameObject.SetActive(false);
     _pool.Free(process);
+}
 }
 }

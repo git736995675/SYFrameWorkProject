@@ -1,5 +1,6 @@
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 简化Log调用
 /// </summary>
@@ -25,11 +26,11 @@ public static void LogSettings(LogLevel level = LogLevel.Error)
     LogManager.Instance.GlobalLogLevel = level;
 }
 
-public static void LogSettings(LogLevel level = LogLevel.Error, bool isEnableFileLog = false,
-    bool isEnableStackTrace = false)
+public static void LogSettings(LogLevel level = LogLevel.Error, bool isEnableFileLog = false, bool isEnableStackTrace = false)
 {
     LogManager.Instance.GlobalLogLevel = level;
     LogManager.Instance.EnableFileLogging = isEnableFileLog;
     LogManager.Instance.EnableStackTrace = isEnableStackTrace;
+}
 }
 }

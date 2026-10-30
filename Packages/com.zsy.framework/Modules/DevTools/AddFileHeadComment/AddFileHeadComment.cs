@@ -1,10 +1,11 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using System.IO;
 using UnityEditor;
 using ZSYFramework.Core.Json;
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 监听脚本创建事件，自动添加作者和创建时间注释
 /// </summary>
@@ -89,6 +90,7 @@ public static SettingsProvider CreateMySettingsProvider()
         keywords = new[] { "script", "author", "comment", "注释", "作者" }
     };
     return provider;
+}
 }
 }
 #endif

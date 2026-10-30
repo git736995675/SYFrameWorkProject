@@ -2,7 +2,8 @@ using DG.Tweening;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 ///     动画之透明度类
 /// </summary>
@@ -174,5 +175,6 @@ protected override void EndValue()
     {
         to = UGUI.alpha;
     }
+}
 }
 }

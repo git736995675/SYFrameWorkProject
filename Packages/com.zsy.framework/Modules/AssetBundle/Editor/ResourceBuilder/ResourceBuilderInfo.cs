@@ -1,4 +1,5 @@
-namespace ZSYFramework.AssetBundle.Editor;
+namespace ZSYFramework.AssetBundle.Editor
+{
  
 /// <summary>
 /// 资源打包配置信息。
@@ -9,4 +10,5 @@ public int Version = 1;
 
 
 
+}
 }

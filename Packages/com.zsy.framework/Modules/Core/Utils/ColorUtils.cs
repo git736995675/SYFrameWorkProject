@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 颜色工具类。提供十六进制转 Color、颜色插值等常用方法。
 /// </summary>
@@ -37,5 +38,6 @@ public static string GetRGBByColor(this Color color)
 public static string GetRGBAByColor(this Color color)
 {
     return ColorUtility.ToHtmlStringRGBA(color);
+}
 }
 }

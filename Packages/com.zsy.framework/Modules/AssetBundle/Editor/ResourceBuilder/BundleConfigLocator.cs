@@ -2,7 +2,8 @@ using System.IO;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.AssetBundle.Editor;
+namespace ZSYFramework.AssetBundle.Editor
+{
 /// <summary>
 /// AB 打包配置文件(BundleResPath.txt)的定位器。
 /// 配置文件跟随使用工程：优先 Assets/Config/，不存在则自动创建。
@@ -23,5 +24,6 @@ public static string ConfigDirectory
         }
         return full;
     }
+}
 }
 }

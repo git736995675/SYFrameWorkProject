@@ -8,7 +8,8 @@ using ZSYFramework.Core;
 using UnityEditor;
 #endif
 
-namespace ZSYFramework.UI;
+namespace ZSYFramework.UI
+{
 // View基类（绑定UI元素）
 /// <summary>
 /// 视图基类。所有 UI 窗口的抽象，封装生命周期与打开/关闭动画。
@@ -259,4 +260,5 @@ private void DoCustomAction()
     AssetDatabase.Refresh();
 }
 #endif
+}
 }

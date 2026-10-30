@@ -4,7 +4,8 @@ using System;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.UI;
+namespace ZSYFramework.UI
+{
 /// <summary>
 /// 视图数据模型基类。使用 ScriptableObject 持久化视图数据。
 /// </summary>
@@ -56,5 +57,6 @@ protected virtual void Initialize()
 // 重置
 protected virtual void Reset()
 {
+}
 }
 }

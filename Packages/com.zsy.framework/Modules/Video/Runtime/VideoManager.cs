@@ -5,7 +5,8 @@ using UnityEngine.Video;
 using ZSYFramework.Core;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Video;
+namespace ZSYFramework.Video
+{
 [RequireComponent(typeof(VideoPlayer))]
 /// <summary>
 /// 视频管理器。封装 VideoPlayer 的播放控制与事件回调。
@@ -145,5 +146,6 @@ return "file://" + Application.streamingAssetsPath + "/" + relativePath;
 #else
     return Application.streamingAssetsPath + "/" + relativePath;
 #endif
+}
 }
 }

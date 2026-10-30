@@ -1,4 +1,5 @@
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
 internal enum IsolatedArabicLetters
 {
     PersianPe = 64342, // 0x0000FB56
@@ -43,4 +44,5 @@ internal enum IsolatedArabicLetters
     Ha = 65257, // 0x0000FEE9
     Waw = 65261, // 0x0000FEED
     Ya = 65265, // 0x0000FEF1
+}
 }

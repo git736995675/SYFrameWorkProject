@@ -8,7 +8,8 @@ using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Audio;
+namespace ZSYFramework.Audio
+{
 /// <summary>
 /// 音频类型枚举：背景音乐、音效等。
 /// </summary>
@@ -424,4 +425,5 @@ public string ClipName;
 public float Volume;
 public SoundType SType;
 public AudioSource Source;
+}
 }

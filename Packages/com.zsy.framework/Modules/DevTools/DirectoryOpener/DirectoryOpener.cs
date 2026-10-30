@@ -9,7 +9,8 @@ using ZSYFramework.Core;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 目录快速打开工具窗口
 /// </summary>
@@ -399,6 +400,7 @@ private class CustomDirectory
 private class CustomDirectoryList
 {
     public List<CustomDirectory> directories;
+}
 }
 }
 #endif

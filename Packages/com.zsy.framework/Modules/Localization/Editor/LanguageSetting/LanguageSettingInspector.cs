@@ -11,7 +11,8 @@ using ZSYFramework.Localization;
 #if SY_TMP
 #endif
 
-namespace ZSYFramework.Localization.Editor;
+namespace ZSYFramework.Localization.Editor
+{
 [CustomEditor(typeof(LanguageSetting))]
 /// <summary>
 /// 语言设置资产的 Inspector 定制。可视化编辑语言与字体映射。
@@ -129,6 +130,7 @@ private void RefreshText()
 
     serializedObject.ApplyModifiedProperties();
     Repaint();
+}
 }
 }
 #endif

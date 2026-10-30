@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 动画管理器。集中管理动画播放与事件回调注册。
 /// </summary>
@@ -36,5 +37,6 @@ private void Update()
         _animations.Remove(pair);
     }
     _animationsToRemove.Clear();
+}
 }
 }

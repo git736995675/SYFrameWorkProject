@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 流程节点基类。表示一个可执行的业务流程单元，由 ProcessManager 驱动。
 /// </summary>
@@ -122,5 +123,6 @@ private void Recycle()
     onProcessStart?.RemoveAllListeners();
     onProcessStart?.RemoveAllListeners();
     ProcessManager.Instance.Recycle(this);
+}
 }
 }

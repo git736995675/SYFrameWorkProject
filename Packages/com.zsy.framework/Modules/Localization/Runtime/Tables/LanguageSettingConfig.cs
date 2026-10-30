@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZSYFramework.Core.Json;
 using ZSYFramework.Table;
 
 
-namespace ZSYFramework.Localization;
+namespace ZSYFramework.Localization
+{
 
 /// <summary>
 /// 语言设置表契约类。由配置表生成的数据结构，定义语言与字体的映射模式。
@@ -102,5 +103,6 @@ public static LanguageSettingConfig Get(int id)
 public static List<LanguageSettingConfig> GetAll()
 {
     return _dataArray;
+}
 }
 }

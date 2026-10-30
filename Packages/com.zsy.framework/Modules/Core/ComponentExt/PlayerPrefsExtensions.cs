@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 
 /// <summary>
 /// PlayerPrefs 扩展方法集。支持对象序列化存取与批量操作。
@@ -85,4 +86,5 @@ public class PlayerPrefsExtensions
     {
         return Convert.ToInt64(PlayerPrefs.GetString(key, Convert.ToString(defValue)));
     }
+}
 }

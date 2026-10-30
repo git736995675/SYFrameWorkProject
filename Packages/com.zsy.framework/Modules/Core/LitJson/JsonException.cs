@@ -11,7 +11,8 @@
 
 using System;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 public class JsonException :
 #if NETSTANDARD1_5
     Exception
@@ -59,4 +60,5 @@ public class JsonException :
         base (message, inner_exception)
     {
     }
+}
 }

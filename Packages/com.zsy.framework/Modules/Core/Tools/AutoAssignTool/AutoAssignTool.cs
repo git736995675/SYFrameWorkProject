@@ -8,7 +8,8 @@ using UnityEditor;
 #endif
 
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 自动赋值工具。运行时按名称自动绑定序列化引用，减少手动拖拽。
 /// </summary>
@@ -85,4 +86,5 @@ private static Transform FindChildByName(Transform parent, string name)
 }
 }
 
+}
 #endif

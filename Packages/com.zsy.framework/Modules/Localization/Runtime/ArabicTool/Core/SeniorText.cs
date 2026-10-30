@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
 
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
   public class SeniorText : Text
   {
 private string m_orgText = "";
@@ -88,3 +89,4 @@ public void SetRawText(string str)
 
 public string GetOrignalText() => this.m_orgText;
   }
+}

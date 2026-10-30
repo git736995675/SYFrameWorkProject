@@ -1,7 +1,8 @@
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 // 场景单例基类 (单泡)
 /// <summary>
 /// 场景级 MonoBehaviour 单例基类。切换场景后实例销毁，不跨场景存活。
@@ -68,5 +69,6 @@ public static void Release()
         Destroy(go);
     else
         DestroyImmediate(go);
+}
 }
 }

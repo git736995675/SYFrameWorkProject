@@ -1,4 +1,5 @@
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
 internal enum GeneralArabicLetters
 {
     Hamza = 1569, // 0x00000621
@@ -43,4 +44,5 @@ internal enum GeneralArabicLetters
     PersianGaf2 = 1705, // 0x000006A9
     PersianGaf = 1711, // 0x000006AF
     PersianYeh = 1740, // 0x000006CC
+}
 }

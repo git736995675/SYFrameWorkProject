@@ -4,7 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 文件编辑通用工具。批量文件处理的基础方法与过滤器。
 /// </summary>
@@ -104,5 +105,6 @@ public static string CalculateHash(string filePath, HashAlgorithmType algorithm)
     {
         return "Error";
     }
+}
 }
 }

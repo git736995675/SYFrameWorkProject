@@ -9,7 +9,8 @@ using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Table;
+namespace ZSYFramework.Table
+{
 /// <summary>
 /// 配置表工具集。提供 Excel 读取、配置资产加载等表格系统核心方法。
 /// </summary>
@@ -125,5 +126,6 @@ public static void LoadConfigTextAsset(string bundleName ,string assetName,Actio
     {
         callback?.Invoke(json);
     });
+}
 }
 }

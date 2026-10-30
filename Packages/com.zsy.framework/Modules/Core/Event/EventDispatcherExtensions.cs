@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 事件派发扩展方法集，为任意对象提供便捷的事件注册与触发入口。
 /// </summary>
@@ -69,5 +70,6 @@ public static void RemoveEventListener(this MonoBehaviour mono, string eventName
 public static void RemoveOwnerEvents(this MonoBehaviour mono)
 {
     EventManager.Instance.RemoveEventsByOwner(mono);
+}
 }
 }

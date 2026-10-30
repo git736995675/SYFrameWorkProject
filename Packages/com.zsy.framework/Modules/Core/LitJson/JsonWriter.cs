@@ -15,7 +15,8 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 internal enum Condition
 {
     InArray,
@@ -478,4 +479,5 @@ public class JsonWriter
 
         context.ExpectingValue = true;
     }
+}
 }

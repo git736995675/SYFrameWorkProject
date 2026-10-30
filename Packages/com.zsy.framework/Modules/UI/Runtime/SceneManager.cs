@@ -5,7 +5,8 @@ using System;
 using ZSYFramework.Core;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.UI;
+namespace ZSYFramework.UI
+{
 /// <summary>
 /// 场景管理器。封装场景异步加载、加载画面显示与最小加载时长控制。
 /// </summary>
@@ -176,5 +177,6 @@ private IEnumerator FadeLoadingScreen(float from, float to, float duration)
     }
 
     loadingScreen.alpha = to;
+}
 }
 }

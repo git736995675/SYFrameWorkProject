@@ -1,10 +1,11 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
 
 
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
 public class ArabicTextMenu : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -57,5 +58,6 @@ public class ArabicTextMenu : MonoBehaviour
         obj.name = findName;
         obj.transform.localPosition = Vector3.zero;
     }
+}
 }
 #endif

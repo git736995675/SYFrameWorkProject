@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 
 #if UNITY_EDITOR
 [UnityEditor.InitializeOnLoad]
@@ -150,4 +151,5 @@ public static class UnityTypeBindings
 
     }
 
+}
 }

@@ -1,7 +1,8 @@
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 状态机状态基类。子类实现进入/退出/更新逻辑，由 StateMachine 驱动切换。
 /// </summary>
@@ -25,4 +26,5 @@ public virtual void StateExit()
     isInProgress = false;
 }
 
+}
 }

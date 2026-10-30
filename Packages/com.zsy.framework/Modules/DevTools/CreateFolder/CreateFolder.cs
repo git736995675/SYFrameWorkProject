@@ -6,7 +6,8 @@ using ZSYFramework.Core.Json;
 #if UNITY_EDITOR
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 文件夹批量创建工具。
 /// </summary>
@@ -82,4 +83,5 @@ private static void CreateBaseFolder()
 }
 }
 
+}
 #endif

@@ -9,7 +9,8 @@ using ZSYFramework.Core.Json;
 using ZSYFramework.Core;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.AssetBundle;
+namespace ZSYFramework.AssetBundle
+{
 /// <summary>
 /// 资源工具集。封装路径解析、资源信息查询等加载辅助逻辑。
 /// </summary>
@@ -110,3 +111,4 @@ public struct ResInfoLoadWaitCache
     {
         this.ResName = resName;
         this.Callback = callback;
+}

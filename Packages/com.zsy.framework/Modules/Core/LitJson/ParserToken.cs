@@ -9,7 +9,8 @@
 #endregion
 
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 internal enum ParserToken
 {
     // Lexer tokens (see section A.1.1. of the manual)
@@ -39,4 +40,5 @@ internal enum ParserToken
 
     // The empty rule
     Epsilon
+}
 }

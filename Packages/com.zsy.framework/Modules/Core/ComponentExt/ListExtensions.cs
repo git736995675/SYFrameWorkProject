@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// List 集合扩展方法集。提供随机取值、洗牌等便捷操作。
 /// </summary>
@@ -58,5 +59,6 @@ public static List<T> CloneList<T>(this List<T> list) where T : new()
 public static IEnumerable<T> Random<T>(this IEnumerable<T> list, int Count = -1)
 {
     return list.OrderBy(x => Guid.NewGuid()).Take(Count == -1 ? list.Count() : Count);
+}
 }
 }

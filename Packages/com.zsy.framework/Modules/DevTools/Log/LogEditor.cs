@@ -3,7 +3,8 @@ using ZSYFramework.Core;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 日志编辑器窗口。可视化查看与过滤运行日志。
 /// </summary>
@@ -15,4 +16,5 @@ public static void OpenFile()
     LogManager.OpenLogFile();
 }
 } 
+}
 #endif

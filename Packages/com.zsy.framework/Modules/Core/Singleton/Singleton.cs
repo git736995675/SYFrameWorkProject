@@ -1,6 +1,7 @@
 using ZSYFramework.Core.Json;
-﻿
-namespace ZSYFramework.Core;
+
+namespace ZSYFramework.Core
+{
 // 普通单例基类 (非MonoBehaviour)
 /// <summary>
 /// 普通 C# 类泛型单例基类，非 MonoBehaviour，首次访问 Instance 时自动构造。
@@ -25,5 +26,6 @@ public static T Instance
 public static void DestroyInstance()
 {
     _instance = null;
+}
 }
 }

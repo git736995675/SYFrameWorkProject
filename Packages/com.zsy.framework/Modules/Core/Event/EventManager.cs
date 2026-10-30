@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 简易事件分发系统
 /// </summary>
@@ -322,5 +323,6 @@ private struct EventRegistration
     public string EventName;
     public Type ParamType;
     public Delegate Callback;
+}
 }
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 #if SY_TMP
 #endif
 
-namespace ZSYFramework.Localization;
+namespace ZSYFramework.Localization
+{
 /// <summary>
 /// 国家简称和在下拉框中的位置
 /// </summary>
@@ -75,4 +76,5 @@ public const string es = "es"; //西语
 public const string ja = "ja"; //日语
 public const string ko = "ko"; //韩语
 public const string tc = "tc"; //繁体中文
+}
 }

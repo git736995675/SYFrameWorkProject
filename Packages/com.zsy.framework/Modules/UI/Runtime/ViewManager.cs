@@ -6,7 +6,8 @@ using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.UI;
+namespace ZSYFramework.UI
+{
 /// <summary>
 /// UI 层级枚举：普通、弹窗、引导、顶层等。
 /// </summary>
@@ -326,5 +327,6 @@ public BaseModel GetModel<T>() where T : BaseModel
 {
     var uiName = typeof(T).Name.Replace("Model", "");
     return _activeViews.TryGetValue(uiName, out var view) ? view.Model : null;
+}
 }
 }

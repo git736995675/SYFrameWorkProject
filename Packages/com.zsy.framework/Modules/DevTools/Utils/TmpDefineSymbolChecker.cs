@@ -5,7 +5,8 @@ using UnityEditor.Compilation;
 using ZSYFramework.Localization;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.DevTools.Utils;
+namespace ZSYFramework.DevTools.Utils
+{
 /// <summary>
 /// 检测项目中是否存在 TextMeshPro 程序集，自动维护 SY_TMP 编译宏。
 /// 有 TMP 包 → 加 SY_TMP，LocalizationText 等走 TMP 分支；
@@ -77,5 +78,6 @@ public static void Check()
     {
         _checking = false;
     }
+}
 }
 }

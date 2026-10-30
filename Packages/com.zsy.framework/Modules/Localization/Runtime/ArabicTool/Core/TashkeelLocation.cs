@@ -1,4 +1,5 @@
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
 internal class TashkeelLocation
 {
     public char tashkeel;
@@ -9,4 +10,5 @@ internal class TashkeelLocation
         this.tashkeel = tashkeel;
         this.position = position;
     }
+}
 }

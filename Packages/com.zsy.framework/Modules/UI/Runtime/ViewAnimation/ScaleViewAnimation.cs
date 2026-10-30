@@ -3,7 +3,8 @@ using DG.Tweening;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.UI;
+namespace ZSYFramework.UI
+{
 /// <summary>
 /// 缩放视图动画实现。打开时放大、关闭时缩小的默认动画。
 /// </summary>
@@ -30,4 +31,5 @@ public override void PlayHide(Transform trs, Action onComplete = null)
     };
 }
 
+}
 }

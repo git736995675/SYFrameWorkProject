@@ -2,7 +2,8 @@ using DG.Tweening;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
     #region TweenStyle 动画方式
 /// <summary>
 /// 动画方式
@@ -114,4 +115,5 @@ public virtual void PlayReverseDelay() { }
 protected virtual void StartValue() { }
 protected virtual void EndValue() { }
 public virtual void SetAlpha(float startalpha, float alpha, float animTime, TweenStyle style) { }
+}
 }

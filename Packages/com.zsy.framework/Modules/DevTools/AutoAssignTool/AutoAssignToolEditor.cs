@@ -5,7 +5,8 @@ using ZSYFramework.Core;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 自动赋值工具的编辑器入口。提供菜单触发自动绑定。
 /// </summary>
@@ -39,6 +40,7 @@ private static void ProcessSelectedPrefab()
 
         AutoAssignTool.ProcessSelectedPrefab(prefab);
     }
+}
 }
 }
 #endif

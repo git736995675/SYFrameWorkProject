@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 
 /// <summary>
 /// 拓展方法
@@ -36,4 +37,5 @@ namespace ZSYFramework.Core.Json;
 public sealed class JsonIgnore : Attribute
 {
 
+}
 }

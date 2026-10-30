@@ -8,7 +8,8 @@ using ZSYFramework.Editor.ResourceBuilder;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.AssetBundle.Editor;
+namespace ZSYFramework.AssetBundle.Editor
+{
 /// <summary>
 /// 打包工具核心逻辑。
 /// </summary>
@@ -237,6 +238,7 @@ public static void BuildWebGL(string buildPath = null, bool developmentBuild = f
 private static string[] GetEnabledScenes()
 {
     return (from scene in EditorBuildSettings.scenes where scene.enabled select scene.path).ToArray();
+}
 }
 }
 #endif

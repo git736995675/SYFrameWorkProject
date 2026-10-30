@@ -1,7 +1,8 @@
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// Android 平台桥接管理器。封装 Java 层调用与平台判断。
 /// </summary>
@@ -79,5 +80,6 @@ public static int GetSdkInt()
 
 public static void InstallApk()
 {
+}
 }
 }

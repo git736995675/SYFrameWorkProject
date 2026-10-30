@@ -1,7 +1,8 @@
 using System;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 时间工具类。提供时间戳转换、格式化显示等方法。
 /// </summary>
@@ -457,5 +458,6 @@ public static long ModifyTime(DateTime date, int timeZone = 0, bool getSecond = 
     return getSecond
         ? (long)ts.TotalSeconds
         : (long)ts.TotalMilliseconds;
+}
 }
 }

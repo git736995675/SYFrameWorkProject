@@ -14,7 +14,8 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 public enum JsonType
 {
     None,
@@ -54,4 +55,5 @@ public interface IJsonWrapper : IList, IOrderedDictionary
 
     string ToJson ();
     void   ToJson (JsonWriter writer);
+}
 }

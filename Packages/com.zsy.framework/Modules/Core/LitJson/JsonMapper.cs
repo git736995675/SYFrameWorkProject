@@ -16,7 +16,8 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 internal struct PropertyMetadata
 {
     public MemberInfo Info;
@@ -1095,4 +1096,5 @@ public class JsonMapper
     {
         custom_importers_table.Clear();
     }
+}
 }

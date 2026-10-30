@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 	/// <summary>
 /// 功能描述：
 /// </summary>
@@ -22,3 +23,4 @@ namespace ZSYFramework.Core;
 			return request.asset as T;
 		}
 	}
+}

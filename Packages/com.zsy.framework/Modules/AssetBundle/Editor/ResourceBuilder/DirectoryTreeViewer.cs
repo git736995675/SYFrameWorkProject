@@ -9,7 +9,8 @@ using ZSYFramework.Editor.Utils;
 using ZSYFramework.Core.Editor.Utils;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.AssetBundle.Editor;
+namespace ZSYFramework.AssetBundle.Editor
+{
 /// <summary>
 /// 资源分包，名称设置方式
 /// </summary>
@@ -485,5 +486,6 @@ private string GetRelativePath(string absolutePath)
     }
 
     return absolutePath;
+}
 }
 }

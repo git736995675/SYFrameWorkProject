@@ -13,7 +13,8 @@ using ZSYFramework.Table;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.Table.Editor;
+namespace ZSYFramework.Table.Editor
+{
 /// <summary>
 /// 表格编辑器窗口。可视化编辑配置表并导出游戏数据。
 /// </summary>
@@ -296,4 +297,5 @@ public struct TableData
 }
 
 
+}
 #endif

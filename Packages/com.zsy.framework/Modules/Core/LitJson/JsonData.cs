@@ -16,7 +16,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 public class JsonData : IJsonWrapper, IEquatable<JsonData>
 {
     #region Fields
@@ -1053,4 +1054,5 @@ internal class OrderedDictionaryEnumerator : IDictionaryEnumerator
     {
         list_enumerator.Reset ();
     }
+}
 }

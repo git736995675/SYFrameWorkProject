@@ -2,7 +2,8 @@ using System;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.AssetBundle;
+namespace ZSYFramework.AssetBundle
+{
 /// <summary>
 /// ScriptableObject 单例基类。通过 AssetBundle 加载持久化配置资产并缓存为全局实例。
 /// </summary>
@@ -23,5 +24,6 @@ public static void Init(Action callback)
         Instance = setting;
         callback();
     });
+}
 }
 }

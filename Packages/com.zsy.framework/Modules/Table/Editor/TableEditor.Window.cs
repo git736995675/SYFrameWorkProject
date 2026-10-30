@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +8,8 @@ using UnityEngine;
 using ZSYFramework.Core.Json;
 
 
-namespace ZSYFramework.Table.Editor;
+namespace ZSYFramework.Table.Editor
+{
 /// <summary>
 /// 表格编辑器
 /// </summary>
@@ -106,4 +107,5 @@ private void AddPath(string outputFilePath)
 }
 }
 
+}
 #endif

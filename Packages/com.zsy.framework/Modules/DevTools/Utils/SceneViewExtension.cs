@@ -3,7 +3,8 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.DevTools.Utils;
+namespace ZSYFramework.DevTools.Utils
+{
 [InitializeOnLoad]
 /// <summary>
 /// Scene 视图扩展。在场景视图中注入自定义绘制与快捷操作。
@@ -23,6 +24,7 @@ static void OnSceneGUI(SceneView sceneView)
     GUILayout.EndArea();
 
     Handles.EndGUI();
+}
 }
 }
 #endif

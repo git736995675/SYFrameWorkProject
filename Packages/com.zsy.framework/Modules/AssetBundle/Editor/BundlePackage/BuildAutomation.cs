@@ -8,7 +8,8 @@ using ZSYFramework.Editor.ResourceBuilder;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.AssetBundle.Editor;
+namespace ZSYFramework.AssetBundle.Editor
+{
 /// <summary>
 /// 打包自动化流程。命令行打包入口与构建后处理。
 /// </summary>
@@ -167,6 +168,7 @@ private static string PlatformSuffix(BuildTarget buildTarget)
         BuildTarget.StandaloneOSX => ".app",
         _ => ""
     };
+}
 }
 }
 #endif

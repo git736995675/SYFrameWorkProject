@@ -11,7 +11,8 @@ using ZSYFramework.UI;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.UI.Editor;
+namespace ZSYFramework.UI.Editor
+{
 /// <summary>
 /// UI 脚本生成器。从场景物体一键生成 View 脚本与预制体。
 /// </summary>
@@ -191,6 +192,7 @@ private static string GenerateAttribute(GameObject prefab, string prefabName, st
         }
     }
     return aTtribute;
+}
 }
 }
 #endif

@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 using ZSYFramework.Core;
 
 
-namespace ZSYFramework.Localization;
+namespace ZSYFramework.Localization
+{
 /// <summary>
 /// 多语言管理
 /// </summary>
@@ -242,5 +243,6 @@ private static void GetLangByKey(int key, Action<string> action, CountryAndCode 
 
         action?.Invoke(str);
     });
+}
 }
 }

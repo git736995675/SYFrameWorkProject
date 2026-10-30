@@ -20,7 +20,8 @@ using var outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.
 using var sr = new StreamReader(cs);
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 加密算法工具集。
 /// </summary>
@@ -154,5 +155,6 @@ public static string RenameFilenameToMD5(string oriPath)
         ? $"{directoryName}{md5Name}{extension}"
         : $"{md5Name}{extension}";
     return newName;
+}
 }
 }

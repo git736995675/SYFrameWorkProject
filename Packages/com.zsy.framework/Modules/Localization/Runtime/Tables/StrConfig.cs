@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZSYFramework.Core.Json;
 using ZSYFramework.Table;
 
 
-namespace ZSYFramework.Localization;
+namespace ZSYFramework.Localization
+{
 
 /// <summary>
 /// 多语言文本表契约类。由配置表生成，Key-Value 形式的翻译条目结构。
@@ -108,5 +109,6 @@ public static StrConfig Get(int id)
 public static List<StrConfig> GetAll()
 {
     return _dataArray;
+}
 }
 }

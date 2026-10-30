@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace ZSYFramework.Audio;
+namespace ZSYFramework.Audio
+{
 /// <summary>
 /// 音频静态门面。提供全局播放音效/背景音乐的快捷方法。
 /// </summary>
@@ -138,5 +139,6 @@ public static void StopSourceByName(string soundName)
 public static bool IsPlaying(string soundName)
 {
     return AudioManager.Instance.IsPlaying(soundName);
+}
 }
 }

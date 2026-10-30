@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 日志等级，只开放当前等级以上的打印
 /// </summary>
@@ -200,3 +201,4 @@ public class LogManager : Singleton<LogManager>
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SendWebRequest();
     }
+}

@@ -1,7 +1,8 @@
 using ZSYFramework.Core.Json;
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 // MonoBehaviour单例基类
 /// <summary>
 /// MonoBehaviour 泛型单例基类。子类挂载后通过 Instance 全局访问，场景中自动查找或创建实例。
@@ -67,5 +68,6 @@ public static void Release()
     _instance = null;
     if (Application.isPlaying) Destroy(go);
     else DestroyImmediate(go);
+}
 }
 }

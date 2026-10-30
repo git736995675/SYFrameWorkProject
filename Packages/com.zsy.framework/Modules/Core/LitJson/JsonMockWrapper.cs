@@ -14,7 +14,8 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 public class JsonMockWrapper : IJsonWrapper
 {
     public bool IsArray   { get { return false; } }
@@ -99,4 +100,5 @@ public class JsonMockWrapper : IJsonWrapper
     }
     void IOrderedDictionary.Insert   (int i, object k, object v) {}
     void IOrderedDictionary.RemoveAt (int i) {}
+}
 }

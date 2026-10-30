@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using Object = UnityEngine.Object;
 using System.Collections.Generic;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 对象池管理器。统一管理各类对象池的创建、取用与回收。
 /// </summary>
@@ -103,5 +104,6 @@ public void FreeObj(Transform target)
     {
         FreeObj(target.name, target.gameObject);
     }
+}
 }
 }

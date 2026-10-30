@@ -1,7 +1,8 @@
 using System.IO;
 using UnityEngine;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 路径工具类。提供跨平台路径拼接、规范化等方法。
 /// </summary>
@@ -67,4 +68,5 @@ public static string GetParentDirectoryName(string path)
     return parentDirectoryName;
 }
 
+}
 }

@@ -1,4 +1,5 @@
-namespace ZSYFramework.Localization.Arabic;
+namespace ZSYFramework.Localization.Arabic
+{
 public class TagSt
 {
     public string start;
@@ -24,4 +25,5 @@ public class TagSt
         this.len = len;
         this.line = line;
     }
+}
 }

@@ -1,7 +1,8 @@
 using ZSYFramework.Core.Json;
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 对象池
 /// </summary>
@@ -62,5 +63,6 @@ public void Free(T t)
 public void Dispose()
 {
     mobjs.Clear();
+}
 }
 }

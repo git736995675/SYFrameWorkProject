@@ -1,6 +1,7 @@
 
-namespace ZSYFramework.Core;
-﻿namespace SY
+namespace ZSYFramework.Core
+{
+namespace SY
 {
 /// <summary>
 /// AES 加解密工具。提供字符串与字节数组的对称加密、解密方法。
@@ -30,5 +31,6 @@ public abstract class AesSimple
         }
         return new string(str);
     }
+}
 }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace ZSYFramework.UI;
+namespace ZSYFramework.UI
+{
 /// <summary>
 /// 视图配置资产。全局 UI 框架参数。
 /// </summary>
@@ -17,4 +18,5 @@ public static float CameraZoom { get; set; } = 80;
 
 // ui是否跟随摄像机
 public static bool IsFollow { get; set; } = false;
+}
 }

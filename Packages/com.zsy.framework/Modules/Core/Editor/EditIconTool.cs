@@ -5,7 +5,8 @@ using ZSYFramework.Core.Json;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.Core.Editor.Utils;
+namespace ZSYFramework.Core.Editor.Utils
+{
 /// <summary>
 /// unity内嵌图标获取（待补充）
 /// </summary>
@@ -51,5 +52,6 @@ private static void InitIcons()
     FileIcons["FolderEmpty"] = EditorGUIUtility.IconContent("FolderEmpty Icon");
 }
 
+}
 }
 #endif

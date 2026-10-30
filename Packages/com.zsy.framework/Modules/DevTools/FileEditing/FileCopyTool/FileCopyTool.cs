@@ -5,7 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 文件批量复制工具窗口。
 /// </summary>
@@ -466,5 +467,6 @@ private List<string> GetSelectedExtensions()
     }
 
     return extensions;
+}
 }
 }

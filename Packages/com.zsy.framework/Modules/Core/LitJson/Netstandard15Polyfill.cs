@@ -4,7 +4,8 @@ using System;
 #if NETSTANDARD1_5
 
 
-namespace ZSYFramework.Core.Json;
+namespace ZSYFramework.Core.Json
+{
 internal static class Netstandard15Polyfill
 {
     internal static Type GetInterface(this Type type, string name)
@@ -21,5 +22,6 @@ internal static class Netstandard15Polyfill
     {
         return type.GetTypeInfo().IsEnum;
     }
+}
 }
 #endif

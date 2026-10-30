@@ -8,7 +8,8 @@ using ZSYFramework.Core.Json;
 #if SY_TMP
 #endif
 
-namespace ZSYFramework.Localization;
+namespace ZSYFramework.Localization
+{
 /// <summary>
 /// 本地化文本组件。挂载于 UI 文本，按当前语言自动刷新显示内容。
 /// </summary>
@@ -163,5 +164,6 @@ public void SetText(string text)
         if (_textComponent)
             _textComponent.text = text;
     }
+}
 }
 }

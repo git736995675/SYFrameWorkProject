@@ -1,6 +1,7 @@
 using UnityEngine.Events;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 // 事件类
 [System.Serializable]
 /// <summary>
@@ -8,4 +9,5 @@ namespace ZSYFramework.Core;
 /// </summary>
 public class ProcessEvent : UnityEvent<string, float>
 {
+}
 }

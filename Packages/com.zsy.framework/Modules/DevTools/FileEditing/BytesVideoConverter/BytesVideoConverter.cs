@@ -10,7 +10,8 @@ using ZSYFramework.Core;
 #if UNITY_EDITOR
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 字节数组与视频转换工具。
 /// </summary>
@@ -357,4 +358,5 @@ private string GetRelativePath(string fullPath, string basePath)
 }
 }
 
+}
 #endif

@@ -5,7 +5,8 @@ using ZSYFramework.Core.Json;
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.DevTools.Utils;
+namespace ZSYFramework.DevTools.Utils
+{
 /// <summary>
 /// Samples~ 可见性切换工具。
 /// 显示: 把 Samples~ 内容复制到 Samples（Unity 立即导入，可直接调试）；
@@ -135,5 +136,6 @@ private static void DeleteDirectory(string path)
 
 private static string HiddenPath => Path.Combine(PackageRoot, HiddenName);
 private static string VisiblePath => Path.Combine(PackageRoot, VisibleName);
+}
 }
 #endif

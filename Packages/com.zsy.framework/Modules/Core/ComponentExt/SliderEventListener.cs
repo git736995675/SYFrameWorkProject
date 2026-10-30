@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// Slider 组件事件监听器。捕获滑块数值变化与拖拽事件。
 /// </summary>
@@ -32,5 +33,6 @@ private void OnPointerUp(PointerEventData eventData)
     if (!_isDragging) return;
     _isDragging = false;
     OnDragEnd?.Invoke();
+}
 }
 }

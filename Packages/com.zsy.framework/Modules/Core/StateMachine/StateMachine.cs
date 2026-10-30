@@ -3,7 +3,8 @@ using System.Linq;
 using UnityEngine;
 using ZSYFramework.Core.Json;
 
-namespace ZSYFramework.Core;
+namespace ZSYFramework.Core
+{
 /// <summary>
 /// 有限状态机。管理状态的注册、切换与当前状态更新。
 /// </summary>
@@ -83,5 +84,6 @@ private void Update()
     {
         state.Value?.StateUpdate();
     }
+}
 }
 }

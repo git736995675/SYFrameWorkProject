@@ -7,7 +7,8 @@ using ZSYFramework.Core.Json;
 #if UNITY_EDITOR
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 文件加密工具窗口。
 /// </summary>
@@ -581,4 +582,5 @@ private class KeyData
 }
 }
 
+}
 #endif

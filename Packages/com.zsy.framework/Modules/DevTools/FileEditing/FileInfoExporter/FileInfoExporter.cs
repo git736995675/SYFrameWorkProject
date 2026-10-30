@@ -12,7 +12,8 @@ using var stream = File.OpenRead(filePath);
 #if UNITY_EDITOR
 
 
-namespace ZSYFramework.DevTools;
+namespace ZSYFramework.DevTools
+{
 /// <summary>
 /// 文件信息导出工具
 /// </summary>
@@ -667,4 +668,5 @@ private static byte[] UintToBigEndianBytes(uint x)
 }
 }
 
+}
 #endif

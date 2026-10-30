@@ -13,7 +13,8 @@ using var stream = File.OpenRead(path);
 
 #if UNITY_EDITOR
 
-namespace ZSYFramework.AssetBundle.Editor;
+namespace ZSYFramework.AssetBundle.Editor
+{
 /// <summary>
 /// AssetBundles资源管理编辑器
 /// </summary>
@@ -369,4 +370,5 @@ private static void GenerateVersionFile(BuildTarget target)
 }
 }
 
+}
 #endif
