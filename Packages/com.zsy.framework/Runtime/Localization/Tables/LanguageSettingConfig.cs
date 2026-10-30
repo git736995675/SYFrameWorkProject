@@ -17,6 +17,8 @@ public class LanguageSettingConfig
 	public string Annotate { get; set; }
 	/// 字体资源名称 
 	public string FontAssetName { get; set; }
+	/// TMP字体资源名称(未配置时为空, 回退 FontAssetName 对应逻辑) 
+	public string TMPFontAssetName { get; set; }
 	/// 在UI中的排序 
 	public int Sort { get; set; }
 	/// 在多语言表中的属性名称 
