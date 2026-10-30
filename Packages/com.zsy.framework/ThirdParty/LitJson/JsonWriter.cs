@@ -15,7 +15,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace ZSYFramework.Core.Json
+namespace LitJson
 {
 internal enum Condition
 {

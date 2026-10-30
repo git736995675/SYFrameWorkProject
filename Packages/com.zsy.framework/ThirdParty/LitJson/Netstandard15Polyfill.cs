@@ -4,7 +4,7 @@ using System;
 #if NETSTANDARD1_5
 
 
-namespace ZSYFramework.Core.Json
+namespace LitJson
 {
 internal static class Netstandard15Polyfill
 {

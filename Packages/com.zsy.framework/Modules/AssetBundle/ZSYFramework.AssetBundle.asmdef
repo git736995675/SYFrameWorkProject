@@ -2,7 +2,8 @@
     "name": "ZSYFramework.AssetBundle",
     "rootNamespace": "ZSYFramework",
     "references": [
-        "ZSYFramework.Core"
+        "ZSYFramework.Core",
+        "LitJson"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

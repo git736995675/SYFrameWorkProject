@@ -16,7 +16,7 @@ Packages/
       Video/                # 视频
       UI/                   # View 框架 + Tween 组件 + 场景加载（Runtime + Editor）
       DevTools/             # 纯编辑器开发工具（工具栏扩展、文件工具、注释头等）
-    ThirdParty/             # DOTween（框架代码依赖，随包内置）
+    ThirdParty/             # 内置第三方库: DOTween、LitJson（框架代码依赖）
     Samples~/               # 隐形示例目录，面板中按需 Import
       Demo/                 # 示例场景、AB 资源、打包配置
       Spine/                # spine-unity 3.8 运行时
@@ -30,6 +30,7 @@ Assets/
 ```
 
 所有自研代码统一命名空间 `ZSYFramework.<模块>`（如 `ZSYFramework.Core`、`ZSYFramework.UI`），公共类型均有 XML 文档注释。
+第三方库保持原始命名空间：DOTween（DLL，`DG.Tweening`）、LitJson（源码，`LitJson`，自带 asmdef，autoReferenced 对全部程序集自动可见）。
 每个模块一对 asmdef（`ZSYFramework.<模块>` / `ZSYFramework.<模块>.Editor`），Editor 程序集均限定 Editor 平台，依赖方向单向：
 Core ← Table ← AssetBundle/Audio ← UI/Localization ← DevTools。
 框架代码不依赖 Samples 里的任何插件——它们是**可选导入**的应用层内容。

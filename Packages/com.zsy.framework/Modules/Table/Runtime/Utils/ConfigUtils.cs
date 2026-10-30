@@ -6,7 +6,7 @@ using ExcelDataReader;
 using UnityEngine;
 using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
-using ZSYFramework.Core.Json;
+using LitJson;
 
 namespace ZSYFramework.Table
 {

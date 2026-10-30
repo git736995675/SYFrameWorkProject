@@ -1,6 +1,6 @@
 using System;
 
-namespace ZSYFramework.Core.Json
+namespace LitJson
 {
 
 /// <summary>

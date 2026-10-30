@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-namespace ZSYFramework.Core.Json
+namespace LitJson
 {
 
 #if UNITY_EDITOR

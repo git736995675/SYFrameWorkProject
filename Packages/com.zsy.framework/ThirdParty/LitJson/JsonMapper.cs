@@ -16,7 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace ZSYFramework.Core.Json
+namespace LitJson
 {
 internal struct PropertyMetadata
 {
