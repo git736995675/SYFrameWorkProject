@@ -13,9 +13,9 @@ Packages/
       SRDebugger/           # SRDebugger + SRF 调试面板
       SuperScrollView/      # 循环列表组件
       UGUIOutLine/          # UGUI 描边/渐变组件
+      QHierarchy/           # Hierarchy 层级面板美化（编辑器工具）
 Assets/
   Editor/                   # 仅本管理工程使用（SpineSettings 等）
-  Editor Plugins/QHierarchy/  # 仅本管理工程使用（Hierarchy 美化）
 ```
 
 框架依赖：UniRx、DOTween（已内置包内）、TextMeshPro（自动解析）。
@@ -50,6 +50,7 @@ Assets/
 | SRDebugger 调试面板 | SRDebugger + SRF | 需要真机调试面板 |
 | SuperScrollView 循环列表 | 循环列表组件 | 长列表 UI |
 | UGUI 描边/渐变组件 | UGUIOutLine | 需要描边/渐变效果 |
+| QHierarchy 层级面板美化 | 编辑器 Hierarchy 增强 | 想要更强大的层级窗口 |
 
 导入 Demo 后 AB 资源根路径已预置为导入位置（`Assets/Samples/ZSY Framework/0.1.0/ZSY Demo/AbRes`），直接打开 `SY-Tool/AssetBundle/AssetBundle资源编辑器` 即可使用。
 

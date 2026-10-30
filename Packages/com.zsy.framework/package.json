@@ -35,6 +35,11 @@
       "displayName": "UGUI 描边渐变组件",
       "description": "UGUI OutLine 描边与渐变效果组件。按需导入。",
       "path": "Samples~/UGUIOutLine"
+    },
+    {
+      "displayName": "QHierarchy 层级面板美化",
+      "description": "编辑器 Hierarchy 窗口增强：图标、统计、显隐锁定等快速操作。仅编辑器使用。",
+      "path": "Samples~/QHierarchy"
     }
   ],
   "keywords": [
