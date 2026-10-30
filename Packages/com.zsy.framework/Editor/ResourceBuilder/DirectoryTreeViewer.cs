@@ -76,7 +76,7 @@ namespace ZSYFramework.Editor.ResourceBuilder
     /// </summary>
     public class DirectoryTreeViewer : EditorWindow
     {
-        private static string BundleFilesPath => Path.Combine(Application.dataPath, "Config/BundleResPath.txt");
+        private static string BundleFilesPath => Path.Combine(BundleConfigLocator.ConfigDirectory, "BundleResPath.txt");
 
         private Vector2 _scrollPosition;
 
