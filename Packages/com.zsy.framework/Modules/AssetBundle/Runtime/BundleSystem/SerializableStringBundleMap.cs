@@ -37,6 +37,17 @@ namespace ZSYFramework.AssetBundle
             }
         }
 
+        /// <summary>索引器：读写键值（写后缓存与平行数组同步重建）。</summary>
+        public string this[string key]
+        {
+            get => Map.TryGetValue(key, out var v) ? v : null;
+            set
+            {
+                Map[key] = value;
+                RebuildEntries();
+            }
+        }
+
         /// <summary>取值。</summary>
         public bool TryGetValue(string key, out string value) => Map.TryGetValue(key, out value);
 
