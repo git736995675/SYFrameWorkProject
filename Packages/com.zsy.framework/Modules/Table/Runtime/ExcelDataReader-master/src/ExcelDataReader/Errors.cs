@@ -1,4 +1,4 @@
-namespace ExcelDataReader
+﻿namespace ExcelDataReader
 {
     internal static class Errors
     {

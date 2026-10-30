@@ -1,4 +1,4 @@
-namespace ExcelDataReader.Core.OpenXmlFormat
+﻿namespace ExcelDataReader.Core.OpenXmlFormat
 {
     internal class XlsxDimension : XlsxElement
     {

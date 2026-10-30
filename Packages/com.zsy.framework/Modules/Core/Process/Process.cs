@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace ZSYFramework.Core
 /// </summary>
 public class Process : MonoBehaviour
 {
-// �����¼�
+// 流程事件
 public ProcessEvent onProcessStart = new();
 public ProcessEvent onProcessUpdate = new();
 public ProcessEvent onProcessComplete = new();
@@ -19,7 +19,7 @@ private int _totalSteps = 0;
 private int _completedSteps = 0;
 private bool _isRunning = false;
 
-// ע��һ�����̲���
+// 注册一个流程步骤
 public void RegisterProcess(int weight, Action<Action> processFunc, string description = "")
 {
     if (_isRunning)
@@ -31,7 +31,7 @@ public void RegisterProcess(int weight, Action<Action> processFunc, string descr
     _processSteps.Add(new ProcessStep(weight, processFunc, description));
 }
 
-// ��ʼִ����������
+// 开始执行所有步骤
 public void ExecuteProcesses()
 {
     if (_isRunning || _processSteps.Count == 0) return;
@@ -40,7 +40,7 @@ public void ExecuteProcesses()
     _completedSteps = 0;
     _totalSteps = _processSteps.Count;
 
-    // ��Ȩ������
+    // 按权重排序
     _processSteps.Sort((a, b) => a.Weight.CompareTo(b.Weight));
 
     StartCoroutine(RunProcesses());
@@ -51,15 +51,15 @@ private IEnumerator RunProcesses()
     var currentWeight = _processSteps[0].Weight;
     var currentBatch = new List<ProcessStep>();
 
-    // ����ִ����ͬȨ�صĲ���
+    // 顺序执行不同权重的步骤
     foreach (var t in _processSteps)
     {
         if (t.Weight != currentWeight)
         {
-            // ִ�е�ǰ����
+            // 执行当前批
             yield return ExecuteBatch(currentBatch);
 
-            // ׼����һ����
+            // 准备下一批
             currentWeight = t.Weight;
             currentBatch.Clear();
         }
@@ -67,7 +67,7 @@ private IEnumerator RunProcesses()
         currentBatch.Add(t);
     }
 
-    // ִ�����һ��
+    // 执行最后一批
     if (currentBatch.Count > 0)
     {
         yield return ExecuteBatch(currentBatch);
@@ -83,14 +83,14 @@ private IEnumerator ExecuteBatch(List<ProcessStep> batch)
     var batchCompleted = 0;
     var batchSize = batch.Count;
 
-    // ��ʼ����������Э��
+    // 初始化执行本批协程
     foreach (var step in batch)
     {
         step.ProcessFunc(StepCompleteCallback);
         onProcessStart?.Invoke(step.Description, 0f);
         continue;
 
-        // Ϊÿ�����贴����ɻص�
+        // 为每个步骤创建完成回调
         void StepCompleteCallback()
         {
             batchCompleted++;
@@ -100,14 +100,14 @@ private IEnumerator ExecuteBatch(List<ProcessStep> batch)
         }
     }
 
-    // �ȴ����������в������
+    // 等待本批所有步骤完成
     while (batchCompleted < batchSize)
     {
         yield return null;
     }
 }
 
-// �������̹�����
+// 回收流程管理器
 private void Recycle()
 {
     if (_isRunning)

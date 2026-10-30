@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace ZSYFramework.AssetBundle.Editor
@@ -13,9 +13,9 @@ private string _bundleIdentifier;
 private string _version;
 private int _buildNumber;
 
-private bool _developmentBuild; //�Ƿ�ʹ�÷��ű�
-private bool _autoRunAfterBuild; //�Ƿ��Զ�����
-private bool _assetBundleBuild; //�Ƿ񹹽�AB
+private bool _developmentBuild; //是否使用开发脚本
+private bool _autoRunAfterBuild; //是否自动运行
+private bool _assetBundleBuild; //是否构建AB
 
 [MenuItem("SY-Tool/AssetBundle/打包构建", false, 1)]
 public static void ShowWindow()
@@ -57,8 +57,8 @@ private void OnGUI()
     EditorGUILayout.LabelField("Build Settings", EditorStyles.boldLabel);
 
     _developmentBuild = EditorGUILayout.Toggle("Development Build", _developmentBuild);
-    _autoRunAfterBuild = EditorGUILayout.Toggle("������Զ�����", _autoRunAfterBuild);
-    _assetBundleBuild = EditorGUILayout.Toggle("����AssetBundle", _assetBundleBuild);
+    _autoRunAfterBuild = EditorGUILayout.Toggle("打包后自动运行", _autoRunAfterBuild);
+    _assetBundleBuild = EditorGUILayout.Toggle("构建AssetBundle", _assetBundleBuild);
 
     EditorGUILayout.Space();
     if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
@@ -66,10 +66,10 @@ private void OnGUI()
         EditorGUILayout.Space();
         EditorGUILayout.BeginVertical();
         PlayerSettings.WebGL.exceptionSupport =
-            (WebGLExceptionSupport)EditorGUILayout.EnumPopup("�쳣����ȼ���",
+            (WebGLExceptionSupport)EditorGUILayout.EnumPopup("异常处理级别：",
                 PlayerSettings.WebGL.exceptionSupport);
         PlayerSettings.WebGL.compressionFormat =
-            (WebGLCompressionFormat)EditorGUILayout.EnumPopup("ѹ����ʽ��",
+            (WebGLCompressionFormat)EditorGUILayout.EnumPopup("压缩格式：",
                 PlayerSettings.WebGL.compressionFormat);
         EditorGUILayout.EndVertical();
         EditorGUILayout.Space();

@@ -1,0 +1,29 @@
+# EditorConfig: https://editorconfig.org
+# 统一全仓编码与基础格式，防止再次出现 GBK/UTF-8 混存的乱码问题
+root = true
+
+[*]
+charset = utf-8-bom
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# JSON/YAML 使用两空格缩进
+[*.{json,yml,yaml}]
+indent_size = 2
+
+# Unity 资产文件(YAML)保持 Unity 默认格式，禁止改动行尾以免产生海量 diff
+[*.{asset,unity,mat,anim,controller,prefab}]
+charset = utf-8
+trim_trailing_whitespace = false
+
+# Meta 文件同样不改动
+[*.meta]
+charset = utf-8
+trim_trailing_whitespace = false
+
+# Markdown 尾随空格有语义(换行)，不修剪
+[*.md]
+trim_trailing_whitespace = false

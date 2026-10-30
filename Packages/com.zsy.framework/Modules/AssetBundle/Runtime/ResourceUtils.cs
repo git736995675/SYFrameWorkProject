@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +27,7 @@ namespace ZSYFramework.AssetBundle
 
         private ResourcesInfo _resourcesInfo;
 
-        private readonly List<ResInfoLoadWaitCache> _cache = new(); //�����б����ظ�����
+        private readonly List<ResInfoLoadWaitCache> _cache = new(); //缓存列表防重复加载
 
         public void GetResInfo(string resName, Action<string, string> callback)
         {
@@ -91,7 +91,7 @@ namespace ZSYFramework.AssetBundle
     }
 
     /// <summary>
-    /// ��Դ�嵥ʵ��
+    /// 资源清单实体
     /// </summary>
     public class ResourcesInfo
     {
@@ -102,7 +102,7 @@ namespace ZSYFramework.AssetBundle
     }
 
     /// <summary>
-    /// ������Դ�嵥ʱ�Ļ���
+    /// 等待资源清单加载时的缓存
     /// </summary>
     public struct ResInfoLoadWaitCache
     {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using LitJson;
@@ -99,7 +99,7 @@ public static void GetAll(Action<List<StrConfig>>  callback)
     });
 }  
 
-//------------------------------------------------ͬ������������ǰ����
+//------------------------------------------------同步生成代码：请勿修改此区域以下内容
 public static StrConfig Get(int id)
 {
     Data.TryGetValue(id.ToString(), out var config);

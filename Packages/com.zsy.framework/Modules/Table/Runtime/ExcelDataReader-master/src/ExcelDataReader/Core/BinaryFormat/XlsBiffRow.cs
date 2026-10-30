@@ -1,4 +1,4 @@
-namespace ExcelDataReader.Core.BinaryFormat
+﻿namespace ExcelDataReader.Core.BinaryFormat
 {
     /// <summary>
     /// Represents row record in table

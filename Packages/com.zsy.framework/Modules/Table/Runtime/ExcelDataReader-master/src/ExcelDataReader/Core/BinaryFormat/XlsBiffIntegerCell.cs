@@ -1,4 +1,4 @@
-namespace ExcelDataReader.Core.BinaryFormat
+﻿namespace ExcelDataReader.Core.BinaryFormat
 {
     /// <summary>
     /// Represents a constant integer number in range 0..65535

@@ -1,4 +1,4 @@
-
+﻿
 namespace ZSYFramework.Core
 {
 /// <summary>

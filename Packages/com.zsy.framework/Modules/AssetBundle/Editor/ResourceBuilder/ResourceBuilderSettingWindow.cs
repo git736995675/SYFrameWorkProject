@@ -1,4 +1,4 @@
-namespace ZSYFramework.AssetBundle.Editor
+﻿namespace ZSYFramework.AssetBundle.Editor
 {
 
 /// <summary>

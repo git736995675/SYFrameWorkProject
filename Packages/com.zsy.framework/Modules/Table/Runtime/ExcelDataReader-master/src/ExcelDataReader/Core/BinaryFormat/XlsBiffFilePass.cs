@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using ExcelDataReader.Core.OfficeCrypto;
 
 namespace ExcelDataReader.Core.BinaryFormat

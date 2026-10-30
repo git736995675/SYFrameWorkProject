@@ -1,4 +1,4 @@
-namespace ZSYFramework.Core
+﻿namespace ZSYFramework.Core
 {
     /// <summary>
     /// 框架模块生命周期接口。实现后通过 <see cref="GameRoot.RegisterModule"/> 注册，

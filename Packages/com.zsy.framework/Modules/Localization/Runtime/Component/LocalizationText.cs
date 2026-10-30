@@ -1,4 +1,4 @@
-using ZSYFramework.Localization.Arabic;
+﻿using ZSYFramework.Localization.Arabic;
 using System;
 using TMPro;
 using UnityEngine.UI;

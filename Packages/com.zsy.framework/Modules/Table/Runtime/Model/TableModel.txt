@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using ZSYFramework.Core;
@@ -69,7 +69,7 @@ public class @Name
         });
     }  
     
-    //------------------------------------------------ͬ������������ǰ����
+    //------------------------------------------------同步生成代码：请勿修改此区域以下内容
     public static @Name Get(int id)
     {
         Data.TryGetValue(id.ToString(), out var config);

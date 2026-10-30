@@ -1,4 +1,4 @@
-namespace ZSYFramework.Download
+﻿namespace ZSYFramework.Download
 {
     /// <summary>
     /// 单次下载的配置项。所有字段均有默认值，按需覆盖即可。

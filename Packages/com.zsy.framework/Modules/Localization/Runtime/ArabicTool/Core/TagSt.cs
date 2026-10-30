@@ -1,4 +1,4 @@
-namespace ZSYFramework.Localization.Arabic
+﻿namespace ZSYFramework.Localization.Arabic
 {
 public class TagSt
 {

@@ -1,15 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 namespace ZSYFramework.Core
 {
 /// <summary>
-/// �������
+/// 流程管理器
 /// </summary>
 public class ProcessManager : MonoSingleton<ProcessManager>
 {
 private readonly MemoryPool<Process> _pool = new();
 
 /// <summary>
-/// ȡ��һ������
+/// 获取一个流程
 /// </summary>
 /// <returns></returns>
 public Process GetProcess()
@@ -26,7 +26,7 @@ public Process GetProcess()
 }
 
 /// <summary>
-/// ���ղ���
+/// 回收步骤
 /// </summary>
 /// <param name="process"></param>
 public void Recycle(Process process)

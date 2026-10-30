@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 #if NET20 || NET45 || NETSTANDARD2_0
 using System.Runtime.Serialization;
 #endif

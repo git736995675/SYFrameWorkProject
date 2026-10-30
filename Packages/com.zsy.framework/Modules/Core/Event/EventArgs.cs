@@ -1,4 +1,4 @@
-namespace ZSYFramework.Core
+﻿namespace ZSYFramework.Core
 {
 /// <summary>
 /// 带泛型参数的事件标识类

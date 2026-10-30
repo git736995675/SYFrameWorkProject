@@ -93,7 +93,7 @@ public static void GetAll(Action<List<LanguageSettingConfig>>  callback)
     });
 }  
 
-//------------------------------------------------ͬ������������ǰ����
+//------------------------------------------------同步生成代码：请勿修改此区域以下内容
 public static LanguageSettingConfig Get(int id)
 {
     Data.TryGetValue(id.ToString(), out var config);

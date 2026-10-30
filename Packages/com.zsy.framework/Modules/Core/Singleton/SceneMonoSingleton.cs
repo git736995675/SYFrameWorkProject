@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 namespace ZSYFramework.Core
 {
 // 场景单例基类 (单泡)

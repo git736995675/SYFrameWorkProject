@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System;
 using UnityEditor;
@@ -12,10 +12,10 @@ namespace ZSYFramework.AssetBundle.Editor
 /// </summary>
 public static class BuildTool
 {
-// Ĭ�ϴ�����·��
+// 默认打包输出路径
 private static string DefaultBuildPath => Path.Combine(Application.dataPath, "../Builds");
 
-// ��ǰƽ̨�����׺
+// 当前平台安装包后缀
 private static string PlatformSuffix
 {
     get
@@ -38,7 +38,7 @@ private static string PlatformSuffix
 }
 
 /// <summary>
-/// ����Ӧ�û�����Ϣ
+/// 设置应用基础信息
 /// </summary>
 public static void SetAppInfo(string productName, string bundleIdentifier, string version, int buildNumber = 1)
 {
@@ -46,7 +46,7 @@ public static void SetAppInfo(string productName, string bundleIdentifier, strin
     PlayerSettings.applicationIdentifier = bundleIdentifier;
     PlayerSettings.bundleVersion = version;
 
-    // ƽ̨�ض��İ汾����
+    // 平台特定的版本字段
     switch (EditorUserBuildSettings.activeBuildTarget)
     {
         case BuildTarget.Android:
@@ -58,13 +58,13 @@ public static void SetAppInfo(string productName, string bundleIdentifier, strin
         case BuildTarget.StandaloneWindows:
         case BuildTarget.StandaloneWindows64:
         case BuildTarget.StandaloneOSX:
-            // PC/Macƽ̨��������ض�����
+            // PC/Mac 平台无版本号特定字段
             break;
     }
 }
 
 /// <summary>
-/// ��ȡ��ǰӦ����Ϣ
+/// 获取当前应用信息
 /// </summary>
 public static void GetAppInfo(out string productName, out string bundleIdentifier, out string version,
     out int buildNumber)
@@ -85,7 +85,7 @@ public static void GetAppInfo(out string productName, out string bundleIdentifie
 }
 
 /// <summary>
-/// Webgl��������
+/// WebGL 平台设置
 /// </summary>
 private static void WebGlSetting()
 {
@@ -96,7 +96,7 @@ private static void WebGlSetting()
 }
 
 /// <summary>
-/// ���ð�׿ǩ��
+/// 配置安卓签名
 /// </summary>
 private static void AndroidSetting()
 {
@@ -110,7 +110,7 @@ private static void AndroidSetting()
 }
 
 /// <summary>
-/// ������Ŀ
+/// 执行打包
 /// </summary>
 public static void Build(string buildPath = null, bool developmentBuild = false, bool autoRun = true,
     bool abBuild = true)
@@ -125,7 +125,7 @@ public static void Build(string buildPath = null, bool developmentBuild = false,
         WebGlSetting();
         // AndroidSetting();
 
-        // �����ļ���
+        // 拼接文件名
         var productName = PlayerSettings.productName;
         var version = PlayerSettings.bundleVersion;
         var platform = EditorUserBuildSettings.activeBuildTarget.ToString();
@@ -139,13 +139,13 @@ public static void Build(string buildPath = null, bool developmentBuild = false,
             fileName = $"{productName}{PlatformSuffix}";
         }
 
-        // ȷ�����Ŀ¼����
+        // 确保输出目录存在
         if (!Directory.Exists(buildPath))
         {
             Directory.CreateDirectory(buildPath);
         }
 
-        // ����ѡ��
+        // 构建选项
         var options = autoRun ? BuildOptions.AutoRunPlayer : BuildOptions.None;
         if (developmentBuild)
         {
@@ -161,11 +161,11 @@ public static void Build(string buildPath = null, bool developmentBuild = false,
             ResourceBuilderWindow.BuildBundles(EditorUserBuildSettings.activeBuildTarget);
         }
 
-        // ��ʼ����
+        // 开始打包
         BuildPipeline.BuildPlayer(GetEnabledScenes(), fullPath, EditorUserBuildSettings.activeBuildTarget,
             options);
 
-        // ������ɺ���ļ���
+        // 打包完成后打开文件夹
         EditorUtility.RevealInFinder(buildPath);
         EditorUtility.DisplayDialog("Build Complete", $"Build successful!\nPath: {fullPath}", "OK");
     }
@@ -176,7 +176,7 @@ public static void Build(string buildPath = null, bool developmentBuild = false,
 }
 
 /// <summary>
-/// �л�ƽ̨������
+/// 切换平台并打包
 /// </summary>
 private static void SwitchPlatformAndBuild(BuildTarget targetPlatform, string buildPath = null,
     bool developmentBuild = false, bool autoRun = true, bool abBuild = true)
@@ -191,7 +191,7 @@ private static void SwitchPlatformAndBuild(BuildTarget targetPlatform, string bu
     EditorUserBuildSettings.SwitchActiveBuildTarget(BuildPipeline.GetBuildTargetGroup(targetPlatform),
         targetPlatform);
 
-    // ƽ̨�л����첽�ģ���Ҫ�ȴ����
+    // 平台切换是异步的，需要等待完成
     EditorApplication.delayCall += () =>
     {
         EditorApplication.delayCall = null;
@@ -231,7 +231,7 @@ public static void BuildWebGL(string buildPath = null, bool developmentBuild = f
     SwitchPlatformAndBuild(BuildTarget.WebGL, buildPath, developmentBuild, autoRun, abBuild);
 }
 
-// ��ȡ�������õĳ���
+// 获取所有启用的场景
 private static string[] GetEnabledScenes()
 {
     return (from scene in EditorBuildSettings.scenes where scene.enabled select scene.path).ToArray();

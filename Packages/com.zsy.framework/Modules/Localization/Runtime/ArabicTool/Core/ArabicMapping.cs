@@ -1,4 +1,4 @@
-
+﻿
 namespace ZSYFramework.Localization.Arabic
 {
 internal class ArabicMapping

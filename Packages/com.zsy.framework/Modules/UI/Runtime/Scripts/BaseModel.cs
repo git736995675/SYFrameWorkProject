@@ -1,4 +1,4 @@
-// Model基类（使用ScriptableObject持久化数据）
+﻿// Model基类（使用ScriptableObject持久化数据）
 
 using System;
 using UnityEngine;

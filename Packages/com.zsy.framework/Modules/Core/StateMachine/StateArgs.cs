@@ -1,4 +1,4 @@
-namespace ZSYFramework.Core
+﻿namespace ZSYFramework.Core
 {
 [System.Serializable]
 /// <summary>

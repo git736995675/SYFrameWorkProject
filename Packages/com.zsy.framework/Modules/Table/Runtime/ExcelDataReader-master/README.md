@@ -1,4 +1,4 @@
-# ExcelDataReader
+﻿# ExcelDataReader
 
 [![NuGet](https://img.shields.io/nuget/v/ExcelDataReader.svg)](https://www.nuget.org/packages/ExcelDataReader)
 
