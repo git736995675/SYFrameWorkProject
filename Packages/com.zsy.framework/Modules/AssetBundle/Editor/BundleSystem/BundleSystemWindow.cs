@@ -18,7 +18,11 @@ namespace ZSYFramework.AssetBundle.Editor
         private string _version = "";
         private bool _incremental;
 
-        [MenuItem(SYToolMenus.AssetBundle + "/AssetBundles管理", false, 1)]
+        // 菜单路径与 SYToolMenus.AssetBundle 分组保持一致。
+        // 不直接引用 SYToolMenus 类型: 它在 DevTools 程序集, 而依赖方向是 DevTools→AB.Editor, 反向引用会成环。
+        private const string MenuRoot = "SY-Tool/AssetBundle";
+
+        [MenuItem(MenuRoot + "/AssetBundles管理", false, 1)]
         public static void Open()
         {
             GetWindow<BundleSystemWindow>("AssetBundles管理");
