@@ -1,0 +1,231 @@
+﻿{
+  "RootPaths": [
+    "Assets/Samples/ZSY Framework/0.1.0/ZSY Demo/AbRes"
+  ],
+  "FolderInfos": {
+    "9bd421368d390405096949890356bd50": {
+      "Guid": "9bd421368d390405096949890356bd50",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "b33a7c2727f274d20a12a0975c8188fe": {
+      "Guid": "b33a7c2727f274d20a12a0975c8188fe",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "ba7d66eb94c27447d897345622993455": {
+      "Guid": "ba7d66eb94c27447d897345622993455",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "9a19af7fe845149de8acc292d0961219": {
+      "Guid": "9a19af7fe845149de8acc292d0961219",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "49003f3267cc5449bb5670539974d3ab": {
+      "Guid": "49003f3267cc5449bb5670539974d3ab",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "fe08ff0056d55437989f073e58486ab5": {
+      "Guid": "fe08ff0056d55437989f073e58486ab5",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "35828d444b961433cb91da4371b67b90": {
+      "Guid": "35828d444b961433cb91da4371b67b90",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "d0bb19285d9984fea8d4446146cc3319": {
+      "Guid": "d0bb19285d9984fea8d4446146cc3319",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "dfbaf46dc91e044e4814206bf7320602": {
+      "Guid": "dfbaf46dc91e044e4814206bf7320602",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "58cd2116e7d574c5cad798e30f0127b3": {
+      "Guid": "58cd2116e7d574c5cad798e30f0127b3",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    }
+  },
+  "FileInfos": {
+    "1af6c60e4767849de89c3612ec194ddb": {
+      "Guid": "1af6c60e4767849de89c3612ec194ddb",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "c916f8b184c90491ebdfe218e861322b": {
+      "Guid": "c916f8b184c90491ebdfe218e861322b",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "5056579fb68ad4572b3dd8f16023a475": {
+      "Guid": "5056579fb68ad4572b3dd8f16023a475",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "2502f64b72e494106a17d7843d5a01a4": {
+      "Guid": "2502f64b72e494106a17d7843d5a01a4",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "efd4325b0cfb84b0d8cb6b1613d2010e": {
+      "Guid": "efd4325b0cfb84b0d8cb6b1613d2010e",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "8dd653a79cca84204bdeb3b1323c720a": {
+      "Guid": "8dd653a79cca84204bdeb3b1323c720a",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "7d36a0fbf53a742f78f8f777f50f5657": {
+      "Guid": "7d36a0fbf53a742f78f8f777f50f5657",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "3c3ed8836942e4290bcaa1de89c1e734": {
+      "Guid": "3c3ed8836942e4290bcaa1de89c1e734",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "b48c82ee097df47beb6618e8274c9210": {
+      "Guid": "b48c82ee097df47beb6618e8274c9210",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "ea6ece3961adf4189a8227c572814036": {
+      "Guid": "ea6ece3961adf4189a8227c572814036",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "14703a71ac3054e9eb72dc4b7f1e1bac": {
+      "Guid": "14703a71ac3054e9eb72dc4b7f1e1bac",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "1805579b6df0c4bf6aff4b10543fb482": {
+      "Guid": "1805579b6df0c4bf6aff4b10543fb482",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "04024d90db379467d94312df3cfe580b": {
+      "Guid": "04024d90db379467d94312df3cfe580b",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "f18d592c4a044405291015a55bc438da": {
+      "Guid": "f18d592c4a044405291015a55bc438da",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "017620a79bf854a34892bf2efda29c87": {
+      "Guid": "017620a79bf854a34892bf2efda29c87",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "6036dce9a7e3c4bae89f3e86fd67be29": {
+      "Guid": "6036dce9a7e3c4bae89f3e86fd67be29",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "a92451e25d82141bab9ddc252e30057a": {
+      "Guid": "a92451e25d82141bab9ddc252e30057a",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "fe12f0033d4d344c281de642d524d1ee": {
+      "Guid": "fe12f0033d4d344c281de642d524d1ee",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "a1050a938c50840d88f2734a84ab4878": {
+      "Guid": "a1050a938c50840d88f2734a84ab4878",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "c68efdf6323c347c3b8cbbb1bcf0e1b8": {
+      "Guid": "c68efdf6323c347c3b8cbbb1bcf0e1b8",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "bbe390c4d7a5e42cc9b976ff4d6e7f21": {
+      "Guid": "bbe390c4d7a5e42cc9b976ff4d6e7f21",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "cbb1e654a1527483ab6c9218f8fa1e6a": {
+      "Guid": "cbb1e654a1527483ab6c9218f8fa1e6a",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "b5e0af03d699477592b91b6714c3eb03": {
+      "Guid": "b5e0af03d699477592b91b6714c3eb03",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "c633901a7177943b885bf72b49d6cc19": {
+      "Guid": "c633901a7177943b885bf72b49d6cc19",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "90ce6d2d91b66484399f044adddfaa25": {
+      "Guid": "90ce6d2d91b66484399f044adddfaa25",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "cd6b0c2067af047d88e4585d8d684aba": {
+      "Guid": "cd6b0c2067af047d88e4585d8d684aba",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    },
+    "edc9f323af2e2e04bb629f2bd86ed4c6": {
+      "Guid": "edc9f323af2e2e04bb629f2bd86ed4c6",
+      "RootGuid": "58cd2116e7d574c5cad798e30f0127b3",
+      "NameConfiguration": 0,
+      "AbName": null
+    }
+  }
+}

@@ -1,0 +1,52 @@
+﻿{
+  "1": {
+    "Id": 1,
+    "Country": "English",
+    "ShortName": "en",
+    "Annotate": "英语",
+    "FontAssetName": "newgamefont",
+    "Sort": 1,
+    "StrKey": "ENGLISH",
+    "IsUse": true
+  },
+  "2": {
+    "Id": 2,
+    "Country": "Deutsch",
+    "ShortName": "de",
+    "Annotate": "德语",
+    "FontAssetName": "newgamefont",
+    "Sort": 4,
+    "StrKey": "GERMAN",
+    "IsUse": true
+  },
+  "3": {
+    "Id": 3,
+    "Country": "Español",
+    "ShortName": "es",
+    "Annotate": "西语",
+    "FontAssetName": "newgamefont",
+    "Sort": 5,
+    "StrKey": "SPANISH",
+    "IsUse": true
+  },
+  "4": {
+    "Id": 4,
+    "Country": "日本語",
+    "ShortName": "ja",
+    "Annotate": "日本",
+    "FontAssetName": "newgamefont",
+    "Sort": 6,
+    "StrKey": "JAPANESE",
+    "IsUse": true
+  },
+  "5": {
+    "Id": 5,
+    "Country": "한국어",
+    "ShortName": "ko",
+    "Annotate": "韩语",
+    "FontAssetName": "newgamefont",
+    "Sort": 7,
+    "StrKey": "KOREAN",
+    "IsUse": true
+  }
+}

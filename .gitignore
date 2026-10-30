@@ -100,3 +100,7 @@ InitTestScene*.unity*
 
 # JetBrains Rider / IDE
 /.idea/
+
+# Unity UPM Samples 目录(~结尾被全局 *~ 规则误伤, 需强制保留)
+!**/Samples~/**
+!**/Samples~

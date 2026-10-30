@@ -12,7 +12,7 @@
   },
   "samples": [
     {
-      "displayName": "ZSY Demo（示例场景/AB资源/配置）",
+      "displayName": "ZSY Demo（示例场景·AB资源·配置）",
       "description": "演示场景、AssetBundle 资源目录、配置表数据与打包配置。导入到 Assets/Samples 后可直接打开 Demo 场景。",
       "path": "Samples~/Demo"
     },
@@ -32,7 +32,7 @@
       "path": "Samples~/SuperScrollView"
     },
     {
-      "displayName": "UGUI 描边/渐变组件",
+      "displayName": "UGUI 描边渐变组件",
       "description": "UGUI OutLine 描边与渐变效果组件。按需导入。",
       "path": "Samples~/UGUIOutLine"
     }
