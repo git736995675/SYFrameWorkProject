@@ -1,0 +1,14 @@
+{
+  "name": "com.zsy.framework",
+  "version": "0.1.0",
+  "displayName": "ZSY Framework",
+  "description": "ZSY Unity 游戏框架：单例、事件、场景、AssetBundle、音频、本地化、状态机、配置表等模块。",
+  "unity": "2022.3",
+  "author": {
+    "name": "ZSY"
+  },
+  "keywords": [
+    "framework",
+    "unity"
+  ]
+}

@@ -1,8 +1,0 @@
-﻿Assets/AbRes/Audio.meta
-Assets/AbRes/Font.meta
-Assets/AbRes/Materals.meta
-Assets/AbRes/Prefabs.meta
-Assets/AbRes/Shaders.meta
-Assets/AbRes/Table.meta
-Assets/AbRes/Textures.meta
-Assets/AbRes/Video.meta

@@ -1,6 +1,6 @@
 ﻿{
   "RootPaths": [
-    "Assets/AbRes"
+    "Packages/com.zsy.framework.demo/AbRes"
   ],
   "FolderInfos": {
     "9bd421368d390405096949890356bd50": {
