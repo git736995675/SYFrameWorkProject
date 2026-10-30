@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using AssetBundle = UnityEngine.AssetBundle;
 using ZSYFramework.Core;
 
 namespace ZSYFramework.AssetBundle
@@ -22,7 +23,7 @@ namespace ZSYFramework.AssetBundle
 
         private sealed class LoadedBundle
         {
-            public AssetBundle bundle;
+            public UnityEngine.AssetBundle bundle;
             public int refCount;
             // 资源缓存（bundle 内相对路径 → 资产）
             public readonly Dictionary<string, Object> assets = new();
