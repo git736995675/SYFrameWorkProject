@@ -9,6 +9,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 using ZSYFramework.Editor.ResourceBuilder;
+using ZSYFramework.Editor.Utils;
 using TableEditor = ZSYFramework.Editor.Config.TableEditor;
 
 namespace ZSYFramework.Editor.ToolbarExpansion
@@ -53,7 +54,32 @@ namespace ZSYFramework.Editor.ToolbarExpansion
             GUI.enabled = !EditorApplication.isPlaying; // 根据运行状态禁用按钮
             DrawSceneMenu();
             DrawRefreshMenu();
+            GUI.enabled = true;
+            DrawSamplesVisibility();
             GUILayout.EndHorizontal();
+        }
+
+        /// <summary>
+        /// Samples~ 显隐切换按钮（管理工程专用：应用项目里 Samples~ 目录不存在，
+        /// 点击只会日志提示"未找到目录"，无任何副作用）
+        /// </summary>
+        private static void DrawSamplesVisibility()
+        {
+            var visible = SamplesVisibilityTool.IsVisible;
+            var content = new GUIContent
+            {
+                text = visible ? "Samples√" : "Samples",
+                tooltip = visible
+                    ? "Samples 当前显示中（可直接调试 Demo/插件）。\n点击隐藏，恢复面板 Import 形态。\n提交推送前请务必隐藏！"
+                    : "Samples 当前隐藏（面板 Import 形态）。\n点击显示，临时去掉 ~ 直接调试 Demo/插件。"
+            };
+            var oldColor = GUI.backgroundColor;
+            if (visible) GUI.backgroundColor = new Color(1f, 0.76f, 0.3f); // 显示态橙色警示：提交前要切回
+            if (GUILayout.Button(content))
+            {
+                SamplesVisibilityTool.Toggle();
+            }
+            GUI.backgroundColor = oldColor;
         }
 
         private static void DrawLoadModeMenu()
