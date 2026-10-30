@@ -4,7 +4,8 @@
     "references": [
         "ZSYFramework.AssetBundle",
         "ZSYFramework.Core",
-        "ZSYFramework.Core.Editor"
+        "ZSYFramework.Core.Editor",
+        "LitJson"
     ],
     "includePlatforms": [
         "Editor"
