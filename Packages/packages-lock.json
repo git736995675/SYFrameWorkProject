@@ -231,7 +231,9 @@
       "version": "file:com.zsy.framework",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.textmeshpro": "3.0.7"
+      }
     },
     "com.zsy.framework.demo": {
       "version": "file:com.zsy.framework.demo",
@@ -249,6 +251,12 @@
     },
     "com.zsy.thirdparty.superscrollview": {
       "version": "file:com.zsy.thirdparty.superscrollview",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.zsy.thirdparty.uguioutline": {
+      "version": "file:com.zsy.thirdparty.uguioutline",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
