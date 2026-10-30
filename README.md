@@ -14,11 +14,12 @@ Packages/
       SuperScrollView/      # 循环列表组件
       UGUIOutLine/          # UGUI 描边/渐变组件
       QHierarchy/           # Hierarchy 层级面板美化（编辑器工具）
+      UniRx/                # UniRx 响应式扩展（框架代码不依赖，按需导入）
 Assets/
   Editor/                   # 仅本管理工程使用（SpineSettings 等）
 ```
 
-框架依赖：UniRx、DOTween（已内置包内）、TextMeshPro（自动解析）。
+框架依赖：DOTween（已内置包内 ThirdParty/）、TextMeshPro（自动解析）。
 框架代码不依赖 Samples 里的任何插件——它们是**可选导入**的应用层内容。
 
 框架工程自身就是普通 Unity 工程：包位于 `Packages/` 下属于"嵌入包（embedded package）"，在本工程里可以直接编辑包内代码、调试 Samples 内容，改完 push 即发布。**注意：管理工程自己调试 Demo 时，需手动把 `Samples~/Demo` 拷贝到 `Assets/Samples/...` 位置**（`~` 后缀目录 Unity 不导入），或临时去掉 `~`。
@@ -51,6 +52,7 @@ Assets/
 | SuperScrollView 循环列表 | 循环列表组件 | 长列表 UI |
 | UGUI 描边/渐变组件 | UGUIOutLine | 需要描边/渐变效果 |
 | QHierarchy 层级面板美化 | 编辑器 Hierarchy 增强 | 想要更强大的层级窗口 |
+| UniRx 响应式扩展 | UniRx | 项目使用响应式编程 |
 
 导入 Demo 后 AB 资源根路径已预置为导入位置（`Assets/Samples/ZSY Framework/0.1.0/ZSY Demo/AbRes`），直接打开 `SY-Tool/AssetBundle/AssetBundle资源编辑器` 即可使用。
 
@@ -86,8 +88,8 @@ git push origin v0.2.0
 
 往框架里加第三方插件前先问：**框架代码用到它吗？**
 
-- 用到 → 放框架包本体（目前：UniRx、DOTween）
-- 用不到 → 放 `Samples~/` 作为可选 Sample，应用按需 Import
+- 用到 → 放框架包本体 ThirdParty/（目前：DOTween）
+- 用不到 → 放 `Samples~/` 作为可选 Sample，应用按需 Import（目前：UniRx、Spine、SRDebugger、SuperScrollView、UGUIOutLine、QHierarchy）
 - 插件必须自带或补上 asmdef（Runtime + Editor 成对），避免被罩进自动程序集
 
 ## 维护操作手册

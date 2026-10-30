@@ -104,3 +104,6 @@ InitTestScene*.unity*
 # Unity UPM Samples 目录(~结尾被全局 *~ 规则误伤, 需强制保留)
 !**/Samples~/**
 !**/Samples~
+# 显隐工具拷出的临时副本(Samples 无~, Unity 会导入), 不入库
+/Packages/com.zsy.framework/Samples/
+/Packages/com.zsy.framework/Samples.meta

@@ -40,6 +40,11 @@
       "displayName": "QHierarchy 层级面板美化",
       "description": "编辑器 Hierarchy 窗口增强：图标、统计、显隐锁定等快速操作。仅编辑器使用。",
       "path": "Samples~/QHierarchy"
+    },
+    {
+      "displayName": "UniRx 响应式扩展",
+      "description": "Reactive Extensions for Unity（UniRx）。使用响应式编程的项目导入。",
+      "path": "Samples~/UniRx"
     }
   ],
   "keywords": [
