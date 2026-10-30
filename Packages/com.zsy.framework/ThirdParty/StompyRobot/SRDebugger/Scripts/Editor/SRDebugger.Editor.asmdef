@@ -1,0 +1,19 @@
+{
+    "name": "SRDebugger.Editor",
+    "rootNamespace": "SRDebugger.Editor",
+    "references": [
+        "SRF.Runtime",
+        "SRDebugger.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
