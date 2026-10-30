@@ -37,7 +37,7 @@ private bool _isCopying = false;
 
 private Vector2 _scrollPosition;
 
-[MenuItem("Tools/GCZ/文件拷贝工具")]
+[MenuItem("SY-Tool/开发工具/文件拷贝工具", false, 3)]
 public static void ShowWindow()
 {
     GetWindow<FileCopyTool>("文件拷贝工具");

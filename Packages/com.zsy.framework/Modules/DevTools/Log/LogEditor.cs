@@ -9,7 +9,7 @@ namespace ZSYFramework.DevTools
 /// </summary>
 public class LogEditor : EditorWindow
 {
-[MenuItem("SY_Tools/打开日志文件")]
+[MenuItem("SY-Tool/开发工具/打开日志文件", false, 2)]
 public static void OpenFile()
 {
     LogManager.OpenLogFile();

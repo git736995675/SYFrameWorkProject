@@ -17,7 +17,7 @@ private bool _developmentBuild; //�Ƿ�ʹ�÷��ű�
 private bool _autoRunAfterBuild; //�Ƿ��Զ�����
 private bool _assetBundleBuild; //�Ƿ񹹽�AB
 
-[MenuItem("SY_Tools/打包", false, 301)]
+[MenuItem("SY-Tool/AssetBundle/打包构建", false, 1)]
 public static void ShowWindow()
 {
     GetWindow<BuildToolWindow>("Build Tool");

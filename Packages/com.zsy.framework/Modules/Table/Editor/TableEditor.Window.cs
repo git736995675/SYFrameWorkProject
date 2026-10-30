@@ -21,7 +21,7 @@ private static List<string> _paths;
 
 private static List<string> _ignores;
 
-[MenuItem("SY_Tools/表格管理", false, 201)]
+[MenuItem("SY-Tool/表格/表格管理", false, 1)]
 public static void ShowWindow()
 {
     var window = GetWindow(typeof(TableEditor));

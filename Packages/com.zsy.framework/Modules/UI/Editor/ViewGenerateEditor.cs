@@ -14,7 +14,7 @@ namespace ZSYFramework.UI.Editor
 /// </summary>
 public class ViewGenerateEditor : EditorWindow
 {
-[MenuItem("SY_Tools/UI生成", false, 21)]
+[MenuItem("SY-Tool/UI/UI生成器", false, 1)]
 public static void ShowWindow()
 {
     GetWindow<ViewGenerateEditor>("UI生成");

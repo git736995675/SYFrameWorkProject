@@ -34,7 +34,7 @@ private readonly Dictionary<string, string> _fileTypePresets = new()
 };
 private string _selectedPreset = "Unity Meta Files";
 
-[MenuItem("Tools/GCZ/文件清理")]
+[MenuItem("SY-Tool/开发工具/文件清理", false, 4)]
 public static void ShowWindow()
 {
     GetWindow<FileTypeCleaner>("File Type Cleaner");

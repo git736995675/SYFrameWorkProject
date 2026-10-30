@@ -4,7 +4,8 @@
     "references": [
         "ZSYFramework.Core",
         "ZSYFramework.Download",
-        "ZSYFramework.AssetBundle"
+        "ZSYFramework.AssetBundle",
+        "LitJson"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

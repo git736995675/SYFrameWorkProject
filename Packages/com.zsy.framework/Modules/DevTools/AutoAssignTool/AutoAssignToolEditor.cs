@@ -10,7 +10,7 @@ namespace ZSYFramework.DevTools
 /// </summary>
 public class AutoAssignToolEditor : EditorWindow
 {
-[MenuItem("SY_Tools/脚本变量分配")]
+[MenuItem("SY-Tool/开发工具/脚本变量分配", false, 1)]
 public static void ShowWindow()
 {
     GetWindow<AutoAssignToolEditor>("脚本变量分配");

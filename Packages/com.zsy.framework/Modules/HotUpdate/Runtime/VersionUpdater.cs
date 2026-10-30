@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using LitJson;
-using UnityEngine;
 using ZSYFramework.AssetBundle;
 using ZSYFramework.Core;
 using ZSYFramework.Download;
