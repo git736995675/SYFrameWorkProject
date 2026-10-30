@@ -18,6 +18,7 @@
         "ZSYFramework.AssetBundle",
         "ZSYFramework.Localization",
         "ZSYFramework.Core.Editor",
-        "ZSYFramework.Table.Editor"
+        "ZSYFramework.Table.Editor",
+        "ZSYFramework.AssetBundle.Editor"
     ]
 }
