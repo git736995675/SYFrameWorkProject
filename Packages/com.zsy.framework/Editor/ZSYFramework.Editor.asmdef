@@ -2,7 +2,8 @@
     "name": "ZSYFramework.Editor",
     "rootNamespace": "ZSYFramework.Editor",
     "references": [
-        "ZSYFramework.Runtime"
+        "ZSYFramework.Runtime",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"

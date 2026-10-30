@@ -7,6 +7,9 @@
   "author": {
     "name": "ZSY"
   },
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.7"
+  },
   "keywords": [
     "framework",
     "unity"

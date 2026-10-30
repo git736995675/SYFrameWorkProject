@@ -2,7 +2,8 @@
     "name": "ZSYFramework.Runtime",
     "rootNamespace": "ZSYFramework",
     "references": [
-        "UniRx"
+        "UniRx",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
