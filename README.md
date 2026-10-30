@@ -112,10 +112,13 @@ git push origin v0.2.0
 
 ### 修改 Demo / 已有插件
 
-**在管理工程里改**：`Samples~/` 对 Unity 隐形，两种调试方式任选：
+**在管理工程里改（推荐用可见性开关工具）**：菜单 `SY_Tools → Samples 显示与隐藏`：
 
-- 临时看效果：把 `Samples~/Demo` 拷到 `Assets/Samples/ZSY Framework/0.1.0/ZSY Demo/`（应用项目里的真实路径），改完把改动**同步回** `Samples~/Demo` 再提交
-- 长期开发：临时把目录改名去掉 `~`（`Samples~/Demo` → 可见），提交前再改回来
+- **显示**：把 `Samples~` 临时改名为 `Samples`（去掉 `~`），Unity 立即导入，可直接打开 Demo 场景、调试插件
+- **隐藏**：改回 `Samples~`，恢复隐形，回到"面板 Import"形态——**提交推送前必须切回隐藏态**
+- **当前状态**：查看当前处于哪种状态
+
+> 显示态下 Unity 会把 Samples 内容当普通资产编译（生成 .meta 等），属于正常现象；切回隐藏态后 Unity 自动清理。
 
 **在应用项目里改**（推荐日常用法）：Import 到应用项目后直接改 `Assets/Samples/...` 下的文件——但这是复制体，改动**不会回流**框架仓库。改完如果值得沉淀，把对应文件拷回管理工程的 `Samples~/` 提交推送。
 
