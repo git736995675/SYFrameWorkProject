@@ -126,6 +126,10 @@ public void LoadAsync<T>(string bundleName, string assetPath, Action<T> complete
 
 private static string GetBundlePath(string bundleName)
 {
+    // 优先使用热更下载目录中的同名 bundle（版本更新后的新版本），不存在再回落到包内置资源
+    var hotPath = Path.Combine(ResourceUtils.HotResDir, bundleName);
+    if (File.Exists(hotPath)) return hotPath;
+
     var path = Path.Combine(Application.streamingAssetsPath, GetPlatformName(), bundleName);
     return path;
 }

@@ -22,6 +22,9 @@ namespace ZSYFramework.AssetBundle
         /// <summary>清单文件的 URI 形式。供 UnityWebRequest / Application.OpenURL 使用。</summary>
         public static string ResInfoListFileOutPutUri => "file://" + ResInfoListFileOutPutPath;
 
+        /// <summary>热更资源下载根目录。版本更新器把新版本 AB 下载到这里，加载时优先于包内置资源。</summary>
+        public static string HotResDir => Path.Combine(Application.persistentDataPath, "HotRes");
+
         private ResourcesInfo _resourcesInfo;
 
         private readonly List<ResInfoLoadWaitCache> _cache = new(); //�����б����ظ�����

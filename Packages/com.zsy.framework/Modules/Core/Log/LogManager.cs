@@ -32,6 +32,8 @@ namespace ZSYFramework.Core
         Audio,
         Task,
         Config,
+        HotUpdate,
+        Download,
     }
 
     /// <summary>

@@ -1,0 +1,16 @@
+{
+    "name": "ZSYFramework.Download",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
