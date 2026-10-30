@@ -1,0 +1,17 @@
+{
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "name": "ZSYFramework.Audio",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.Core",
+        "ZSYFramework.AssetBundle"
+    ]
+}

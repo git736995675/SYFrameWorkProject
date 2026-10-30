@@ -1,0 +1,19 @@
+{
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "name": "ZSYFramework.AssetBundle.Editor",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.AssetBundle",
+        "ZSYFramework.Core",
+        "ZSYFramework.Table",
+        "ZSYFramework.Core.Editor"
+    ]
+}

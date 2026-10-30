@@ -6,7 +6,15 @@ ZSY Unity 游戏框架的管理工程（Unity 2022.3）。本仓库以 **UPM 包
 
 ```
 Packages/
-  com.zsy.framework/        # 框架本体（Runtime + Editor）
+  com.zsy.framework/        # 框架本体（按模块划分，每模块 Runtime + Editor）
+    Core/                   # 基础层：单例、事件、日志、状态机、LitJson、工具（含 Editor 子目录）
+    Localization/           # 多语言（Runtime + Editor）
+    Table/                  # 配置表（Excel 读取 + 表格编辑器）
+    AssetBundle/            # AB 加载与打包（Runtime + Editor）
+    Audio/                  # 音频
+    Video/                  # 视频
+    UI/                     # View 框架 + Tween 组件 + 场景加载（Runtime + Editor）
+    DevTools/               # 纯编辑器开发工具（工具栏扩展、文件工具、注释头等）
     Samples~/               # 隐形示例目录，面板中按需 Import
       Demo/                 # 示例场景、AB 资源、配置表、打包配置
       Spine/                # spine-unity 3.8 运行时
@@ -19,6 +27,8 @@ Assets/
   Editor/                   # 仅本管理工程使用（SpineSettings 等）
 ```
 
+每个模块一对 asmdef（`ZSYFramework.<模块>` / `ZSYFramework.<模块>.Editor`），依赖方向单向：
+Core ← Table ← AssetBundle/Audio ← UI/Localization ← DevTools。
 框架依赖：DOTween（已内置包内 ThirdParty/）、TextMeshPro（自动解析）。
 框架代码不依赖 Samples 里的任何插件——它们是**可选导入**的应用层内容。
 

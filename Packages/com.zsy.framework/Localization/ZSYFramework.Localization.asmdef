@@ -1,0 +1,18 @@
+{
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "name": "ZSYFramework.Localization",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.Core",
+        "ZSYFramework.Table",
+        "Unity.TextMeshPro"
+    ]
+}

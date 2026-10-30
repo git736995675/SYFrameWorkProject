@@ -1,0 +1,19 @@
+{
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "name": "ZSYFramework.Core.Editor",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.Core",
+        "Unity.TextMeshPro"
+    ]
+}

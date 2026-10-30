@@ -1,0 +1,21 @@
+{
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "name": "ZSYFramework.UI",
+    "rootNamespace": "ZSYFramework",
+    "references": [
+        "ZSYFramework.Core",
+        "ZSYFramework.AssetBundle",
+        "ZSYFramework.Audio",
+        "ZSYFramework.Table",
+        "ZSYFramework.Localization",
+        "Unity.TextMeshPro"
+    ]
+}
