@@ -60,13 +60,25 @@ namespace ZSYFramework.AssetBundle.Editor
                 return false;
             }
 
-            // 2. 清空输出目录
+            // 2. 空布局守卫：BuildAssetBundles 传空 builds 数组会报
+            // "No AssetBundle has been set for this build"，提前拦截并说明原因
+            var builds = BundleRuleApplier.ToAssetBundleBuilds(layout);
+            if (builds.Length == 0)
+            {
+                SYLog.Error(
+                    "[BundleSystem] 布局计算结果为 0 个 bundle，无法构建。\n" +
+                    "常见原因: 规则为 Manual 命名模式但例外条目为空，" +
+                    "或所有文件都被排除规则/内置排除扩展名过滤。请检查文件夹 Inspector 中的规则配置。",
+                    LogCategory.Resource);
+                return false;
+            }
+
+            // 3. 清空输出目录（守卫通过后再清，避免空目录残留）
             var outPath = StreamingOutputPath(target);
             if (Directory.Exists(outPath)) Directory.Delete(outPath, true);
             Directory.CreateDirectory(outPath);
 
-            // 3. 显式构建：bundle 名与资源列表来自布局，importer 无需设置 abname
-            var builds = BundleRuleApplier.ToAssetBundleBuilds(layout);
+            // 4. 显式构建：bundle 名与资源列表来自布局，importer 无需设置 abname
             var build = BuildPipeline.BuildAssetBundles(outPath, builds, options, target);
             if (build == null)
             {
@@ -74,12 +86,12 @@ namespace ZSYFramework.AssetBundle.Editor
                 return false;
             }
 
-            // 4. 生成清单
+            // 5. 生成清单
             var manifest = BundleManifestGenerator.Generate(outPath, layout, version, target);
             BundleManifestGenerator.Write(manifest, Path.Combine(outPath, "manifest.json"));
             BundleManifestGenerator.WriteVersionIndex(manifest, Path.Combine(outPath, "version.json"));
 
-            // 5. 拷贝完整产物到版本化目录
+            // 6. 拷贝完整产物到版本化目录
             var versionedPath = VersionedOutputPath(target, version);
             if (Directory.Exists(versionedPath)) Directory.Delete(versionedPath, true);
             CopyDirectory(outPath, versionedPath);

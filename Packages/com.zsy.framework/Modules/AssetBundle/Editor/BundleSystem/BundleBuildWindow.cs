@@ -32,6 +32,11 @@ namespace ZSYFramework.AssetBundle.Editor
         private bool _openOutputAfterBuild = true;
         private Vector2 _scroll;
 
+        // 布局缓存：ComputeLayout 是全盘文件系统扫描，不能放进 OnGUI 每帧执行
+        // （否则 Manual 模式等规则的告警会每帧重复刷屏）。OnEnable/OnFocus 时重算一次。
+        private BundleLayout _layoutCache;
+        private bool _layoutDirty = true;
+
         [MenuItem(MenuPath, false, 2)]
         public static void Open()
         {
@@ -42,6 +47,13 @@ namespace ZSYFramework.AssetBundle.Editor
         {
             // 默认勾选当前平台
             _selected.Add(EditorUserBuildSettings.activeBuildTarget);
+            _layoutDirty = true;
+        }
+
+        private void OnFocus()
+        {
+            // 窗口重新聚焦时规则或资源可能已变化，重算一次（单次，非每帧）
+            _layoutDirty = true;
         }
 
         private void OnGUI()
@@ -154,17 +166,29 @@ namespace ZSYFramework.AssetBundle.Editor
         private void DrawBuildAction()
         {
             var rules = BundleSystemWindow.CollectAllRulesPublic();
+            if (_layoutDirty)
+            {
+                _layoutCache = BundleRuleApplier.ComputeLayout(rules);
+                _layoutDirty = false;
+            }
+
+            var noBundles = rules.Length > 0 && _layoutCache.bundles.Count == 0;
             var ruleInfo = rules.Length == 0
                 ? "工程内没有打包规则（BundleRuleAsset）"
-                : $"{rules.Length} 条规则 · {_layoutInfo(rules)}";
+                : $"{rules.Length} 条规则 · {LayoutInfo(_layoutCache)}";
+            if (noBundles)
+            {
+                ruleInfo += "\n⚠ 没有任何资源参与打包（Manual 模式缺例外条目，或全部被排除），无法构建";
+            }
 
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
             {
                 EditorGUILayout.LabelField(ruleInfo, EditorStyles.miniLabel);
                 EditorGUILayout.Space(2);
 
-                using (new EditorGUI.DisabledScope(_selected.Count == 0 || rules.Length == 0))
+                using (new EditorGUI.DisabledScope(_selected.Count == 0 || rules.Length == 0 || noBundles))
                 {
+                    // 构建按钮文案在多选时不区分平台
                     var label = _selected.Count switch
                     {
                         0 => "开始构建",
@@ -181,9 +205,8 @@ namespace ZSYFramework.AssetBundle.Editor
 
         private BuildTarget FirstSelected() => _selected.First();
 
-        private string _layoutInfo(IReadOnlyList<BundleRuleAsset> rules)
+        private static string LayoutInfo(BundleLayout layout)
         {
-            var layout = BundleRuleApplier.ComputeLayout(rules);
             if (!layout.Success)
                 return $"⚠ {layout.conflicts.Count} 个命名冲突（构建会被中止，详见 Console）";
             return $"{layout.bundles.Count} 个 bundle · {layout.TotalAssets} 个资源";

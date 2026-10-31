@@ -100,6 +100,9 @@ namespace ZSYFramework.AssetBundle.Editor
                 }
             }
 
+            // Manual 模式缺名文件聚合收集，循环结束后按规则一次性告警（避免逐文件刷屏）
+            var manualMissing = new List<string>();
+
             foreach (var assetPath in CollectAssetFiles(root, rule))
             {
                 var relative = assetPath[(root.Length + 1)..];
@@ -112,7 +115,7 @@ namespace ZSYFramework.AssetBundle.Editor
                         // Manual 模式必须有例外条目给名字；无条目跳过并提示
                         if (ov == null || string.IsNullOrWhiteSpace(ov.bundleName))
                         {
-                            SYLog.Warning($"[BundleSystem] Manual 模式缺少包名: {assetPath}", LogCategory.Resource);
+                            manualMissing.Add(assetPath);
                             continue;
                         }
                         bundleName = SanitizeBundleName(ov.bundleName);
@@ -166,6 +169,19 @@ namespace ZSYFramework.AssetBundle.Editor
                     }
                     if (list.Count < 10) list.Add(assetPath);
                 }
+            }
+
+            // Manual 模式缺名汇总告警（每规则一条，最多展示 10 个路径）
+            if (manualMissing.Count > 0)
+            {
+                var shown = string.Join("\n", manualMissing.Take(10)
+                    .Select(p => "  " + p));
+                if (manualMissing.Count > 10) shown += $"\n  … 其余 {manualMissing.Count - 10} 个";
+                SYLog.Warning(
+                    $"[BundleSystem] 规则 {rule.name} 为 Manual 命名模式，" +
+                    $"{manualMissing.Count} 个文件没有例外条目包名，已跳过:\n{shown}\n" +
+                    $"→ 在文件夹 Inspector 的例外条目里为文件补 bundleName，或改用其他命名模式",
+                    LogCategory.Resource);
             }
         }
 
