@@ -69,10 +69,8 @@ namespace ZSYFramework.AssetBundle.Editor
         [Tooltip("Manual 模式下整个目录打成一个包的名字；其他模式下忽略")]
         public string bundleName = "";
 
-        [Header("远程策略：bundle 是否走 CDN 热更")]
         public BundleRemoteRule remoteRule = BundleRemoteRule.AllLocal;
 
-        [Header("排除规则（相对路径通配，* 匹配任意字符）")]
         [Tooltip("命中任意模式的文件不参与打包，如 *.cs、Test/*、*~")]
         public List<string> excludePatterns = new();
 

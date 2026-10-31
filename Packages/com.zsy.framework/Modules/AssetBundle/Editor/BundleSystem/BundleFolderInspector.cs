@@ -162,6 +162,11 @@ namespace ZSYFramework.AssetBundle.Editor
                     break;
             }
 
+            // 远程策略：该目录的 bundle 是否走 CDN 热更
+            var remoteProp = so.FindProperty("remoteRule");
+            EditorGUILayout.PropertyField(remoteProp, new GUIContent("远程策略"));
+            so.ApplyModifiedProperties();
+
             var exProp = so.FindProperty("excludePatterns");
             EditorGUILayout.PropertyField(exProp,
                 new GUIContent("排除规则（相对路径通配，* 匹配任意字符）"), true);
