@@ -182,7 +182,7 @@ namespace ZSYFramework.AssetBundle.Editor
                 .ToArray();
         }
 
-        /// <summary>枚举参与打包的资源文件（Assets/ 路径）。</summary>
+        /// <summary>枚举参与打包的资源文件（返回 Assets/ 工程相对路径，AssetBundleBuild.assetNames 只接受这种格式）。</summary>
         private static List<string> CollectAssetFiles(string root, BundleRuleAsset rule)
         {
             var result = new List<string>();
@@ -196,10 +196,10 @@ namespace ZSYFramework.AssetBundle.Editor
                     if (Array.IndexOf(BuiltinExcludeExtensions, ext) >= 0) continue;
                     if (file.EndsWith("~")) continue; // Unity 隐藏目录语义（文件级）
 
-                    var assetPath = file.Replace("\\", "/");
-                    var relative = assetPath[(rootFull.Length + 1)..].Replace("\\", "/");
+                    var full = file.Replace("\\", "/");
+                    var relative = full[(rootFull.Length + 1)..];
                     if (IsExcluded(relative, rule.excludePatterns)) continue;
-                    result.Add(assetPath);
+                    result.Add(root + "/" + relative);
                 }
 
                 foreach (var sub in Directory.GetDirectories(dir))
