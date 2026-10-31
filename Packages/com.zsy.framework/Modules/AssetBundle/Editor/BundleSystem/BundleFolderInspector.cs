@@ -141,7 +141,7 @@ namespace ZSYFramework.AssetBundle.Editor
                     break;
 
                 case BundleNamingMode.Manual:
-                    var nameProp = so.FindProperty("rootBundleName");
+                    var nameProp = so.FindProperty("bundleName");
                     EditorGUILayout.PropertyField(nameProp, new GUIContent("手动包名"));
                     so.ApplyModifiedProperties();
                     var manualName = BundleRuleApplier.SanitizeBundleName(nameProp.stringValue);

@@ -67,7 +67,7 @@ namespace ZSYFramework.AssetBundle.Editor
 
         /// <summary>Manual 命名模式下整目录使用的自定义包名（在文件夹 Inspector 的“手动包名”输入框填写）。其他模式忽略。</summary>
         [Tooltip("Manual 模式下整个目录打成一个包的名字；其他模式下忽略")]
-        public string rootBundleName = "";
+        public string bundleName = "";
 
         [Header("远程策略：bundle 是否走 CDN 热更")]
         public BundleRemoteRule remoteRule = BundleRemoteRule.AllLocal;
