@@ -104,21 +104,57 @@ namespace ZSYFramework.AssetBundle.Editor
         public static void WriteVersionIndex(BundleManifest manifest, string path)
         {
             // 与 HotUpdate.VersionManifest 同构: { version, files: [{name, md5, size}] }
+            // 不用 LitJson：其 JsonWriter 根级只接受对象/数组，写裸字符串会抛 "Can't add a value here"。
+            // 这里只涉及 string/long，手写转义最稳。
             var sb = new System.Text.StringBuilder("{\"version\":");
-            sb.Append(LitJson.JsonMapper.ToJson(manifest.version));
+            sb.Append(EscapeJsonString(manifest.version));
             sb.Append(",\"files\":[");
             for (var i = 0; i < manifest.bundles.Count; i++)
             {
                 if (i > 0) sb.Append(',');
                 var b = manifest.bundles[i];
-                sb.Append("{\"name\":").Append(LitJson.JsonMapper.ToJson(b.name));
-                sb.Append(",\"md5\":").Append(LitJson.JsonMapper.ToJson(b.md5));
+                sb.Append("{\"name\":").Append(EscapeJsonString(b.name));
+                sb.Append(",\"md5\":").Append(EscapeJsonString(b.md5));
                 sb.Append(",\"size\":").Append(b.size).Append('}');
             }
             sb.Append("]}");
 
             Directory.CreateDirectory(Path.GetDirectoryName(path) ?? ".");
             File.WriteAllText(path, sb.ToString(), System.Text.Encoding.UTF8);
+        }
+
+        /// <summary>JSON 字符串字面量转义（含首尾引号），null 输出为 JSON null。</summary>
+        private static string EscapeJsonString(string value)
+        {
+            if (value == null) return "null";
+
+            var sb = new System.Text.StringBuilder(value.Length + 2);
+            sb.Append('"');
+            foreach (var c in value)
+            {
+                switch (c)
+                {
+                    case '"': sb.Append("\\\""); break;
+                    case '\\': sb.Append("\\\\"); break;
+                    case '\b': sb.Append("\\b"); break;
+                    case '\f': sb.Append("\\f"); break;
+                    case '\n': sb.Append("\\n"); break;
+                    case '\r': sb.Append("\\r"); break;
+                    case '\t': sb.Append("\\t"); break;
+                    default:
+                        if (c < ' ')
+                        {
+                            sb.Append("\\u").Append(((int)c).ToString("x4"));
+                        }
+                        else
+                        {
+                            sb.Append(c);
+                        }
+                        break;
+                }
+            }
+            sb.Append('"');
+            return sb.ToString();
         }
 
         private static string ComputeMd5(string path)
