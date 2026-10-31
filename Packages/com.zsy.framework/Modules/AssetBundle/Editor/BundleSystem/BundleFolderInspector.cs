@@ -114,20 +114,68 @@ namespace ZSYFramework.AssetBundle.Editor
         private void DrawRuleFields()
         {
             var so = new SerializedObject(_rule);
-            var naming = (BundleNamingMode)so.FindProperty("namingMode").enumValueIndex;
+            var namingProp = so.FindProperty("namingMode");
+            // 用 intValue 取底层序列化值，而非 enumValueIndex（枚举值不连续时两者不同）
+            var naming = (BundleNamingMode)namingProp.intValue;
 
-            var it = so.GetIterator();
-            it.NextVisible(true); // m_Script
-            while (it.NextVisible(false))
+            EditorGUILayout.PropertyField(namingProp, new GUIContent("命名模式"));
+            so.ApplyModifiedProperties();
+
+            // 整体描述：当前规则的打包方式与命名规则
+            EditorGUILayout.HelpBox(
+                $"此文件夹参与 AB 打包，当前命名模式：{NamingLabel(naming)}。", MessageType.Info);
+
+            switch (naming)
             {
-                if (it.name == "targetDirectory") continue;
-                // rootBundleName 仅 RootDir 模式有意义, 其余模式隐藏避免误配
-                if (it.name == "rootBundleName" && naming != BundleNamingMode.RootDir) continue;
-                EditorGUILayout.PropertyField(it, true);
+                case BundleNamingMode.SubDir:
+                    EditorGUILayout.HelpBox(
+                        "每个一级子目录打成一个 bundle；根目录下的散文件归入以文件夹名命名的包。",
+                        MessageType.None);
+                    break;
+
+                case BundleNamingMode.RootDir:
+                    var dirName = BundleRuleApplier.SanitizeBundleName(_folderPath.Split('/').Last());
+                    EditorGUILayout.HelpBox(
+                        $"整个文件夹打成一个 bundle，名称自动取文件夹名：{dirName}。",
+                        MessageType.None);
+                    break;
+
+                case BundleNamingMode.Manual:
+                    var nameProp = so.FindProperty("rootBundleName");
+                    EditorGUILayout.PropertyField(nameProp, new GUIContent("手动包名"));
+                    so.ApplyModifiedProperties();
+                    var manualName = BundleRuleApplier.SanitizeBundleName(nameProp.stringValue);
+                    if (!string.IsNullOrEmpty(manualName))
+                        EditorGUILayout.HelpBox(
+                            $"整个文件夹打成一个 bundle，名称：{manualName}。",
+                            MessageType.None);
+                    else
+                        EditorGUILayout.HelpBox(
+                            "请在上方填写手动包名，否则整个文件夹不会被打包。",
+                            MessageType.Warning);
+                    break;
+
+                case BundleNamingMode.AssetName:
+                    EditorGUILayout.HelpBox(
+                        "每个资源文件独立成包（适合大文件如场景、视频）。",
+                        MessageType.None);
+                    break;
             }
 
+            var exProp = so.FindProperty("excludePatterns");
+            EditorGUILayout.PropertyField(exProp,
+                new GUIContent("排除规则（相对路径通配，* 匹配任意字符）"), true);
             so.ApplyModifiedProperties();
         }
+
+        private static string NamingLabel(BundleNamingMode mode) => mode switch
+        {
+            BundleNamingMode.SubDir => "子目录名（SubDir）",
+            BundleNamingMode.RootDir => "根目录名（RootDir）",
+            BundleNamingMode.Manual => "手动（Manual）",
+            BundleNamingMode.AssetName => "资源名（AssetName）",
+            _ => mode.ToString(),
+        };
 
         private void DrawPreviewResult()
         {

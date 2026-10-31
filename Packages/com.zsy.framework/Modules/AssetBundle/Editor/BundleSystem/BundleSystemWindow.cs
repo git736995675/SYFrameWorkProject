@@ -154,7 +154,6 @@ namespace ZSYFramework.AssetBundle.Editor
                 GUILayout.Label(naming, EditorStyles.miniLabel, GUILayout.Width(56));
                 GUILayout.Label(remote, EditorStyles.miniLabel, GUILayout.Width(44));
                 GUILayout.Label($"排除 {rule.excludePatterns.Count}", EditorStyles.miniLabel, GUILayout.Width(58));
-                GUILayout.Label($"例外 {rule.overrides.Count}", EditorStyles.miniLabel, GUILayout.Width(52));
 
                 EditorGUILayout.EndHorizontal();
             }

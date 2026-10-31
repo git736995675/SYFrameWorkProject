@@ -82,47 +82,43 @@ namespace ZSYFramework.AssetBundle.Editor
                 return;
             }
 
-            var rootName = SanitizeBundleName(
-                rule.namingMode == BundleNamingMode.RootDir ? rule.rootBundleName : root.Split('/').Last());
+            var rootName = SanitizeBundleName(root.Split('/').Last());
             if (string.IsNullOrEmpty(rootName))
             {
-                SYLog.Error($"[BundleSystem] 规则 {rule.name} 的 bundle 名为空", LogCategory.Resource);
+                SYLog.Error($"[BundleSystem] 规则 {rule.name} 的文件夹名为空", LogCategory.Resource);
                 return;
             }
 
-            // 手动例外查找表：相对路径 → override
-            var overrideMap = new Dictionary<string, BundleOverride>(StringComparer.OrdinalIgnoreCase);
-            foreach (var ov in rule.overrides)
+            // RootDir / Manual 为整目录单一包名，循环外预计算并做缺名检查（避免每文件重复判断）
+            string fixedBundleName = null;
+            switch (rule.namingMode)
             {
-                if (!string.IsNullOrEmpty(ov.relativePath))
-                {
-                    overrideMap[NormalizeRelative(ov.relativePath)] = ov;
-                }
+                case BundleNamingMode.RootDir:
+                    fixedBundleName = rootName; // 包名取当前文件夹名（自动）
+                    break;
+                case BundleNamingMode.Manual:
+                    fixedBundleName = SanitizeBundleName(rule.bundleName);
+                    if (string.IsNullOrWhiteSpace(fixedBundleName))
+                    {
+                        SYLog.Warning(
+                            $"[BundleSystem] 规则 {rule.name} 为 Manual 模式但未填写\"手动包名\"，" +
+                            $"整个目录 {root} 已被跳过。\n→ 在文件夹 Inspector 的\"手动包名\"输入框中填写后再打包。",
+                            LogCategory.Resource);
+                        return;
+                    }
+                    break;
             }
-
-            // Manual 模式缺名文件聚合收集，循环结束后按规则一次性告警（避免逐文件刷屏）
-            var manualMissing = new List<string>();
 
             foreach (var assetPath in CollectAssetFiles(root, rule))
             {
                 var relative = assetPath[(root.Length + 1)..];
-                overrideMap.TryGetValue(NormalizeRelative(relative), out var ov);
 
                 string bundleName;
                 switch (rule.namingMode)
                 {
-                    case BundleNamingMode.Manual:
-                        // Manual 模式必须有例外条目给名字；无条目跳过并提示
-                        if (ov == null || string.IsNullOrWhiteSpace(ov.bundleName))
-                        {
-                            manualMissing.Add(assetPath);
-                            continue;
-                        }
-                        bundleName = SanitizeBundleName(ov.bundleName);
-                        break;
-
                     case BundleNamingMode.RootDir:
-                        bundleName = rootName;
+                    case BundleNamingMode.Manual:
+                        bundleName = fixedBundleName;
                         break;
 
                     case BundleNamingMode.SubDir:
@@ -153,12 +149,7 @@ namespace ZSYFramework.AssetBundle.Editor
                 {
                     layout.assetToBundle[assetPath] = bundleName;
                     info.assetPaths.Add(assetPath);
-                    info.isRemote = rule.remoteRule switch
-                    {
-                        BundleRemoteRule.AllRemote => true,
-                        BundleRemoteRule.PerBundle => ov != null && ov.isRemote,
-                        _ => false,
-                    };
+                    info.isRemote = rule.remoteRule == BundleRemoteRule.AllRemote;
                 }
                 else if (layout.assetToBundle[assetPath] != bundleName)
                 {
@@ -169,19 +160,6 @@ namespace ZSYFramework.AssetBundle.Editor
                     }
                     if (list.Count < 10) list.Add(assetPath);
                 }
-            }
-
-            // Manual 模式缺名汇总告警（每规则一条，最多展示 10 个路径）
-            if (manualMissing.Count > 0)
-            {
-                var shown = string.Join("\n", manualMissing.Take(10)
-                    .Select(p => "  " + p));
-                if (manualMissing.Count > 10) shown += $"\n  … 其余 {manualMissing.Count - 10} 个";
-                SYLog.Warning(
-                    $"[BundleSystem] 规则 {rule.name} 为 Manual 命名模式，" +
-                    $"{manualMissing.Count} 个文件没有例外条目包名，已跳过:\n{shown}\n" +
-                    $"→ 在文件夹 Inspector 的例外条目里为文件补 bundleName，或改用其他命名模式",
-                    LogCategory.Resource);
             }
         }
 

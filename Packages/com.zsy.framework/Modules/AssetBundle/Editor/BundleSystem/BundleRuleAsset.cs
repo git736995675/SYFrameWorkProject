@@ -5,17 +5,17 @@ using UnityEngine;
 
 namespace ZSYFramework.AssetBundle.Editor
 {
-    /// <summary>Bundle 命名模式。</summary>
+    /// <summary>Bundle 命名模式。注意：枚举底层整数值已随历史资产固化，调整仅改声明顺序（影响 Inspector 下拉显示），勿改动 = 后面的数值。</summary>
     public enum BundleNamingMode
     {
-        /// <summary>手动指定：每个文件/子目录在例外条目里单独写包名（配合 overrides 使用）。</summary>
-        Manual = 0,
+        /// <summary>子目录名：每个一级子目录一个 bundle（经典模式，兼容旧习惯）。默认首选模式。</summary>
+        SubDir = 2,
 
-        /// <summary>根目录名：整个打包目录内的所有资源打进同一个 bundle，名字取规则资产里显式配置的 bundleName。</summary>
+        /// <summary>根目录名：整个打包目录内的所有资源打进同一个 bundle，名字自动取当前文件夹名。</summary>
         RootDir = 1,
 
-        /// <summary>子目录名：每个一级子目录一个 bundle（经典模式，兼容旧习惯）。</summary>
-        SubDir = 2,
+        /// <summary>手动：整个目录打包成一个 bundle，包名由用户在文件夹 Inspector 的“手动包名”输入框填写（可自定义）。</summary>
+        Manual = 0,
 
         /// <summary>资源自身名：每个资源文件独立成包（适合大文件如场景、视频）。</summary>
         AssetName = 3,
@@ -65,8 +65,8 @@ namespace ZSYFramework.AssetBundle.Editor
         [Header("Bundle 命名模式")]
         public BundleNamingMode namingMode = BundleNamingMode.SubDir;
 
-        /// <summary>RootDir 模式下整包使用的 bundle 名（RootDir 模式必填）。</summary>
-        [Tooltip("RootDir 命名模式下整个目录打成一个包的名字；其他模式下忽略")]
+        /// <summary>Manual 命名模式下整目录使用的自定义包名（在文件夹 Inspector 的“手动包名”输入框填写）。其他模式忽略。</summary>
+        [Tooltip("Manual 模式下整个目录打成一个包的名字；其他模式下忽略")]
         public string rootBundleName = "";
 
         [Header("远程策略：bundle 是否走 CDN 热更")]
@@ -76,7 +76,8 @@ namespace ZSYFramework.AssetBundle.Editor
         [Tooltip("命中任意模式的文件不参与打包，如 *.cs、Test/*、*~")]
         public List<string> excludePatterns = new();
 
-        [Header("例外条目：手动命名 / 单包远程标记")]
+        /// <summary>预留：逐资源/子目录的命名与远程例外。当前命名模式已简化为整目录统一命名，此字段暂不在 Inspector 暴露，保留供高级扩展。</summary>
+        [HideInInspector]
         public List<BundleOverride> overrides = new();
 
         /// <summary>解析目标目录的工程内路径（Assets/...），无效时返回 null。</summary>
