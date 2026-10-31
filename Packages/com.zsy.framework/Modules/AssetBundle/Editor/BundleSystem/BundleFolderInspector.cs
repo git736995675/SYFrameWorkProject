@@ -10,9 +10,12 @@ namespace ZSYFramework.AssetBundle.Editor
     /// Bundle 命名方式、远程策略、排除规则与例外条目。
     /// 规则数据仍存储在 BundleRuleAsset（约定放在该文件夹内，命名 {目录名}_bundle_rule.asset），
     /// 打包管线零改动：BundleSystemWindow 可"自动收集全部规则"一键纳入构建。
+    /// 注意：Unity 没有 FolderAsset 类型，文件夹就是 DefaultAsset；
+    /// 用 [CustomEditor(typeof(DefaultAsset))] 接管后需自行排除非文件夹资产。
+    /// 命名空间末段与 UnityEditor.Editor 类同名，基类必须写全限定名。
     /// </summary>
-    [CustomEditor(typeof(FolderAsset))]
-    public sealed class BundleFolderInspector : Editor
+    [CustomEditor(typeof(DefaultAsset))]
+    public sealed class BundleFolderInspector : UnityEditor.Editor
     {
         private string _folderPath;
         private BundleRuleAsset _rule;
@@ -21,10 +24,18 @@ namespace ZSYFramework.AssetBundle.Editor
 
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            var path = AssetDatabase.GetAssetPath(target);
 
-            var folder = (FolderAsset)target;
-            var path = AssetDatabase.GetAssetPath(folder);
+            // DefaultAsset 也涵盖非文件夹资产(如无导入器的杂项文件), 非文件夹只画默认面板
+            var isFolder = AssetDatabase.IsValidFolder(path);
+            if (!isFolder)
+            {
+                DrawDefaultInspector();
+                return;
+            }
+
+            // 文件夹本身没有默认 Inspector 内容; 历史怪癖: GUI 可能预置 disabled, 显式恢复
+            GUI.enabled = true;
 
             // 切换选中对象时 Editor 实例可能复用, 路径变化即重置缓存
             if (path != _folderPath)
