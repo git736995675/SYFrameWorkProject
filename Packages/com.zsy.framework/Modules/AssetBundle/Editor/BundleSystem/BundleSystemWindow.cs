@@ -23,8 +23,6 @@ namespace ZSYFramework.AssetBundle.Editor
 
         private BundleRuleAsset[] _rules = Array.Empty<BundleRuleAsset>();
         private BundleLayout _layout;
-        private string _version = "";
-        private bool _incremental;
         private int _tab;
         private Vector2 _scroll;
         private Vector2 _detailScroll;
@@ -103,21 +101,12 @@ namespace ZSYFramework.AssetBundle.Editor
                 _layout = BundleRuleApplier.ComputeLayout(_rules);
             }
 
-            GUILayout.Space(12);
-            GUILayout.Label("版本", EditorStyles.miniLabel, GUILayout.Width(30));
-            _version = EditorGUILayout.TextField(
-                string.IsNullOrEmpty(_version) ? DateTime.Now.ToString("yyyyMMdd_HHmm") : _version,
-                EditorStyles.toolbarTextField, GUILayout.Width(110));
-            _incremental = GUILayout.Toggle(_incremental, "增量", EditorStyles.toolbarButton);
-
             GUILayout.FlexibleSpace();
 
-            using (new EditorGUI.DisabledScope(_layout == null || !_layout.Success))
+            // 构建统一走 AB打包工具（平台选择/版本号/增量在那里配），此处只保留清理入口
+            if (GUILayout.Button("AB打包工具", EditorStyles.toolbarButton, GUILayout.Width(84)))
             {
-                if (GUILayout.Button("构建当前平台", EditorStyles.toolbarButton, GUILayout.Width(96)))
-                {
-                    Build(EditorUserBuildSettings.activeBuildTarget);
-                }
+                BundleBuildWindow.Open();
             }
             if (GUILayout.Button("清理历史 abname", EditorStyles.toolbarButton, GUILayout.Width(104)))
             {
@@ -340,38 +329,12 @@ namespace ZSYFramework.AssetBundle.Editor
         }
 
         // ── 构建 ─────────────────────────────────────────────────
+        // 构建执行统一收敛在 BundleBuildWindow（平台选择/版本号/增量），
+        // 本窗口只做资源信息展示；构建完成后回到「产物清单」Tab 查看结果。
 
-        private void Build(BuildTarget target)
-        {
-            if (string.IsNullOrWhiteSpace(_version))
-            {
-                EditorUtility.DisplayDialog("版本号无效", "请填写版本号（如 20261031_1300）", "确定");
-                return;
-            }
-
-            var options = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.StrictMode;
-            if (!_incremental)
-            {
-                // 全量: 强制重建全部 bundle; 增量时 Unity 按资产哈希自动复用未变更 bundle
-                options |= BuildAssetBundleOptions.ForceRebuildAssetBundle;
-            }
-
-            try
-            {
-                EditorUtility.DisplayProgressBar("AssetBundles", "构建中…", 0.5f);
-                var ok = BundleBuilder.Build(_rules, target, _version.Trim(), _layout, options);
-                if (ok)
-                {
-                    _tab = 3; // 构建完跳到产物清单
-                    EditorUtility.DisplayDialog("构建完成",
-                        $"版本 {_version}\n输出: {BundleBuilder.StreamingOutputPath(target)}", "确定");
-                }
-            }
-            finally
-            {
-                EditorUtility.ClearProgressBar();
-            }
-        }
+        /// <summary>扫描工程内全部规则资产（文件夹 Inspector 生成 + 手动创建）。
+        /// 公开给 BundleBuildWindow 复用，保证两个窗口的规则来源一致。</summary>
+        public static BundleRuleAsset[] CollectAllRulesPublic() => CollectAllRules();
 
         /// <summary>扫描工程内全部规则资产（文件夹 Inspector 生成 + 手动创建）。</summary>
         private static BundleRuleAsset[] CollectAllRules()

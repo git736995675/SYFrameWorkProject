@@ -58,6 +58,7 @@ namespace ZSYFramework.DevTools
         // (分组, 名称, 菜单完整路径) —— 与各模块 MenuItem 保持一致
         private static readonly (string group, string name, string menu)[] Entries =
         {
+            ("AssetBundle", "AB打包工具", SYToolMenus.AssetBundle + "/AB打包工具"),
             ("AssetBundle", "AssetBundles管理", SYToolMenus.AssetBundle + "/AssetBundles管理"),
             ("AssetBundle", "打包构建", SYToolMenus.AssetBundle + "/打包构建"),
             ("表格", "表格管理", SYToolMenus.Table + "/表格管理"),
