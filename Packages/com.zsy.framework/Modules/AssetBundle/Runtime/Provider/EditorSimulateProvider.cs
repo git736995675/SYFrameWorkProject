@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEditor;
+using UnityEngine;
+using ZSYFramework.Core;
 using Object = UnityEngine.Object;
 
 namespace ZSYFramework.AssetBundle
@@ -10,6 +12,8 @@ namespace ZSYFramework.AssetBundle
     /// <summary>
     /// 编辑器模拟资源提供者。绕过 AB 打包，直接用 AssetDatabase 加载工程内资产，
     /// 开发期无需每次改动资源都重新打 AB。仅编辑器可用。
+    /// 资源名 → 资产定位：按「文件名（不含扩展名）」在工程内搜索，与
+    /// BundleManifestGenerator 写入清单的资源名规则（GetFileNameWithoutExtension）一致。
     /// </summary>
     public sealed class EditorSimulateProvider : IResourceProvider
     {
@@ -48,15 +52,43 @@ namespace ZSYFramework.AssetBundle
         {
             if (_cache.TryGetValue(location, out var cached)) return cached;
 
-            Object asset = null;
-            // 与 AB 模式一致：先经资源清单把资源名解析为工程内路径
-            ResourceUtils.Instance.GetResInfo(location, (_, fullPath) =>
+            var asset = FindAssetByName(location, assetType);
+            if (asset == null)
             {
-                asset = AssetDatabase.LoadAssetAtPath(fullPath, assetType);
-            });
+                SYLog.Error($"[EditorSimulate] 工程内找不到资源: {location}", LogCategory.Resource);
+            }
 
             _cache[location] = asset;
             return asset;
+        }
+
+        /// <summary>按文件名搜索工程资产。多命中时优先 t:Object 且路径较短者（顶层资源优先）。</summary>
+        private static Object FindAssetByName(string fileName, Type assetType)
+        {
+            if (string.IsNullOrEmpty(fileName)) return null;
+
+            var guids = AssetDatabase.FindAssets($"\"{fileName}\"", new[] { "Assets" });
+            Object best = null;
+            var bestPathLength = int.MaxValue;
+            foreach (var guid in guids)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                if (string.IsNullOrEmpty(path)) continue;
+                if (!System.IO.Path.GetFileNameWithoutExtension(path)
+                        .Equals(fileName, StringComparison.OrdinalIgnoreCase)) continue;
+
+                var asset = AssetDatabase.LoadAssetAtPath(path, assetType)
+                            ?? AssetDatabase.LoadAssetAtPath<Object>(path);
+                if (asset == null) continue;
+
+                if (path.Length < bestPathLength)
+                {
+                    best = asset;
+                    bestPathLength = path.Length;
+                }
+            }
+
+            return best;
         }
     }
 }

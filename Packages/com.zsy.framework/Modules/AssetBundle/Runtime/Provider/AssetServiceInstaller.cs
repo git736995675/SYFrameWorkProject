@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Object = UnityEngine.Object;
-using UnityEngine;
 using ZSYFramework.Core;
 
 namespace ZSYFramework.AssetBundle
 {
     /// <summary>
-    /// 资源服务注入器：把 AssetBundle 管线适配为 Core 的 <see cref="IAssetService"/> 与
-    /// <see cref="IConfigTextLoader"/> 契约，并注册进 <see cref="ServiceHub"/>。
-    /// 资源管线就绪后由 GameRoot 启动流程调用 <see cref="Install"/>；
+    /// 资源服务注入器：把 BundleSystem 管线（<see cref="BundleResourceService"/>）适配为
+    /// Core 的 <see cref="IAssetService"/> 与 <see cref="IConfigTextLoader"/> 契约，
+    /// 并注册进 <see cref="ServiceHub"/>。
     /// 安装前消费方调用会收到日志兜底（不崩，模块可独立调试）。
     /// </summary>
     public static class AssetServiceInstaller
@@ -24,7 +23,7 @@ namespace ZSYFramework.AssetBundle
             Install();
         }
 
-        /// <summary>把 AB 管线注册为全局资源/配置服务。重复调用幂等。</summary>
+        /// <summary>把 BundleSystem 管线注册为全局资源/配置服务。重复调用幂等。</summary>
         public static void Install()
         {
             if (_installed) return;
@@ -37,12 +36,12 @@ namespace ZSYFramework.AssetBundle
         {
             public void Load<T>(string assetName, Action<T> onSuccess) where T : Object
             {
-                ABLoadManager.Instance.Load(assetName, onSuccess);
+                BundleResourceService.Load(assetName, onSuccess);
             }
 
             public Task<T> LoadAsync<T>(string assetName) where T : Object
             {
-                return ResourceProvider.LoadAssetAsync<T>(assetName);
+                return BundleResourceService.LoadAsync<T>(assetName);
             }
         }
 
@@ -50,18 +49,18 @@ namespace ZSYFramework.AssetBundle
         {
             public void LoadConfig<T>(string assetName, Action<T> onSuccess)
             {
-                ABLoadManager.Instance.LoadTextAsset(assetName, json =>
+                BundleResourceService.Load<TextAsset>(assetName, json =>
                 {
-                    onSuccess?.Invoke(LitJson.JsonMapper.ToObject<T>(json.text));
+                    onSuccess?.Invoke(json != null
+                        ? LitJson.JsonMapper.ToObject<T>(json.text)
+                        : default);
                 });
             }
 
             public void LoadConfigRaw(string bundleName, string assetName, Action<Object> onSuccess)
             {
-                ABLoadManager.Instance.Load<TextAsset>(bundleName, assetName, json =>
-                {
-                    onSuccess?.Invoke(json);
-                });
+                // 新清单按资源名定位（bundleName 参数保留兼容旧调用签名，不再参与寻址）
+                BundleResourceService.Load<TextAsset>(assetName, json => { onSuccess?.Invoke(json); });
             }
         }
     }

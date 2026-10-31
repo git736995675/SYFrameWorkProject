@@ -93,8 +93,7 @@ public static void PerformBuild()
         }
 
         var fullPath = Path.Combine(buildPath, fileName);
-        ResourceBuilderWindow.ReadPath();
-        ResourceBuilderWindow.BuildBundles(buildTarget);
+        BuildBundlesForPlayer(buildTarget);
         BuildPipeline.BuildPlayer(scenes, fullPath, buildTarget, BuildOptions.None);
         Debug.Log("=== 构建成功 ===");
 
@@ -165,6 +164,30 @@ private static string PlatformSuffix(BuildTarget buildTarget)
         BuildTarget.StandaloneOSX => ".app",
         _ => ""
     };
+}
+
+/// <summary>
+/// 出包前构建 AssetBundles（走 BundleSystem 显式构建管线）。
+/// 版本号取当前时间戳，与 BundleSystemWindow 手动构建保持同一数据源。
+/// </summary>
+private static void BuildBundlesForPlayer(BuildTarget target)
+{
+    var rules = AssetDatabase.FindAssets("t:BundleRuleAsset")
+        .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+        .Select(path => AssetDatabase.LoadAssetAtPath<BundleRuleAsset>(path))
+        .Where(r => r != null && r.TargetAssetPath != null)
+        .ToList();
+    if (rules.Count == 0)
+    {
+        Debug.LogWarning("[BuildTool] 工程内没有打包规则（BundleRuleAsset），跳过 AB 构建");
+        return;
+    }
+
+    var version = DateTime.Now.ToString("yyyyMMdd_HHmm");
+    if (!BundleBuilder.Build(rules, target, version))
+    {
+        throw new InvalidOperationException("AssetBundle 构建失败，中止出包");
+    }
 }
 }
 }

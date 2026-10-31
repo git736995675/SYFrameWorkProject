@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Object = UnityEngine.Object;
+using UnityEngine;
 
 namespace ZSYFramework.AssetBundle
 {
+    /// <summary>资源加载模式枚举：Editor 直读或 AssetBundle 加载。</summary>
+    public enum LoadMode
+    {
+        Editor, // 编辑器模式
+        AssetBundle // AssetBundle模式
+    }
+
     /// <summary>
     /// 资源加载统一门面。业务代码只调用 <see cref="ResourceProvider.LoadAssetAsync{T}"/>，
-    /// 具体由哪个 <see cref="IResourceProvider"/> 完成加载（编辑器直读 / AB / 远程）对业务透明。
-    /// 默认按编辑器资源加载模式（<see cref="ABLoadManager.LoadModeSetting"/>）自动选择实现。
+    /// 具体由哪个 <see cref="IResourceProvider"/> 完成加载（编辑器直读 / AB）对业务透明。
+    /// 默认按编辑器资源加载模式（<see cref="LoadModeSetting"/>）自动选择实现。
     /// </summary>
     public static class ResourceProvider
     {
@@ -38,10 +46,21 @@ namespace ZSYFramework.AssetBundle
             return Current.LoadAssetAsync(location, assetType);
         }
 
+        /// <summary>资源加载模式（PlayerPrefs 持久化，工具栏可切换）。仅编辑器下影响实现选择。</summary>
+        public static LoadMode LoadModeSetting
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey("ResLoadMode")) return LoadMode.Editor;
+                return (LoadMode)PlayerPrefs.GetInt("ResLoadMode");
+            }
+            set => PlayerPrefs.SetInt("ResLoadMode", (int)value);
+        }
+
         private static IResourceProvider CreateDefault()
         {
 #if UNITY_EDITOR
-            if (ABLoadManager.LoadModeSetting == LoadMode.Editor)
+            if (LoadModeSetting == LoadMode.Editor)
             {
                 return new EditorSimulateProvider();
             }

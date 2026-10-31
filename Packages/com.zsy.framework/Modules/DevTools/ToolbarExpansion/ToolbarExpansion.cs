@@ -89,11 +89,11 @@ private static void DrawLoadModeMenu()
     var menu = new GenericMenu();
     var content = new GUIContent
     {
-        text = ABLoadManager.LoadModeSetting == LoadMode.AssetBundle ? "当前Ab" : "当前Editor",
+        text = ResourceProvider.LoadModeSetting == LoadMode.AssetBundle ? "当前Ab" : "当前Editor",
         tooltip = "切换资源加载模式"
     };
     if (!GUILayout.Button(content)) return;
-    ABLoadManager.LoadModeSetting = ABLoadManager.LoadModeSetting == LoadMode.AssetBundle
+    ResourceProvider.LoadModeSetting = ResourceProvider.LoadModeSetting == LoadMode.AssetBundle
         ? LoadMode.Editor
         : LoadMode.AssetBundle;
     menu.ShowAsContext();

@@ -9,9 +9,8 @@ using ZSYFramework.Core;
 namespace ZSYFramework.AssetBundle
 {
     /// <summary>
-    /// 新一代 AssetBundle 加载器：清单驱动 + 依赖解析 + 引用计数。
-    /// 与旧 ABLoadManager 的区别：
-    /// - 定位来自 manifest.json（资源名→bundle 名→路径），不再依赖运行时拼路径；
+    /// AssetBundle 加载器：清单驱动 + 依赖解析 + 引用计数。
+    /// - 定位来自 manifest.json（资源名→bundle 名→路径），不依赖运行时拼路径；
     /// - 远程 bundle（isRemote）未下载时给出明确错误，提示走 VersionUpdater；
     /// - 引用计数精细到 bundle，Release 时依赖计数一并递减。
     /// </summary>

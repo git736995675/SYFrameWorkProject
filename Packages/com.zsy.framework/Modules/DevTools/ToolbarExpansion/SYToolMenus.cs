@@ -59,7 +59,6 @@ namespace ZSYFramework.DevTools
         private static readonly (string group, string name, string menu)[] Entries =
         {
             ("AssetBundle", "AssetBundles管理", SYToolMenus.AssetBundle + "/AssetBundles管理"),
-            ("AssetBundle", "AssetBundle资源编辑器", SYToolMenus.AssetBundle + "/AssetBundle资源编辑器"),
             ("AssetBundle", "打包构建", SYToolMenus.AssetBundle + "/打包构建"),
             ("表格", "表格管理", SYToolMenus.Table + "/表格管理"),
             ("UI", "UI生成器", SYToolMenus.UI + "/UI生成器"),

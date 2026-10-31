@@ -30,7 +30,7 @@ namespace ZSYFramework.HotUpdate
     /// <summary>
     /// 资源版本更新流程：拉取远端版本清单 → 与本地清单比对差异 → 并发下载变更文件到
     /// <see cref="ResourceUtils.HotResDir"/> → 写回本地清单。
-    /// 更新完成后 ABLoadManager / ResourceProvider 会自动优先加载 HotRes 目录中的新版本。
+    /// 更新完成后 ResourceProvider / BundleManifestManager 会自动优先加载 HotRes 目录中的新版本。
     /// </summary>
     public sealed class VersionUpdater
     {

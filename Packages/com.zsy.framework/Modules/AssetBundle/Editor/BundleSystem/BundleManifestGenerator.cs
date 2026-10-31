@@ -82,7 +82,7 @@ namespace ZSYFramework.AssetBundle.Editor
                 }
             }
 
-            // 平台主清单也注册为资源（ABLoadManager 需要 AssetBundleManifest）
+            // 平台主清单（Bundles.<平台>）也注册为资源，便于工具链按资源名访问 Unity 原生 manifest
             var platformManifestFile = bundleFilePaths.FirstOrDefault(f =>
                 Path.GetFileName(f) == $"Bundles.{target}");
             if (platformManifestFile != null)
