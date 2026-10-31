@@ -19,7 +19,7 @@ namespace ZSYFramework.AssetBundle.Editor
     {
         private string _folderPath;
         private BundleRuleAsset _rule;
-        private RuleApplyResult _preview;
+        private BundleLayout _preview;
         private bool _foldout = true;
 
         public override void OnInspectorGUI()
@@ -88,7 +88,7 @@ namespace ZSYFramework.AssetBundle.Editor
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("预览 bundle 划分"))
                 {
-                    _preview = BundleRuleApplier.ApplyAll(new[] { _rule }, dryRun: true);
+                    _preview = BundleRuleApplier.ComputeLayout(new[] { _rule });
                 }
                 if (GUILayout.Button("定位规则资产", GUILayout.Width(96)))
                 {
@@ -141,12 +141,12 @@ namespace ZSYFramework.AssetBundle.Editor
             }
 
             const int maxLines = 20;
-            var total = _preview.bundleFileCounts.Count;
-            var remote = _preview.bundleRemoteFlags.Values.Count(r => r);
-            var lines = _preview.bundleFileCounts
-                .OrderBy(kv => kv.Key)
+            var total = _preview.bundles.Count;
+            var remote = _preview.bundles.Values.Count(b => b.isRemote);
+            var lines = _preview.bundles.Values
+                .OrderBy(b => b.name)
                 .Take(maxLines)
-                .Select(kv => $"· {kv.Key}  ({kv.Value})");
+                .Select(b => $"· {b.name}  ({b.assetPaths.Count})");
 
             var text = $"共 {total} 个 bundle（远程 {remote} 个）：\n" + string.Join("\n", lines);
             if (total > maxLines) text += $"\n… 其余 {total - maxLines} 个省略";

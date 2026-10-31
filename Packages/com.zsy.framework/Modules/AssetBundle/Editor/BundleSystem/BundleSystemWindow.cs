@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -8,19 +9,28 @@ using ZSYFramework.Core;
 namespace ZSYFramework.AssetBundle.Editor
 {
     /// <summary>
-    /// AB 打包主窗口：规则管理 → 冲突预检 → 一键构建 → 清单查看。
-    /// 入口: SY-Tool/AssetBundle/AssetBundles管理。
+    /// AB 打包主窗口：资源信息中心。
+    /// 结构：构建操作区（一行紧凑）→ 打包规则列表（只读+定位）→ Tab 明细
+    /// （资源总览 / Bundle 视图 / 依赖视图 / 构建产物清单）。
+    /// 规则来源于文件夹 Inspector 配置的 BundleRuleAsset，此处只读展示，
+    /// 编辑一律跳回文件夹 Inspector（单一数据源，杜绝两处配置打架）。
     /// </summary>
     public sealed class BundleSystemWindow : EditorWindow
     {
-        private Vector2 _scroll;
-        private RuleApplyResult _lastCheck;
-        private string _version = "";
-        private bool _incremental;
-
         // 菜单路径与 SYToolMenus.AssetBundle 分组保持一致。
         // 不直接引用 SYToolMenus 类型: 它在 DevTools 程序集, 而依赖方向是 DevTools→AB.Editor, 反向引用会成环。
         private const string MenuRoot = "SY-Tool/AssetBundle";
+
+        private BundleRuleAsset[] _rules = Array.Empty<BundleRuleAsset>();
+        private BundleLayout _layout;
+        private string _version = "";
+        private bool _incremental;
+        private int _tab;
+        private Vector2 _scroll;
+        private Vector2 _detailScroll;
+        private string _selectedBundle;
+
+        private static readonly string[] TabNames = { "资源总览", "Bundle 视图", "依赖视图", "产物清单" };
 
         [MenuItem(MenuRoot + "/AssetBundles管理", false, 1)]
         public static void Open()
@@ -28,163 +38,315 @@ namespace ZSYFramework.AssetBundle.Editor
             GetWindow<BundleSystemWindow>("AssetBundles管理");
         }
 
+        private void OnEnable()
+        {
+            RefreshRules();
+        }
+
+        private void RefreshRules()
+        {
+            _rules = CollectAllRules();
+            _layout = null; // 规则变了, 旧布局失效
+        }
+
         private void OnGUI()
         {
-            _scroll = EditorGUILayout.BeginScrollView(_scroll);
+            DrawToolbar();
+            EditorGUILayout.Space(4);
 
-            DrawRuleSection();
-            EditorGUILayout.Space(8);
-            DrawBuildSection();
-            EditorGUILayout.Space(8);
-            DrawManifestSection();
-
-            EditorGUILayout.EndScrollView();
-        }
-
-        // ── 规则管理 ─────────────────────────────────────────────
-
-        private void DrawRuleSection()
-        {
-            EditorGUILayout.LabelField("打包规则资产", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox(
-                "两种配置方式：\n" +
-                "· 选中 Assets/ 下文件夹，在 Inspector 的「AssetBundle 打包设置」里配置（推荐）；\n" +
-                "· 手动创建规则资产（Create → ZSYFramework → Bundle Rule Asset）后拖入下方列表。\n" +
-                "命名冲突未解决时无法构建。", MessageType.Info);
-
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("自动收集全部规则", GUILayout.Width(140)))
+            if (_rules.Length == 0)
             {
-                _rules = CollectAllRules();
-                if (_rules.Length == 0)
-                {
-                    EditorUtility.DisplayDialog("未找到规则资产",
-                        "工程内没有 BundleRuleAsset。\n请先在文件夹 Inspector 里「启用 AB 打包」。", "确定");
-                }
-            }
-            GUILayout.Label($"{ActiveRules().Length} 条规则生效", EditorStyles.miniLabel);
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
-
-            _rules = DrawRuleList(_rules);
-        }
-
-        /// <summary>扫描工程内全部规则资产（文件夹 Inspector 生成 + 手动创建）。</summary>
-        private static BundleRuleAsset[] CollectAllRules()
-        {
-            return AssetDatabase.FindAssets("t:BundleRuleAsset")
-                .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
-                .Select(path => AssetDatabase.LoadAssetAtPath<BundleRuleAsset>(path))
-                .Where(r => r != null && r.TargetAssetPath != null)
-                .OrderBy(r => r.TargetAssetPath, StringComparer.Ordinal)
-                .ToArray();
-        }
-
-        private BundleRuleAsset[] _rules = Array.Empty<BundleRuleAsset>();
-
-        private static BundleRuleAsset[] DrawRuleList(BundleRuleAsset[] rules)
-        {
-            var newList = new BundleRuleAsset[rules.Length + 1];
-            rules.CopyTo(newList, 0);
-            newList[^1] = null;
-
-            for (var i = 0; i < newList.Length; i++)
-            {
-                EditorGUILayout.BeginHorizontal();
-                newList[i] = (BundleRuleAsset)EditorGUILayout.ObjectField(
-                    $"  规则 {i + 1}", newList[i], typeof(BundleRuleAsset), false);
-                EditorGUILayout.EndHorizontal();
-
-                if (newList[i] != null && newList[i].TargetAssetPath == null)
-                {
-                    EditorGUILayout.HelpBox($"规则 {newList[i].name} 未配置有效目标目录", MessageType.Warning);
-                }
-            }
-
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("添加一行", GUILayout.Width(100)))
-            {
-                // 长度已 +1, 直接返回
-            }
-            if (GUILayout.Button("移除空行", GUILayout.Width(100)))
-            {
-                return newList.Where(r => r != null).ToArray();
-            }
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
-            return newList;
-        }
-
-        // ── 构建区 ───────────────────────────────────────────────
-
-        private void DrawBuildSection()
-        {
-            EditorGUILayout.LabelField("构建", EditorStyles.boldLabel);
-
-            EditorGUILayout.BeginHorizontal();
-            _version = EditorGUILayout.TextField("版本号", string.IsNullOrEmpty(_version)
-                ? DateTime.Now.ToString("yyyyMMdd_HHmm") : _version);
-            if (GUILayout.Button("取当前时间", GUILayout.Width(90)))
-            {
-                _version = DateTime.Now.ToString("yyyyMMdd_HHmm");
-                GUI.FocusControl(null);
-            }
-            EditorGUILayout.EndHorizontal();
-
-            _incremental = EditorGUILayout.Toggle(new GUIContent("增量构建",
-                "开启后不做输出目录清理（依赖 Unity 哈希比对复用未变更 bundle）"), _incremental);
-
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("① 预检冲突（不写入）"))
-            {
-                _lastCheck = BundleRuleApplier.ApplyAll(ActiveRules(), dryRun: true);
-                ShowCheckResult();
-            }
-            if (GUILayout.Button("② 应用规则到资源"))
-            {
-                _lastCheck = BundleRuleApplier.ApplyAll(ActiveRules(), dryRun: false);
-                ShowCheckResult();
-            }
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            using (new EditorGUI.DisabledScope(!ValidVersion()))
-            {
-                if (GUILayout.Button("③ 构建当前平台"))
-                {
-                    Build(EditorUserBuildSettings.activeBuildTarget);
-                }
-                if (GUILayout.Button("构建 Windows"))
-                {
-                    Build(BuildTarget.StandaloneWindows);
-                }
-            }
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.LabelField($"包内置输出: {BundleBuilder.StreamingOutputPath(EditorUserBuildSettings.activeBuildTarget)}",
-                EditorStyles.miniLabel);
-            EditorGUILayout.LabelField($"CDN 产物: {BundleBuilder.VersionedOutputPath(EditorUserBuildSettings.activeBuildTarget, _version)}",
-                EditorStyles.miniLabel);
-        }
-
-        private void Build(BuildTarget target)
-        {
-            if (!ValidVersion())
-            {
-                EditorUtility.DisplayDialog("版本号无效", "请填写版本号（如 20261031_0240）", "确定");
+                EditorGUILayout.HelpBox(
+                    "工程内没有打包规则。\n请在 Project 窗口选中 Assets/ 下的文件夹，" +
+                    "在 Inspector 的「AssetBundle 打包设置」里点「启用 AB 打包」。", MessageType.Info);
                 return;
             }
 
-            if (_lastCheck == null || !_lastCheck.Success)
+            _scroll = EditorGUILayout.BeginScrollView(_scroll);
+            DrawRulesSection();
+
+            if (_layout == null)
             {
-                _lastCheck = BundleRuleApplier.ApplyAll(ActiveRules(), dryRun: true);
-                if (!_lastCheck.Success)
+                EditorGUILayout.Space(6);
+                EditorGUILayout.HelpBox("点击「刷新预览」计算资源划分结果。", MessageType.None);
+                EditorGUILayout.EndScrollView();
+                return;
+            }
+
+            if (!_layout.Success)
+            {
+                EditorGUILayout.Space(6);
+                DrawConflicts();
+                EditorGUILayout.EndScrollView();
+                return;
+            }
+
+            EditorGUILayout.Space(6);
+            DrawTabBar();
+            EditorGUILayout.Space(4);
+            DrawTabContent();
+            EditorGUILayout.EndScrollView();
+        }
+
+        // ── 顶部操作区 ───────────────────────────────────────────
+
+        private void DrawToolbar()
+        {
+            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+
+            if (GUILayout.Button("刷新规则", EditorStyles.toolbarButton, GUILayout.Width(70)))
+            {
+                RefreshRules();
+            }
+            if (GUILayout.Button("刷新预览", EditorStyles.toolbarButton, GUILayout.Width(70)))
+            {
+                _layout = BundleRuleApplier.ComputeLayout(_rules);
+            }
+
+            GUILayout.Space(12);
+            GUILayout.Label("版本", EditorStyles.miniLabel, GUILayout.Width(30));
+            _version = EditorGUILayout.TextField(
+                string.IsNullOrEmpty(_version) ? DateTime.Now.ToString("yyyyMMdd_HHmm") : _version,
+                EditorStyles.toolbarTextField, GUILayout.Width(110));
+            _incremental = GUILayout.Toggle(_incremental, "增量", EditorStyles.toolbarButton);
+
+            GUILayout.FlexibleSpace();
+
+            using (new EditorGUI.DisabledScope(_layout == null || !_layout.Success))
+            {
+                if (GUILayout.Button("构建当前平台", EditorStyles.toolbarButton, GUILayout.Width(96)))
                 {
-                    ShowCheckResult();
-                    EditorUtility.DisplayDialog("存在冲突",
-                        $"有 {_lastCheck.conflicts.Count} 个 bundle 命名冲突，请先解决（见 Console）", "确定");
-                    return;
+                    Build(EditorUserBuildSettings.activeBuildTarget);
                 }
+            }
+            if (GUILayout.Button("清理历史 abname", EditorStyles.toolbarButton, GUILayout.Width(104)))
+            {
+                BundleRuleApplier.ClearBundleNames();
+                Debug.Log("[BundleSystem] 已清空工程内全部 AssetBundle 名（旧方案遗留）");
+            }
+
+            EditorGUILayout.EndHorizontal();
+        }
+
+        // ── 规则列表（只读） ─────────────────────────────────────
+
+        private void DrawRulesSection()
+        {
+            EditorGUILayout.LabelField($"打包规则（{_rules.Length}）", EditorStyles.boldLabel);
+
+            foreach (var rule in _rules)
+            {
+                EditorGUILayout.BeginHorizontal();
+
+                // 只读展示: 目标目录 + 命名模式 + 远程策略, 点击定位目录
+                var dir = rule.TargetAssetPath;
+                var naming = rule.namingMode switch
+                {
+                    BundleNamingMode.Manual => "手动",
+                    BundleNamingMode.RootDir => "根目录名",
+                    BundleNamingMode.SubDir => "子目录名",
+                    BundleNamingMode.AssetName => "资源名",
+                    _ => "?",
+                };
+                var remote = rule.remoteRule switch
+                {
+                    BundleRemoteRule.AllLocal => "内置",
+                    BundleRemoteRule.AllRemote => "远程",
+                    BundleRemoteRule.PerBundle => "按例外",
+                    _ => "?",
+                };
+
+                if (GUILayout.Button(dir ?? $"{rule.name}（无效目录）", EditorStyles.linkLabel))
+                {
+                    EditorGUIUtility.PingObject(rule.targetDirectory != null
+                        ? rule.targetDirectory
+                        : (UnityEngine.Object)rule);
+                }
+                GUILayout.Label(naming, EditorStyles.miniLabel, GUILayout.Width(56));
+                GUILayout.Label(remote, EditorStyles.miniLabel, GUILayout.Width(44));
+                GUILayout.Label($"排除 {rule.excludePatterns.Count}", EditorStyles.miniLabel, GUILayout.Width(58));
+                GUILayout.Label($"例外 {rule.overrides.Count}", EditorStyles.miniLabel, GUILayout.Width(52));
+
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        private void DrawConflicts()
+        {
+            EditorGUILayout.HelpBox($"存在 {_layout.conflicts.Count} 个 bundle 命名冲突，无法构建：",
+                MessageType.Error);
+            foreach (var kv in _layout.conflicts)
+            {
+                EditorGUILayout.LabelField($"· {kv.Key}", EditorStyles.miniLabel);
+                foreach (var f in kv.Value)
+                {
+                    EditorGUILayout.LabelField($"    {f}", EditorStyles.miniLabel);
+                }
+            }
+        }
+
+        private void DrawTabBar()
+        {
+            _tab = GUILayout.Toolbar(_tab, TabNames);
+        }
+
+        // ── Tab 内容 ─────────────────────────────────────────────
+
+        private void DrawTabContent()
+        {
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            _detailScroll = EditorGUILayout.BeginScrollView(_detailScroll, GUILayout.Height(360));
+
+            switch (_tab)
+            {
+                case 0: DrawAssetOverview(); break;
+                case 1: DrawBundleView(); break;
+                case 2: DrawDependencyView(); break;
+                case 3: DrawBuildOutputView(); break;
+            }
+
+            EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndVertical();
+        }
+
+        /// <summary>资源总览：全部待打包资源 → 所属 bundle。</summary>
+        private void DrawAssetOverview()
+        {
+            EditorGUILayout.LabelField($"待打包资源 {_layout.TotalAssets} 个 / " +
+                $"{_layout.bundles.Count} 个 bundle", EditorStyles.boldLabel);
+            EditorGUILayout.Space(2);
+
+            foreach (var b in _layout.bundles.Values.OrderBy(b => b.name, StringComparer.Ordinal))
+            {
+                EditorGUILayout.LabelField($"[{b.name}]{(b.isRemote ? "  远程" : "")}",
+                    EditorStyles.boldLabel);
+                foreach (var asset in b.assetPaths)
+                {
+                    if (GUILayout.Button(asset, EditorStyles.linkLabel))
+                    {
+                        EditorGUIUtility.PingObject(AssetDatabase.LoadMainAssetAtPath(asset));
+                    }
+                }
+                EditorGUILayout.Space(3);
+            }
+        }
+
+        /// <summary>Bundle 视图：左列 bundle 列表，右列选中包的资源清单。</summary>
+        private void DrawBundleView()
+        {
+            EditorGUILayout.LabelField($"共 {_layout.bundles.Count} 个 bundle", EditorStyles.boldLabel);
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.BeginVertical(GUILayout.Width(230));
+            foreach (var b in _layout.bundles.Values.OrderBy(b => b.name, StringComparer.Ordinal))
+            {
+                var title = $"{b.name} ({b.assetPaths.Count})";
+                if (GUILayout.Toggle(_selectedBundle == b.name, title, "Button"))
+                {
+                    _selectedBundle = b.name;
+                }
+            }
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.BeginVertical();
+            if (_selectedBundle != null &&
+                _layout.bundles.TryGetValue(_selectedBundle, out var info))
+            {
+                EditorGUILayout.LabelField(info.name, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(
+                    info.isRemote ? "远程（CDN 热更）" : "内置（StreamingAssets）",
+                    EditorStyles.miniLabel);
+                EditorGUILayout.Space(4);
+                EditorGUILayout.LabelField($"资源清单（{info.assetPaths.Count}）", EditorStyles.boldLabel);
+                foreach (var asset in info.assetPaths)
+                {
+                    if (GUILayout.Button(Path.GetFileName(asset), EditorStyles.linkLabel))
+                    {
+                        EditorGUIUtility.PingObject(AssetDatabase.LoadMainAssetAtPath(asset));
+                    }
+                }
+            }
+            else
+            {
+                EditorGUILayout.HelpBox("选择左侧 bundle 查看资源清单。", MessageType.None);
+            }
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        /// <summary>依赖视图：构建产物存在时展示 bundle 间依赖；否则提示先构建。</summary>
+        private void DrawDependencyView()
+        {
+            var outPath = BundleBuilder.StreamingOutputPath(EditorUserBuildSettings.activeBuildTarget);
+            if (!Directory.Exists(outPath) || !Directory.GetFiles(outPath, "*.manifest").Any())
+            {
+                EditorGUILayout.HelpBox("尚无构建产物，依赖关系由 Unity 在构建时计算。\n" +
+                    "先执行「构建当前平台」，之后此处展示每个 bundle 的依赖列表。", MessageType.None);
+                return;
+            }
+
+            EditorGUILayout.LabelField($"构建产物依赖（{EditorUserBuildSettings.activeBuildTarget}）",
+                EditorStyles.boldLabel);
+            EditorGUILayout.Space(2);
+
+            foreach (var bundleFile in Directory.GetFiles(outPath, "*.manifest"))
+            {
+                var bundleName = Path.GetFileNameWithoutExtension(bundleFile);
+                if (bundleName.StartsWith("Bundles")) continue; // 平台主清单无意义
+
+                var deps = File.ReadAllLines(bundleFile)
+                    .Where(l => l.StartsWith("- "))
+                    .Select(l => Path.GetFileNameWithoutExtension(l[2..].Trim()))
+                    .Where(d => !d.StartsWith("Bundles"))
+                    .Distinct()
+                    .ToList();
+
+                EditorGUILayout.LabelField($"{bundleName}  →  {(deps.Count == 0 ? "（无依赖）" : "")}",
+                    EditorStyles.miniLabel);
+                foreach (var d in deps)
+                {
+                    EditorGUILayout.LabelField($"    · {d}", EditorStyles.miniLabel);
+                }
+            }
+        }
+
+        /// <summary>产物清单：最近一次构建的 manifest.json 内容。</summary>
+        private void DrawBuildOutputView()
+        {
+            var path = Path.Combine(Application.streamingAssetsPath, "Bundles",
+                BundleManifestManager.PlatformName, "manifest.json");
+            if (!File.Exists(path))
+            {
+                EditorGUILayout.HelpBox("尚未构建，无产物清单。", MessageType.None);
+                return;
+            }
+
+            var manifest = BundleManifestManager.Parse(File.ReadAllText(path));
+            var remote = manifest.bundles.Count(b => b.isRemote);
+            EditorGUILayout.LabelField(
+                $"版本 {manifest.version} · {manifest.bundles.Count} bundles（远程 {remote}）· " +
+                $"{manifest.resources.entries.Count} 资源", EditorStyles.boldLabel);
+            EditorGUILayout.Space(2);
+
+            foreach (var b in manifest.bundles)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(b.name, GUILayout.Width(200));
+                EditorGUILayout.LabelField(FormatSize(b.size), GUILayout.Width(70));
+                GUILayout.Label(b.isRemote ? "远程" : "内置", GUILayout.Width(40));
+                EditorGUILayout.LabelField($"依赖 {b.dependencies.Count}", EditorStyles.miniLabel);
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        // ── 构建 ─────────────────────────────────────────────────
+
+        private void Build(BuildTarget target)
+        {
+            if (string.IsNullOrWhiteSpace(_version))
+            {
+                EditorUtility.DisplayDialog("版本号无效", "请填写版本号（如 20261031_1300）", "确定");
+                return;
             }
 
             var options = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.StrictMode;
@@ -197,10 +359,10 @@ namespace ZSYFramework.AssetBundle.Editor
             try
             {
                 EditorUtility.DisplayProgressBar("AssetBundles", "构建中…", 0.5f);
-                var ok = BundleBuilder.Build(ActiveRules(), target, _version.Trim(), options);
+                var ok = BundleBuilder.Build(_rules, target, _version.Trim(), _layout, options);
                 if (ok)
                 {
-                    _lastCheck = null;
+                    _tab = 3; // 构建完跳到产物清单
                     EditorUtility.DisplayDialog("构建完成",
                         $"版本 {_version}\n输出: {BundleBuilder.StreamingOutputPath(target)}", "确定");
                 }
@@ -211,90 +373,15 @@ namespace ZSYFramework.AssetBundle.Editor
             }
         }
 
-        private BundleRuleAsset[] ActiveRules() => _rules.Where(r => r != null).ToArray();
-
-        private bool ValidVersion() => !string.IsNullOrWhiteSpace(_version);
-
-        private void ShowCheckResult()
+        /// <summary>扫描工程内全部规则资产（文件夹 Inspector 生成 + 手动创建）。</summary>
+        private static BundleRuleAsset[] CollectAllRules()
         {
-            if (_lastCheck == null) return;
-            if (_lastCheck.Success)
-            {
-                var total = _lastCheck.bundleFileCounts.Count;
-                var remote = _lastCheck.bundleRemoteFlags.Values.Count(r => r);
-                Debug.Log($"[BundleSystem] 预检通过: {total} 个 bundle, {_lastCheck.assignedCount} 个资源, 远程 {remote} 个");
-            }
-            else
-            {
-                foreach (var kv in _lastCheck.conflicts)
-                {
-                    Debug.LogError($"[BundleSystem] bundle 名冲突 [{kv.Key}]:\n  " + string.Join("\n  ", kv.Value));
-                }
-            }
-        }
-
-        // ── 清单查看 ─────────────────────────────────────────────
-
-        private Vector2 _manifestScroll;
-        private BundleManifest _preview;
-
-        private void DrawManifestSection()
-        {
-            EditorGUILayout.LabelField("清单", EditorStyles.boldLabel);
-
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("打开清单文件"))
-            {
-                var path = Path.GetFullPath(BundleManifestManager.HotManifestPath);
-                if (!File.Exists(path))
-                {
-                    path = Path.GetFullPath(Path.Combine(Application.streamingAssetsPath,
-                        "Bundles", BundleManifestManager.PlatformName, "manifest.json"));
-                }
-                if (File.Exists(path)) EditorUtility.RevealInFinder(path);
-                else EditorUtility.DisplayDialog("清单不存在", "尚未打包生成清单", "确定");
-            }
-            if (GUILayout.Button("打开 CDN 产物目录"))
-            {
-                var dir = BundleBuilder.CdnRootPath(EditorUserBuildSettings.activeBuildTarget);
-                if (Directory.Exists(dir)) EditorUtility.RevealInFinder(dir);
-                else EditorUtility.DisplayDialog("目录不存在", "尚未执行过构建", "确定");
-            }
-            if (GUILayout.Button(_preview == null ? "查看清单内容" : "刷新清单内容"))
-            {
-                LoadPreview();
-            }
-            EditorGUILayout.EndHorizontal();
-
-            if (_preview == null) return;
-
-            EditorGUILayout.HelpBox(
-                $"版本 {_preview.version} · 平台 {_preview.platform} · " +
-                $"{_preview.bundles.Count} bundles · {_preview.resources.entries.Count} 资源", MessageType.None);
-
-            _manifestScroll = EditorGUILayout.BeginScrollView(_manifestScroll, GUILayout.Height(220));
-            foreach (var b in _preview.bundles)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(b.name, GUILayout.Width(220));
-                EditorGUILayout.LabelField(FormatSize(b.size), GUILayout.Width(70));
-                GUILayout.Label(b.isRemote ? "远程" : "内置", GUILayout.Width(40));
-                EditorGUILayout.LabelField($"依赖 {b.dependencies.Count}", EditorStyles.miniLabel);
-                EditorGUILayout.EndHorizontal();
-            }
-            EditorGUILayout.EndScrollView();
-        }
-
-        private void LoadPreview()
-        {
-            var path = Path.Combine(Application.streamingAssetsPath, "Bundles",
-                BundleManifestManager.PlatformName, "manifest.json");
-            if (!File.Exists(path))
-            {
-                EditorUtility.DisplayDialog("清单不存在", "尚未打包生成清单", "确定");
-                return;
-            }
-            _preview = BundleManifestManager.Parse(File.ReadAllText(path));
+            return AssetDatabase.FindAssets("t:BundleRuleAsset")
+                .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+                .Select(path => AssetDatabase.LoadAssetAtPath<BundleRuleAsset>(path))
+                .Where(r => r != null && r.TargetAssetPath != null)
+                .OrderBy(r => r.TargetAssetPath, StringComparer.Ordinal)
+                .ToArray();
         }
 
         private static string FormatSize(long bytes) =>

@@ -19,10 +19,10 @@ namespace ZSYFramework.AssetBundle.Editor
     {
         /// <summary>扫描构建产物生成清单。</summary>
         /// <param name="outputPath">bundle 输出目录（Assets/StreamingAssets/Bundles/&lt;平台&gt;）。</param>
-        /// <param name="remoteFlags">bundle 名 → 远程标记。</param>
+        /// <param name="layout">打包布局（显式构建的计算结果，提供资源映射与远程标记）。</param>
         /// <param name="version">版本号。</param>
         /// <param name="target">目标平台。</param>
-        public static BundleManifest Generate(string outputPath, Dictionary<string, bool> remoteFlags,
+        public static BundleManifest Generate(string outputPath, BundleLayout layout,
             string version, BuildTarget target)
         {
             var manifest = new BundleManifest
@@ -40,12 +40,13 @@ namespace ZSYFramework.AssetBundle.Editor
                 var bundleName = Path.GetFileName(file);
 
                 // Unity 生成的平台主清单（Bundles.<平台> 文件）已过滤；其余每个文件视为一个 bundle
+                var layoutInfo = layout != null && layout.bundles.TryGetValue(bundleName, out var li) ? li : null;
                 var info = new BundleFileInfo
                 {
                     name = bundleName,
                     size = new FileInfo(file).Length,
                     md5 = ComputeMd5(file),
-                    isRemote = remoteFlags != null && remoteFlags.TryGetValue(bundleName, out var r) && r,
+                    isRemote = layoutInfo?.isRemote ?? false,
                 };
 
                 // 从 .manifest 文件读取显式依赖（Unity 会为每个 bundle 生成同名 .manifest）
@@ -53,7 +54,6 @@ namespace ZSYFramework.AssetBundle.Editor
                 if (File.Exists(manifestFile))
                 {
                     info.dependencies = File.ReadAllLines(manifestFile)
-                        .Where(l => l.StartsWith("Dependencies: ") || l.StartsWith("- "))
                         .Where(l => l.StartsWith("- "))
                         .Select(l => Path.GetFileNameWithoutExtension(l[2..].Trim()))
                         .Distinct()
@@ -67,21 +67,19 @@ namespace ZSYFramework.AssetBundle.Editor
                 manifest.bundles.Add(info);
             }
 
-            // 资源名 → bundle 映射：来自 AssetDatabase 中带 bundle 名的全部资产
-            foreach ( var guid in AssetDatabase.FindAssets("", new[] { "Assets" }))
+            // 资源名 → bundle 映射：直接取自布局计算结果（不再扫描 importer）
+            if (layout != null)
             {
-                var assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                if (string.IsNullOrEmpty(assetPath)) continue;
-                var importer = AssetImporter.GetAtPath(assetPath);
-                if (importer == null || string.IsNullOrEmpty(importer.assetBundleName)) continue;
-                // 主清单文件本身也算资源（运行时需要加载 AssetBundleManifest）
-                var resName = Path.GetFileNameWithoutExtension(assetPath);
-                if (manifest.resources.ContainsKey(resName))
+                foreach (var kv in layout.assetToBundle)
                 {
-                    SYLog.Warning($"[BundleSystem] 清单资源重名被覆盖: {resName} ({assetPath})",
-                        LogCategory.Resource);
+                    var resName = Path.GetFileNameWithoutExtension(kv.Key);
+                    if (manifest.resources.ContainsKey(resName))
+                    {
+                        SYLog.Warning($"[BundleSystem] 清单资源重名被覆盖: {resName} ({kv.Key})",
+                            LogCategory.Resource);
+                    }
+                    manifest.resources[resName] = kv.Value;
                 }
-                manifest.resources[resName] = importer.assetBundleName;
             }
 
             // 平台主清单也注册为资源（ABLoadManager 需要 AssetBundleManifest）

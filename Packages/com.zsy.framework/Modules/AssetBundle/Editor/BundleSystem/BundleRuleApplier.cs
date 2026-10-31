@@ -9,30 +9,47 @@ using ZSYFramework.Core;
 namespace ZSYFramework.AssetBundle.Editor
 {
     /// <summary>
-    /// 规则应用结果：供窗口与构建流程展示。
+    /// 打包布局计算结果：bundle 名 → 资源明细，供预览窗口 / 显式构建共享。
     /// </summary>
-    public sealed class RuleApplyResult
+    public sealed class BundleLayout
     {
-        /// <summary>成功分配 bundle 名的资源数。</summary>
-        public int assignedCount;
+        /// <summary>单 bundle 明细。</summary>
+        public sealed class BundleInfo
+        {
+            /// <summary>bundle 名（即产物文件名）。</summary>
+            public string name;
 
-        /// <summary>生成的 bundle 名 → 文件数。</summary>
-        public readonly Dictionary<string, int> bundleFileCounts = new();
+            /// <summary>是否远程（CDN 热更）。</summary>
+            public bool isRemote;
 
-        /// <summary>命中的 bundle 名 → 远程标记。</summary>
-        public readonly Dictionary<string, bool> bundleRemoteFlags = new();
+            /// <summary>bundle 内资源明细。</summary>
+            public readonly List<string> assetPaths = new();
+
+            /// <summary>依赖的其他 bundle 名（构建后由清单填充；预览阶段为空）。</summary>
+            public readonly List<string> dependencies = new();
+        }
+
+        /// <summary>bundle 名 → 明细。</summary>
+        public readonly Dictionary<string, BundleInfo> bundles = new(StringComparer.Ordinal);
+
+        /// <summary>资源路径 → 所属 bundle 名（资源总览用）。</summary>
+        public readonly Dictionary<string, string> assetToBundle = new(StringComparer.Ordinal);
 
         /// <summary>命名冲突列表（bundle 名 → 冲突文件）。</summary>
-        public readonly Dictionary<string, List<string>> conflicts = new();
+        public readonly Dictionary<string, List<string>> conflicts = new(StringComparer.Ordinal);
+
+        /// <summary>参与打包的资源总数。</summary>
+        public int TotalAssets => assetToBundle.Count;
 
         /// <summary>是否可以继续构建。</summary>
         public bool Success => conflicts.Count == 0;
     }
 
     /// <summary>
-    /// 规则应用器：把 BundleRuleAsset 翻译为 AssetImporter.assetBundleName。
-    /// 职责：枚举目标文件 → 按命名模式分配 bundle 名 → 冲突检测 → 写入 importer。
-    /// 全程不使用 variant（bundle 名即最终文件名，干净且与清单一一对应）。
+    /// 规则应用器：把 BundleRuleAsset 列表计算为 bundle 布局。
+    /// 纯计算器，不写 AssetImporter——构建走 BuildPipeline.BuildAssetBundles 的
+    /// AssetBundleBuild[] 显式重载，工程内 importer 状态保持干净。
+    /// ClearBundleNames 仅用于清理旧方案遗留的脏 abname。
     /// </summary>
     public static class BundleRuleApplier
     {
@@ -42,35 +59,21 @@ namespace ZSYFramework.AssetBundle.Editor
             ".meta", ".cs", ".xlsx", ".xls", ".csv", ".json", ".txt", ".asmdef", ".asset",
         };
 
-        /// <summary>把全部规则应用到 importer。先清空旧 bundle 名保证幂等。</summary>
-        /// <param name="rules">规则资产列表。</param>
-        /// <param name="dryRun">只计算不写入（供预检）。</param>
-        public static RuleApplyResult ApplyAll(IReadOnlyList<BundleRuleAsset> rules, bool dryRun = false)
+        /// <summary>
+        /// 计算全部规则的 bundle 布局。只读计算，无任何工程状态副作用。
+        /// </summary>
+        public static BundleLayout ComputeLayout(IReadOnlyList<BundleRuleAsset> rules)
         {
-            if (!dryRun)
-            {
-                ClearAllBundleNames();
-            }
-
-            var result = new RuleApplyResult();
-            var seenBundleNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
+            var layout = new BundleLayout();
             foreach (var rule in rules)
             {
-                ApplyOne(rule, result, seenBundleNames, dryRun);
+                ComputeOne(rule, layout);
             }
 
-            if (!dryRun)
-            {
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
-            }
-
-            return result;
+            return layout;
         }
 
-        private static void ApplyOne(BundleRuleAsset rule, RuleApplyResult result,
-            HashSet<string> seenBundleNames, bool dryRun)
+        private static void ComputeOne(BundleRuleAsset rule, BundleLayout layout)
         {
             var root = rule.TargetAssetPath;
             if (root == null)
@@ -97,8 +100,7 @@ namespace ZSYFramework.AssetBundle.Editor
                 }
             }
 
-            var files = CollectAssetFiles(root, rule);
-            foreach (var assetPath in files)
+            foreach (var assetPath in CollectAssetFiles(root, rule))
             {
                 var relative = assetPath[(root.Length + 1)..];
                 overrideMap.TryGetValue(NormalizeRelative(relative), out var ov);
@@ -136,43 +138,48 @@ namespace ZSYFramework.AssetBundle.Editor
                         continue;
                 }
 
-                // 冲突检测：同名资源在不同位置分到同一 bundle 名 → 覆盖风险
-                if (!result.bundleFileCounts.TryAdd(bundleName, 1))
+                // 跨规则 bundle 重名检测（同规则内同 bundle 多文件是合法的）
+                if (!layout.bundles.TryGetValue(bundleName, out var info))
                 {
-                    result.bundleFileCounts[bundleName]++;
+                    info = new BundleLayout.BundleInfo { name = bundleName };
+                    layout.bundles[bundleName] = info;
                 }
 
-                if (!seenBundleNames.Add(bundleName))
+                // 登记资源（同路径防御性去重）
+                if (!layout.assetToBundle.ContainsKey(assetPath))
                 {
-                    // 同 bundle 名出现即记录（允许同 bundle 多文件，但跨规则重名要提示）
-                    if (!result.conflicts.TryGetValue(bundleName, out var list))
+                    layout.assetToBundle[assetPath] = bundleName;
+                    info.assetPaths.Add(assetPath);
+                    info.isRemote = rule.remoteRule switch
                     {
-                        result.conflicts[bundleName] = list = new List<string>();
+                        BundleRemoteRule.AllRemote => true,
+                        BundleRemoteRule.PerBundle => ov != null && ov.isRemote,
+                        _ => false,
+                    };
+                }
+                else if (layout.assetToBundle[assetPath] != bundleName)
+                {
+                    // 同一资源被多条规则算入不同 bundle → 冲突
+                    if (!layout.conflicts.TryGetValue(bundleName, out var list))
+                    {
+                        layout.conflicts[bundleName] = list = new List<string>();
                     }
                     if (list.Count < 10) list.Add(assetPath);
                 }
-
-                // 远程标记解析
-                var isRemote = rule.remoteRule switch
-                {
-                    BundleRemoteRule.AllRemote => true,
-                    BundleRemoteRule.PerBundle => ov != null && ov.isRemote,
-                    _ => false,
-                };
-                result.bundleRemoteFlags[bundleName] = isRemote;
-
-                if (!dryRun)
-                {
-                    var importer = AssetImporter.GetAtPath(assetPath);
-                    if (importer == null)
-                    {
-                        SYLog.Warning($"[BundleSystem] 无法获取 importer: {assetPath}", LogCategory.Resource);
-                        continue;
-                    }
-                    importer.assetBundleName = bundleName;
-                    importer.assetBundleVariant = null; // 新方案不使用 variant
-                }
             }
+        }
+
+        /// <summary>把布局转为显式构建参数（按名排序保证产物确定性）。</summary>
+        public static AssetBundleBuild[] ToAssetBundleBuilds(BundleLayout layout)
+        {
+            return layout.bundles.Values
+                .OrderBy(b => b.name, StringComparer.Ordinal)
+                .Select(b => new AssetBundleBuild
+                {
+                    assetBundleName = b.name,
+                    assetNames = b.assetPaths.OrderBy(p => p, StringComparer.Ordinal).ToArray(),
+                })
+                .ToArray();
         }
 
         /// <summary>枚举参与打包的资源文件（Assets/ 路径）。</summary>
@@ -250,8 +257,11 @@ namespace ZSYFramework.AssetBundle.Editor
         private static string NormalizeRelative(string p) =>
             p?.Trim().Replace("\\", "/").TrimStart('/').ToLowerInvariant() ?? "";
 
-        /// <summary>清空工程内全部 bundle 名（含孤儿名）。</summary>
-        public static void ClearAllBundleNames()
+        /// <summary>
+        /// 清空工程内全部 bundle 名。显式构建方案下 importer 不再被写入，
+        /// 此方法仅用于清理旧方案遗留的脏 abname（窗口里手动触发一次即可）。
+        /// </summary>
+        public static void ClearBundleNames()
         {
             foreach (var name in AssetDatabase.GetAllAssetBundleNames())
             {
