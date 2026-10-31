@@ -45,7 +45,7 @@ namespace ZSYFramework.AssetBundle.Editor
                 _preview = null;
             }
 
-            EditorGUILayout.Space(10);
+            EditorGUILayout.Space(6);
             DrawBundleSection(path);
         }
 
@@ -53,51 +53,61 @@ namespace ZSYFramework.AssetBundle.Editor
 
         private void DrawBundleSection(string folderPath)
         {
-            _foldout = EditorGUILayout.Foldout(_foldout, "AssetBundle 打包设置", true);
+            var header = _rule == null ? "AssetBundle 打包设置" : "AssetBundle 打包设置（已启用）";
+            _foldout = EditorGUILayout.Foldout(_foldout, header, true, EditorStyles.foldoutHeader);
             if (!_foldout) return;
 
-            EditorGUI.indentLevel++;
+            // 折叠内容包进卡片容器: 统一内边距, 修复 HelpBox 缩进 26px / 按钮顶格 8px 的错位
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.Space(2);
 
             if (_rule == null)
             {
-                EditorGUILayout.HelpBox("该文件夹未参与 AB 打包。", MessageType.None);
-
                 var underAssets = folderPath.StartsWith("Assets/");
-                using (new EditorGUI.DisabledScope(!underAssets))
+                if (underAssets)
                 {
-                    if (GUILayout.Button("启用 AB 打包（生成规则资产）"))
+                    EditorGUILayout.LabelField("该文件夹未参与 AB 打包。", EditorStyles.miniLabel);
+                    EditorGUILayout.Space(2);
+                    if (GUILayout.Button("启用 AB 打包"))
                     {
                         _rule = CreateRule(folderPath);
                         _preview = null;
                     }
                 }
-
-                if (!underAssets)
+                else
                 {
                     EditorGUILayout.HelpBox("仅支持在 Assets/ 下的文件夹创建规则资产。", MessageType.Warning);
                 }
             }
             else
             {
+                GUILayout.Space(4);
                 DrawRuleFields();
 
-                EditorGUILayout.Space(4);
+                EditorGUILayout.Space(6);
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("预览 bundle 划分"))
                 {
                     _preview = BundleRuleApplier.ApplyAll(new[] { _rule }, dryRun: true);
                 }
-                if (GUILayout.Button("定位规则资产"))
+                if (GUILayout.Button("定位规则资产", GUILayout.Width(96)))
                 {
                     EditorGUIUtility.PingObject(_rule);
                 }
                 EditorGUILayout.EndHorizontal();
 
                 DrawPreviewResult();
-                DrawRemoveButton();
+
+                EditorGUILayout.Space(4);
+                if (GUILayout.Button("移除打包配置", EditorStyles.miniButton))
+                {
+                    TryRemoveRule();
+                }
             }
 
-            EditorGUI.indentLevel--;
+            GUILayout.Space(2);
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4);
         }
 
         /// <summary>内嵌绘制规则字段（隐藏 targetDirectory：它就是当前文件夹本身）。</summary>
@@ -125,6 +135,7 @@ namespace ZSYFramework.AssetBundle.Editor
 
             if (!_preview.Success)
             {
+                EditorGUILayout.Space(4);
                 EditorGUILayout.HelpBox("存在 bundle 名冲突（详见 Console）", MessageType.Error);
                 return;
             }
@@ -135,15 +146,16 @@ namespace ZSYFramework.AssetBundle.Editor
             var lines = _preview.bundleFileCounts
                 .OrderBy(kv => kv.Key)
                 .Take(maxLines)
-                .Select(kv => $"· {kv.Key}  ({kv.Value} 个资源)");
+                .Select(kv => $"· {kv.Key}  ({kv.Value})");
 
-            var text = $"bundle 划分（{total} 个, 远程 {remote} 个）:\n" + string.Join("\n", lines);
+            var text = $"共 {total} 个 bundle（远程 {remote} 个）：\n" + string.Join("\n", lines);
             if (total > maxLines) text += $"\n… 其余 {total - maxLines} 个省略";
 
+            EditorGUILayout.Space(4);
             EditorGUILayout.HelpBox(text, MessageType.Info);
         }
 
-        private void DrawRemoveButton()
+        private void TryRemoveRule()
         {
             if (!GUILayout.Button("移除打包配置")) return;
 
