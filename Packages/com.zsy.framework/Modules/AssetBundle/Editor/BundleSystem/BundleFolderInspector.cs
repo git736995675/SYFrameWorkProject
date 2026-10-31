@@ -157,8 +157,6 @@ namespace ZSYFramework.AssetBundle.Editor
 
         private void TryRemoveRule()
         {
-            if (!GUILayout.Button("移除打包配置")) return;
-
             var assetPath = AssetDatabase.GetAssetPath(_rule);
             if (!EditorUtility.DisplayDialog("移除打包配置",
                     $"删除 {assetPath} ？\n该操作只删除规则资产, 不修改文件夹内其他资源。",
